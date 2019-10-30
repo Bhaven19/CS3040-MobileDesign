@@ -1,0 +1,4 @@
+#Fri Oct 18 14:25:03 BST 2019
+base.0=C\:\\Users\\MKP08\\Desktop\\CS3040-Repo\\Units\\Unit 2\\TwoActivitiesAns\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

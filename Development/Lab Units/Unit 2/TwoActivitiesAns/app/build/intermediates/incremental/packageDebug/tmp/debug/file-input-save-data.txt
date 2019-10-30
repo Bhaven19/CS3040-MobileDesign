@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Fri Oct 18 14:25:03 BST 2019
+0.baseType=DIRECTORY
+0.base=C\:\\Users\\MKP08\\Desktop\\CS3040-Repo\\Units\\Unit 2\\TwoActivitiesAns\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.path=classes.dex
+0.set=DEX
+count=1
