@@ -1,0 +1,1 @@
+open cv tutorial website: https://blog.codeonion.com/tutorials/opencv-for-android-tutorials/
