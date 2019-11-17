@@ -11,4 +11,6 @@
     <string name="name_label_text">Name</string>
     <string name="order_label">Order</string>
     <string name="enter_name_hint">Enter Your Name</string>
+    <string name="address_label_text">Address</string>
+    <string name="enter_address_hint">Enter Address</string>
 </resources>
