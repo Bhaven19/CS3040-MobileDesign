@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AndroidXLab</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="view_transactions">View Transactions</string>
+    <string name="send_money">Send Money</string>
+    <string name="view_balance">View Balance</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="send">Send</string>
+</resources>
