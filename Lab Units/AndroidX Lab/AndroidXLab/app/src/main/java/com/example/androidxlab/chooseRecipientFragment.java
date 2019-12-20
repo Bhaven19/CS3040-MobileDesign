@@ -12,6 +12,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 
 /**
@@ -20,6 +23,8 @@ import android.view.ViewGroup;
 public class chooseRecipientFragment extends Fragment implements View.OnClickListener{
 
     private NavController navController;
+
+    private TextInputEditText inputRecipient;
 
     public chooseRecipientFragment() {
         // Required empty public constructor
@@ -37,7 +42,16 @@ public class chooseRecipientFragment extends Fragment implements View.OnClickLis
     public void onClick(View view) {
         if (view != null && navController != null) {
             if (view.getId() == R.id.chooseRecipient_next_btn) {
-                navController.navigate(R.id.action_chooseRecipientFragment_to_specifyAmountFragment);
+                if (!inputRecipient.getText().toString().isEmpty()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("recipient", inputRecipient.getText().toString());
+
+                    navController.navigate(R.id.action_chooseRecipientFragment_to_specifyAmountFragment, bundle);
+
+                } else {
+                    Toast.makeText(getActivity(), "Please enter a recipient.", Toast.LENGTH_SHORT).show();
+
+                }
 
             } else if (view.getId() == R.id.chooseRecipient_cancel_btn) {
                 getActivity().onBackPressed();
@@ -49,6 +63,8 @@ public class chooseRecipientFragment extends Fragment implements View.OnClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        inputRecipient = view.findViewById(R.id.input_recipient);
 
         navController = Navigation.findNavController(view);
 

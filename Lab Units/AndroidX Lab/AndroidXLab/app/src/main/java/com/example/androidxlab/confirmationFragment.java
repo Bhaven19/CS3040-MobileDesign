@@ -3,11 +3,14 @@ package com.example.androidxlab;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -15,6 +18,29 @@ import android.view.ViewGroup;
  */
 public class confirmationFragment extends Fragment {
 
+    private String recipient;
+    private Money amount;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstantState){
+        super.onCreate(savedInstantState);
+
+        Bundle b = getArguments();
+
+        if (b != null){
+            recipient = b.getString("recipient");
+            amount = (Money) b.getSerializable("amount");
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        String message = "You have sent " + amount + " to " + recipient;
+
+        TextView textView = view.findViewById(R.id.confirmation_message);
+        textView.setText(message);
+    }
 
     public confirmationFragment() {
         // Required empty public constructor
