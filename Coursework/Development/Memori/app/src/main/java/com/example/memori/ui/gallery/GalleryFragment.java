@@ -1,4 +1,4 @@
-package com.example.memori.ui.holidays;
+package com.example.memori.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.memori.R;
 
-public class HolidaysFragment extends Fragment {
+public class GalleryFragment extends Fragment {
 
-    private HolidaysViewModel holidaysViewModel;
+    private GalleryViewModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        holidaysViewModel =
-                ViewModelProviders.of(this).get(HolidaysViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_navigation_holidays, container, false);
-        final TextView textView = root.findViewById(R.id.text_holidays);
-        holidaysViewModel.getText().observe(this, new Observer<String>() {
+        galleryViewModel =
+                ViewModelProviders.of(this).get(GalleryViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
+        galleryViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

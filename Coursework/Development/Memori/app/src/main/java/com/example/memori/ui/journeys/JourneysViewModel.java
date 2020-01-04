@@ -1,16 +1,16 @@
-package com.example.memori.ui.holidays;
+package com.example.memori.ui.journeys;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HolidaysViewModel extends ViewModel {
+public class JourneysViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HolidaysViewModel() {
+    public JourneysViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is holidays fragment");
+        mText.setValue("This is journeys fragment");
     }
 
     public LiveData<String> getText() {

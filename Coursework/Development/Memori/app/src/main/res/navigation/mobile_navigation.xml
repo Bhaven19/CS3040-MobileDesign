@@ -12,22 +12,22 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.memori.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_map"
+        android:name="com.example.memori.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.memori.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_gallery"
+        android:name="com.example.memori.ui.gallery.GalleryFragment"
+        android:label="@string/title_gallery"
+        tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/navigation_holidays"
-        android:name="com.example.memori.ui.holidays.HolidaysFragment"
-        android:label="@string/title_holidays"
-        tools:layout="@layout/fragment_navigation_holidays" />
+        android:id="@+id/navigation_journeys"
+        android:name="com.example.memori.ui.journeys.JourneysFragment"
+        android:label="@string/title_journeys"
+        tools:layout="@layout/fragment_journeys" />
 
 
 </navigation>
