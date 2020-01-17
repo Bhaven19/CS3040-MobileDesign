@@ -11,12 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.memori.R;
 
-public class JourneysFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class JourneysFragment extends Fragment implements View.OnClickListener{
 
     private JourneysViewModel journeysViewModel;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,4 +38,24 @@ public class JourneysFragment extends Fragment {
         });
         return root;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
+
+        view.findViewById(R.id.create_holiday_btn).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view != null && navController != null) {
+            if (view.getId() == R.id.create_holiday_btn) {
+                navController.navigate(R.id.action_journeysFragment_to_createHolidayFragment);
+
+            }
+        }
+    }
+
 }

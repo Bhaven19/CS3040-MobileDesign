@@ -1,42 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/label_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_home"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/label_latestHoliday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_latestHoliday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/label_home"
+        app:layout_constraintTop_toBottomOf="@+id/label_home" />
+
+    <TextView
+        android:id="@+id/label_addToHoliday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_addToHoliday"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/label_latestHoliday"
+        app:layout_constraintTop_toBottomOf="@+id/btn_map" />
+
+    <Button
+        android:id="@+id/btn_map"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/label_latestHoliday"
+        app:layout_constraintTop_toBottomOf="@+id/label_latestHoliday" />
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/label_addToHoliday"
+        app:layout_constraintTop_toBottomOf="@+id/label_addToHoliday">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/label_addToHoliday"
+            app:layout_constraintTop_toBottomOf="@+id/label_addToHoliday">
 
-            <ImageButton
-                android:id="@+id/barcelona_btn"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btn_addDiary"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/barcelona_button" />
+                android:text="@string/btnlbl_diary" />
 
-            <ImageButton
-                android:id="@+id/france_btn"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btn_addPhoto"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/france_button" />
+                android:text="@string/btnlbl_photo" />
+
+            <Button
+                android:id="@+id/btn_addVLocation"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/btnlbl_location" />
+
+            <Button
+                android:id="@+id/btn_addPeople"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/btnlbl_people" />
+
+            <Button
+                android:id="@+id/btn_addNotes"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/btnlbl_notes" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </HorizontalScrollView>
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
