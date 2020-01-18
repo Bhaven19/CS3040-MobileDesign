@@ -29,23 +29,8 @@
         android:label="@string/title_holiday"
         tools:layout="@layout/fragment_holiday">
 
-        <action
-            android:id="@+id/action_journeysFragment_to_createHolidayFragment"
-            app:destination="@id/navigation_createHoliday" />
-
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_createHoliday"
-        android:name="com.example.memori.ui.holidays.CreateHolidayFragment"
-        android:label="@string/text_createHoliday"
-        tools:layout="@layout/fragment_create_holiday">
-
-        <action
-            android:id="@+id/action_createHolidayFragment_to_journeysFragment"
-            app:destination="@id/navigation_holiday" />
-
-    </fragment>
 
 
 </navigation>

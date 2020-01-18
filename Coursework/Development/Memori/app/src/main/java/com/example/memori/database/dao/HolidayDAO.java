@@ -1,0 +1,25 @@
+package com.example.memori.database.dao;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+
+import com.example.memori.database.entities.HolidayName;
+
+import java.util.List;
+
+@Dao
+public interface HolidayDAO {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(HolidayName name);
+
+    @Query("DELETE FROM holiday_table")
+    void deleteAll();
+
+    @Query("SELECT * from holiday_table")
+    LiveData<List<HolidayName>> getAllHolidayNames();
+
+}
