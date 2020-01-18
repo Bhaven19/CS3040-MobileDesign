@@ -18,15 +18,17 @@
     <string name="lbl_journeyName">What is the name of your holiday?</string>
     <string name="lbl_startLoc">Where is your holiday starting from?</string>
     <string name="lbl_destLoc">Where is your holiday finishing at?</string>
-    <string name="btn_Search">Search</string>
     <string name="lbl_companions">Who are you travelling with?</string>
-    <string name="lbl_notes">Any Travel Notes?</string>
+    <string name="lbl_notes">Travel Notes</string>
     <string name="lbl_startdate">When do you leave?</string>
     <string name="lbl_enddate">When do you return?</string>
     <string name="label_home">Welcome to Memori</string>
     <string name="label_latestHoliday">Your Latest Holiday to ...</string>
     <string name="label_addToHoliday">Add to your latest holiday</string>
+
     <string name="temp">(Clickable Map)</string>
+
+    <string name="btn_Search">Search</string>
     <string name="btnlbl_diary">Diary</string>
     <string name="btnlbl_photo">Photo</string>
     <string name="btnlbl_location">Location</string>
