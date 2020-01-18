@@ -80,4 +80,5 @@ public class HolidayFragment extends Fragment implements View.OnClickListener{
                     Toast.LENGTH_LONG).show();
         }
     }
+
 }

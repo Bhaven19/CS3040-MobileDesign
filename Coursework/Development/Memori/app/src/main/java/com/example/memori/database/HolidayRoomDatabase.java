@@ -66,7 +66,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             // If we have no words, then create the initial list of words
             for (int i = 0; i <= words.length - 1; i++) {
                     HolidayName hName = new HolidayName(words[i]);
-                    mDao.insert(hName);
+                    mDao.insertName(hName);
             }
 
             return null;

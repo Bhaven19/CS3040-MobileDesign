@@ -38,7 +38,7 @@ public class HolidayRepository {
 
         @Override
         protected Void doInBackground(final HolidayName... params) {
-            mAsyncTaskDao.insert(params[0]);
+            mAsyncTaskDao.insertName(params[0]);
             return null;
         }
     }

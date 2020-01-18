@@ -14,7 +14,7 @@ import java.util.List;
 public interface HolidayDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(HolidayName name);
+    void insertName(HolidayName name);
 
     @Query("DELETE FROM holiday_table")
     void deleteAll();
