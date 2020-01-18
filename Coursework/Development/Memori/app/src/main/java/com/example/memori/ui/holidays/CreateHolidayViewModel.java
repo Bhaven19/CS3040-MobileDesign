@@ -1,7 +1,5 @@
-package com.example.memori.ui.journeys;
+package com.example.memori.ui.holidays;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class CreateHolidayViewModel extends ViewModel {

@@ -1,4 +1,4 @@
-package com.example.memori.ui.journeys;
+package com.example.memori.ui.holidays;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,18 +19,18 @@ import com.example.memori.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class JourneysFragment extends Fragment implements View.OnClickListener{
+public class HolidayFragment extends Fragment implements View.OnClickListener{
 
-    private JourneysViewModel journeysViewModel;
+    private HolidayViewModel holidayViewModel;
     private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        journeysViewModel =
-                ViewModelProviders.of(this).get(JourneysViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_journeys, container, false);
+        holidayViewModel =
+                ViewModelProviders.of(this).get(HolidayViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
         final TextView textView = root.findViewById(R.id.text_journeys);
-        journeysViewModel.getText().observe(this, new Observer<String>() {
+        holidayViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

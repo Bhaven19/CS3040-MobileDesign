@@ -3,16 +3,12 @@ package com.example.memori;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.memori.ui.journeys.CreateHolidayFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home,
                 R.id.navigation_map,
                 R.id.navigation_gallery,
-                R.id.navigation_journeys)
+                R.id.navigation_holiday)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

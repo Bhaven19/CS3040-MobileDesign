@@ -1,4 +1,4 @@
-package com.example.memori.ui.journeys;
+package com.example.memori.ui.holidays;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
