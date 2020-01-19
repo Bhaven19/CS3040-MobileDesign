@@ -20,6 +20,8 @@ import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
 import com.example.memori.database.entities.Holiday;
 
+import java.sql.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -71,8 +73,9 @@ public class HolidayFragment extends Fragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE) {
-            Holiday hName = new Holiday(data.getStringExtra(CreateHolidayActivity.EXTRA_REPLY));
-            mHolidayViewModel.insert(hName);
+            Date date = new Date(00,00,00);
+            Holiday holiday = new Holiday(data.getStringExtra(CreateHolidayActivity.EXTRA_REPLY), date);
+            mHolidayViewModel.insert(holiday);
         } else {
             Toast.makeText(
                     getActivity().getApplicationContext(),

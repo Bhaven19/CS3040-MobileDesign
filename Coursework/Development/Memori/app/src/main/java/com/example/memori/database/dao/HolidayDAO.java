@@ -14,12 +14,13 @@ import java.util.List;
 public interface HolidayDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertName(Holiday name);
+    void insert(Holiday holiday);
+
 
     @Query("DELETE FROM holiday_table")
     void deleteAll();
 
     @Query("SELECT * from holiday_table")
-    LiveData<List<Holiday>> getAllHolidayNames();
+    LiveData<List<Holiday>> getAllHolidays();
 
 }

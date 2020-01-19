@@ -13,20 +13,20 @@ import java.util.List;
 public class HolidayRepository {
 
     private HolidayDAO mHolidayDAO;
-    private LiveData<List<Holiday>> mAllHolidayNames;
+    private LiveData<List<Holiday>> mAllHoliday;
 
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();
-        mAllHolidayNames = mHolidayDAO.getAllHolidayNames();
+        mAllHoliday = mHolidayDAO.getAllHolidays();
     }
 
     public LiveData<List<Holiday>> getAllHolidayNames() {
-        return mAllHolidayNames;
+        return mAllHoliday;
     }
 
-    public void insert (Holiday impHName) {
-        new insertAsyncTask(mHolidayDAO).execute(impHName);
+    public void insert (Holiday impHoliday) {
+        new insertAsyncTask(mHolidayDAO).execute(impHoliday);
     }
 
     private static class insertAsyncTask extends AsyncTask<Holiday, Void, Void> {
@@ -38,7 +38,7 @@ public class HolidayRepository {
 
         @Override
         protected Void doInBackground(final Holiday... params) {
-            mAsyncTaskDao.insertName(params[0]);
+            mAsyncTaskDao.insert(params[0]);
             return null;
         }
     }

@@ -30,7 +30,7 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
     public void onBindViewHolder(WordViewHolder holder, int position) {
         if (mHolidays != null) {
             Holiday current = mHolidays.get(position);
-            holder.wordItemView.setText(current.getHolidayName());
+            holder.wordItemView.setText(current.getName());
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Word");
