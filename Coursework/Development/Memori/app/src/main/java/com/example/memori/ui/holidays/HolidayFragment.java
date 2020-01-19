@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
-import com.example.memori.database.entities.HolidayName;
+import com.example.memori.database.entities.Holiday;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +71,7 @@ public class HolidayFragment extends Fragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE) {
-            HolidayName hName = new HolidayName(data.getStringExtra(CreateHolidayActivity.EXTRA_REPLY));
+            Holiday hName = new Holiday(data.getStringExtra(CreateHolidayActivity.EXTRA_REPLY));
             mHolidayViewModel.insert(hName);
         } else {
             Toast.makeText(

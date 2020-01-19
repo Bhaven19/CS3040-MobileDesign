@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.memori.database.entities.HolidayName;
+import com.example.memori.database.entities.Holiday;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ import java.util.List;
 public interface HolidayDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertName(HolidayName name);
+    void insertName(Holiday name);
 
     @Query("DELETE FROM holiday_table")
     void deleteAll();
 
     @Query("SELECT * from holiday_table")
-    LiveData<List<HolidayName>> getAllHolidayNames();
+    LiveData<List<Holiday>> getAllHolidayNames();
 
 }

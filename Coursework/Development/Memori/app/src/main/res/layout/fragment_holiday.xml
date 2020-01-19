@@ -48,20 +48,26 @@
         app:layout_constraintEnd_toStartOf="@+id/filter_btn"
         app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="24dp"
-        android:background="@android:color/darker_gray"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/holidays_label"
-        app:layout_constraintTop_toBottomOf="@+id/holidays_label"
-        tools:listitem="@layout/recyclerview_item" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_btn">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/darker_gray"
+            tools:listitem="@layout/recyclerview_item"
+            android:layout_marginRight="0dp" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

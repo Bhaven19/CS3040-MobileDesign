@@ -1,14 +1,12 @@
 package com.example.memori.ui.holidays;
 
 import android.app.Application;
-import android.os.Bundle;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.memori.database.HolidayRepository;
-import com.example.memori.database.entities.HolidayName;
+import com.example.memori.database.entities.Holiday;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class HolidayViewModel extends AndroidViewModel {
 
     private HolidayRepository mRepository;
 
-    private LiveData<List<HolidayName>> mAllHolidayNames;
+    private LiveData<List<Holiday>> mAllHolidayNames;
 
     public HolidayViewModel(Application application) {
         super(application);
@@ -24,11 +22,11 @@ public class HolidayViewModel extends AndroidViewModel {
         mAllHolidayNames = mRepository.getAllHolidayNames();
     }
 
-    LiveData<List<HolidayName>> getAllHolidayNames() { return mAllHolidayNames; }
+    LiveData<List<Holiday>> getAllHolidayNames() { return mAllHolidayNames; }
 
-    public void insert(HolidayName impHolidayName) { mRepository.insert(impHolidayName); }
+    public void insert(Holiday impHoliday) { mRepository.insert(impHoliday); }
     //public void deleteAll() { mRepository.insert(mRepository.deleteAll()); }
-    //public void delete(HolidayName impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
+    //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
 
 
 }

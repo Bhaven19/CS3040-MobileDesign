@@ -10,12 +10,9 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.memori.database.dao.HolidayDAO;
-import com.example.memori.database.entities.HolidayName;
+import com.example.memori.database.entities.Holiday;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-@Database(entities = {HolidayName.class}, version = 1, exportSchema = false)
+@Database(entities = {Holiday.class}, version = 1, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -65,7 +62,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
             // If we have no words, then create the initial list of words
             for (int i = 0; i <= words.length - 1; i++) {
-                    HolidayName hName = new HolidayName(words[i]);
+                    Holiday hName = new Holiday(words[i]);
                     mDao.insertName(hName);
             }
 
