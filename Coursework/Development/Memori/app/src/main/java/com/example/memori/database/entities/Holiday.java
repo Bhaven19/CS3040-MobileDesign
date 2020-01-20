@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
-import com.example.memori.database.Converters;
-
-import java.util.Date;
+import java.io.Serializable;
 
 @Entity(tableName = "holiday_table")
-public class Holiday {
+public class Holiday implements Serializable {
 
     @PrimaryKey (autoGenerate = true)
     @NonNull
@@ -22,14 +19,16 @@ public class Holiday {
     @ColumnInfo(name = "NAME")
     private String name;
 
-    @NonNull
-    @ColumnInfo(name = "START_DATE")
-    @TypeConverters({Converters.class})
-    private Date startDate;
+    @ColumnInfo(name = "TRAVELLERS")
+    private String travellers;
 
-    public Holiday(@NonNull String name, @NonNull Date startDate) {
+    @ColumnInfo(name = "NOTES")
+    private String notes;
+
+    public Holiday(@NonNull String name, String travellers, String notes) {
         this.name = name;
-        this.startDate = startDate;
+        this.travellers = travellers;
+        this.notes = notes;
     }
 
     public void set_id(int mID){
@@ -40,9 +39,10 @@ public class Holiday {
         return _id;
     }
 
-    @NonNull
-    public Date getStartDate() {
-        return startDate;
+    public String getNotes(){return notes;}
+
+    public String getTravellers() {
+        return travellers;
     }
 
     public String getName(){

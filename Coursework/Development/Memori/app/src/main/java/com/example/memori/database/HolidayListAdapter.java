@@ -16,7 +16,7 @@ import java.util.List;
 public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.WordViewHolder> {
 
     private final LayoutInflater mInflater;
-    private List<Holiday> mHolidays; // Cached copy of words
+    private List<Holiday> mHolidays;
 
     public HolidayListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 

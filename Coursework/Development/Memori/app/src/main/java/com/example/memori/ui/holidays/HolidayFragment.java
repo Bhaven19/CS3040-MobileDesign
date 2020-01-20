@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +27,7 @@ import java.sql.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayFragment extends Fragment implements View.OnClickListener{
+public class HolidayFragment extends Fragment{
 
     private HolidayViewModel holidayViewModel;
     private NavController navController;
@@ -44,10 +46,17 @@ public class HolidayFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         navController = Navigation.findNavController(view);
 
-        view.findViewById(R.id.create_holiday_btn).setOnClickListener(this);
+
+        Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
+        createHoliday_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
+                startActivityForResult(createIntent, 1);
+
+            }
+        });
 
         RecyclerView recyclerView = getView().findViewById(R.id.recyclerview);
         final HolidayListAdapter adapter = new HolidayListAdapter(getActivity().getApplicationContext());
@@ -60,22 +69,50 @@ public class HolidayFragment extends Fragment implements View.OnClickListener{
             // Update the cached copy of the words in the adapter.
             adapter.setWords(words);
         });
+
+        // Add the functionality to swipe items in the recycler view to delete that item
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Holiday myHoliday = adapter.getWordAtPosition(position);
+
+                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
+                        viewIntent.putExtra("chosenHoliday", myHoliday);
+
+                        startActivityForResult(viewIntent, 1);
+
+                    }
+                });
+
+        helper.attachToRecyclerView(recyclerView);
+
     }
 
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), CreateHolidayActivity.class);
-        startActivityForResult(intent, 1);
 
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE) {
-            Date date = new Date(00,00,00);
-            Holiday holiday = new Holiday(data.getStringExtra(CreateHolidayActivity.EXTRA_REPLY), date);
+        String myHolidayName = data.getStringExtra("holidayName");
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && myHolidayName.isEmpty()){
+            Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
+                    data.getStringExtra("holidayTravellers"),
+                    data.getStringExtra("holidayNotes"));
+
             mHolidayViewModel.insert(holiday);
+
         } else {
             Toast.makeText(
                     getActivity().getApplicationContext(),

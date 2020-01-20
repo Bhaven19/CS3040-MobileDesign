@@ -19,7 +19,8 @@ public class CreateHolidayActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.roomwordssample.REPLY";
 
     private EditText mEditHolidayNameView;
-    private EditText mEditStartDate;
+    private EditText mTravellersView;
+    private EditText mTravelNotes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,33 +28,27 @@ public class CreateHolidayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_holiday);
 
         mEditHolidayNameView = findViewById(R.id.edit_Name);
-        mEditStartDate = findViewById(R.id.edit_StartDate);
+        mTravellersView = findViewById(R.id.edit_Companions);
+        mTravelNotes = findViewById(R.id.edit_Notes);
 
         final Button button = findViewById(R.id.btn_saveHoliday);
 
         button.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
 
-            if (TextUtils.isEmpty(mEditHolidayNameView.getText()) || TextUtils.isEmpty(mEditStartDate.getText())) {
+            if (TextUtils.isEmpty(mEditHolidayNameView.getText()) || TextUtils.isEmpty(mTravellersView.getText())) {
                 setResult(RESULT_CANCELED, replyIntent);
 
                 Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
 
             } else {
                 String hName = mEditHolidayNameView.getText().toString();
+                String hCompanions = mTravellersView.getText().toString();
+                String hNotes = mTravelNotes.getText().toString();
 
-                replyIntent.putExtra(EXTRA_REPLY, hName);
-
-                try {
-                    Date hStartDate = new SimpleDateFormat("dd/MM/yyyy").parse(mEditStartDate.getText().toString());
-
-                    replyIntent.putExtra(EXTRA_REPLY, hStartDate);
-
-                    Toast.makeText(getApplicationContext(), "Name: " + hName + " ... Date: " + hStartDate, Toast.LENGTH_LONG).show();
-
-                } catch(java.text.ParseException e) {
-                    e.printStackTrace();
-                }
+                replyIntent.putExtra("holidayName", hName);
+                replyIntent.putExtra("holidayTravellers", hCompanions);
+                replyIntent.putExtra("holidayNotes", hNotes);
 
                 setResult(RESULT_OK, replyIntent);
             }

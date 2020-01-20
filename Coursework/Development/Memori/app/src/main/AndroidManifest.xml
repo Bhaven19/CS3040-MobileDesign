@@ -21,6 +21,9 @@
         <activity
             android:name=".ui.holidays.CreateHolidayActivity">
         </activity>
+        <activity
+            android:name=".ui.holidays.ViewHolidayActivity">
+        </activity>
     </application>
 
 </manifest>
