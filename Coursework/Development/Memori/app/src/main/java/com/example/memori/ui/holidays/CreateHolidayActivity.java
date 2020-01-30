@@ -18,15 +18,16 @@ import java.util.Date;
 public class CreateHolidayActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.roomwordssample.REPLY";
 
-    private EditText mEditHolidayNameView;
-    private EditText mTravellersView;
-    private EditText mTravelNotes;
+    private EditText mEditHolidayNameView, mStartingLoc, mDestination, mTravellersView, mTravelNotes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_holiday);
 
+        mEditHolidayNameView = findViewById(R.id.edit_Name);
+        mStartingLoc = findViewById(R.id.edit_StartLoc);
+        mDestination = findViewById(R.id.edit_EndLoc);
         mEditHolidayNameView = findViewById(R.id.edit_Name);
         mTravellersView = findViewById(R.id.edit_Companions);
         mTravelNotes = findViewById(R.id.edit_Notes);
@@ -43,10 +44,14 @@ public class CreateHolidayActivity extends AppCompatActivity {
 
             } else {
                 String hName = mEditHolidayNameView.getText().toString();
+                String hStartingLoc = mStartingLoc.getText().toString();
+                String hDestination = mDestination.getText().toString();
                 String hCompanions = mTravellersView.getText().toString();
                 String hNotes = mTravelNotes.getText().toString();
 
                 replyIntent.putExtra("holidayName", hName);
+                replyIntent.putExtra("holidayStartingLoc", hStartingLoc);
+                replyIntent.putExtra("holidayDestination", hDestination);
                 replyIntent.putExtra("holidayTravellers", hCompanions);
                 replyIntent.putExtra("holidayNotes", hNotes);
 

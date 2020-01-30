@@ -24,6 +24,19 @@ public class HolidayViewModel extends AndroidViewModel {
 
     LiveData<List<Holiday>> getAllHolidayNames() { return mAllHolidayNames; }
 
+    public String holidayNamesToString(){
+        String list = "";
+
+        LiveData<List<Holiday>> holidayLiveList = getAllHolidayNames();
+        List<Holiday> holidayList = holidayLiveList.getValue();
+
+        for (Holiday currentH : holidayList) {
+            list += currentH.getName() + ", ";
+        }
+
+        return list;
+    }
+
     public void insert(Holiday impHoliday) { mRepository.insert(impHoliday); }
     //public void deleteAll() { mRepository.insert(mRepository.deleteAll()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }

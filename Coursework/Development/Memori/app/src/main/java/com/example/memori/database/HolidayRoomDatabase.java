@@ -15,7 +15,7 @@ import com.example.memori.database.entities.Holiday;
 
 import java.util.Date;
 
-@Database(entities = {Holiday.class}, version = 6, exportSchema = false)
+@Database(entities = {Holiday.class}, version = 7, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -55,8 +55,11 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mDao;
         String [] holidayNames = {"Devon", "Cornwall", "New York"};
+        String startingLoc = "Birmingham";
+        String destination = "Paris";
         String travellerNames = "John, Mark, Sophie";
         String travelNotes = "Here are some notes";
+
 
         PopulateDbAsync(HolidayRoomDatabase db) {
             mDao = db.holidayDAO();
@@ -68,7 +71,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             mDao.deleteAll();
 
             for (int i = 0; i <= holidayNames.length - 1; i++) {
-                Holiday holiday = new Holiday(holidayNames[i], travellerNames, travelNotes);
+                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes);
                 mDao.insert(holiday);
             }
 

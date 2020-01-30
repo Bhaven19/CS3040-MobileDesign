@@ -19,14 +19,22 @@ public class Holiday implements Serializable {
     @ColumnInfo(name = "NAME")
     private String name;
 
+    @ColumnInfo(name = "STARTING_LOC")
+    private String startingLoc;
+
+    @ColumnInfo(name = "DESTINATION")
+    private String destination;
+
     @ColumnInfo(name = "TRAVELLERS")
     private String travellers;
 
     @ColumnInfo(name = "NOTES")
     private String notes;
 
-    public Holiday(@NonNull String name, String travellers, String notes) {
+    public Holiday(@NonNull String name, String startingLoc, String destination, String travellers, String notes) {
         this.name = name;
+        this.startingLoc = startingLoc;
+        this.destination = destination;
         this.travellers = travellers;
         this.notes = notes;
     }
@@ -47,5 +55,13 @@ public class Holiday implements Serializable {
 
     public String getName(){
         return name;
+    }
+
+    public String getStartingLoc(){
+        return startingLoc;
+    }
+
+    public String getDestination(){
+        return destination;
     }
 }

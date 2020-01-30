@@ -16,7 +16,40 @@
             android:layout_marginTop="16dp"
             android:text="Holiday Notes"
             app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
+            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartLoc" />
+
+        <TextView
+            android:id="@+id/label_HolidayEndLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:text="ending loc"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/label_HolidayLocation"
+            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
+
+        <TextView
+            android:id="@+id/label_HolidayStartLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="starting loc"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
             app:layout_constraintTop_toBottomOf="@+id/text_HolidayName" />
+
+        <TextView
+            android:id="@+id/label_HolidayLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:text="to"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/label_HolidayStartLoc"
+            app:layout_constraintStart_toEndOf="@+id/label_HolidayStartLoc"
+            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
 
         <TextView
             android:id="@+id/label_holidayImages"
