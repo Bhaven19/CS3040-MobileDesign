@@ -37,8 +37,13 @@ public class CreateHolidayActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
 
-            if (TextUtils.isEmpty(mEditHolidayNameView.getText()) || TextUtils.isEmpty(mTravellersView.getText())) {
-                setResult(RESULT_CANCELED, replyIntent);
+            if (TextUtils.isEmpty(mEditHolidayNameView.getText()) ||
+                    TextUtils.isEmpty(mStartingLoc.getText()) ||
+                    TextUtils.isEmpty(mDestination.getText()) ||
+                    TextUtils.isEmpty(mTravellersView.getText()) ||
+                    TextUtils.isEmpty(mTravelNotes.getText()) ) {
+
+                setResult(0, replyIntent);
 
                 Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
 

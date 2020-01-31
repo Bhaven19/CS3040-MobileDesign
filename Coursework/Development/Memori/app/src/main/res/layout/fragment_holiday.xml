@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     android:background="@color/colorScreenBackground">
 
+    <TextView
+        android:id="@+id/label_holidays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="All Holidays"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_holidays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_holiday">
+
+    </androidx.appcompat.widget.Toolbar>
+
+
     <Button
         android:id="@+id/create_holiday_btn"
         android:layout_width="0dp"
@@ -13,7 +36,7 @@
         android:text="@string/create_a_holiday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_holidays" />
 
     <TextView
         android:id="@+id/holidays_label"

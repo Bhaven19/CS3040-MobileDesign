@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -36,6 +37,8 @@ public class HolidayFragment extends Fragment{
     private HolidayViewModel holidayViewModel;
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
+    private Toolbar hToolbar;
+
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     public static final int VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE = 2;
@@ -55,7 +58,7 @@ public class HolidayFragment extends Fragment{
         Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
         createHoliday_btn.setOnClickListener(v -> {
             Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
-            startActivityForResult(createIntent, 1);
+            startActivityForResult(createIntent, NEW_WORD_ACTIVITY_REQUEST_CODE);
 
         });
 
@@ -108,7 +111,7 @@ public class HolidayFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE){
+        if (resultCode == NEW_WORD_ACTIVITY_REQUEST_CODE){
             Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
@@ -117,7 +120,7 @@ public class HolidayFragment extends Fragment{
 
             mHolidayViewModel.insert(holiday);
 
-        } else if (requestCode == VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE) {
+        } else if (resultCode == VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE) {
             Log.d("HolidayList", "3. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
         } else {
