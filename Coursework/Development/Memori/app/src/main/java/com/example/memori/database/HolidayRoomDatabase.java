@@ -15,7 +15,7 @@ import com.example.memori.database.entities.Holiday;
 
 import java.util.Date;
 
-@Database(entities = {Holiday.class}, version = 7, exportSchema = false)
+@Database(entities = {Holiday.class}, version = 8, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();

@@ -11,19 +11,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
+import com.example.memori.database.entities.Holiday;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CreateHolidayActivity extends AppCompatActivity {
-    public static final String EXTRA_REPLY = "com.example.android.roomwordssample.REPLY";
-
+public class EditHolidayActivity extends AppCompatActivity {
     private EditText mEditHolidayNameView, mStartingLoc, mDestination, mTravellersView, mTravelNotes;
+    private Holiday mHoliday;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_holiday);
+
+        mHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
 
         mEditHolidayNameView = findViewById(R.id.edit_Name);
         mStartingLoc = findViewById(R.id.edit_StartLoc);
@@ -32,6 +34,8 @@ public class CreateHolidayActivity extends AppCompatActivity {
         mTravelNotes = findViewById(R.id.edit_Notes);
 
         final Button button = findViewById(R.id.btn_saveHoliday);
+
+        setValues();
 
         button.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
@@ -44,24 +48,27 @@ public class CreateHolidayActivity extends AppCompatActivity {
 
                 setResult(0, replyIntent);
 
-                Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Holiday was not updated, some fields were empty", Toast.LENGTH_LONG).show();
 
             } else {
-                String hName = mEditHolidayNameView.getText().toString();
-                String hStartingLoc = mStartingLoc.getText().toString();
-                String hDestination = mDestination.getText().toString();
-                String hCompanions = mTravellersView.getText().toString();
-                String hNotes = mTravelNotes.getText().toString();
+                replyIntent.putExtra("holidayName", mEditHolidayNameView.getText().toString());
+                replyIntent.putExtra("holidayStartingLoc", mStartingLoc.getText().toString());
+                replyIntent.putExtra("holidayDestination", mDestination.getText().toString());
+                replyIntent.putExtra("holidayTravellers", mTravellersView.getText().toString());
+                replyIntent.putExtra("holidayNotes", mTravelNotes.getText().toString());
 
-                replyIntent.putExtra("holidayName", hName);
-                replyIntent.putExtra("holidayStartingLoc", hStartingLoc);
-                replyIntent.putExtra("holidayDestination", hDestination);
-                replyIntent.putExtra("holidayTravellers", hCompanions);
-                replyIntent.putExtra("holidayNotes", hNotes);
-
-                setResult(RESULT_OK, replyIntent);
+                setResult(3, replyIntent);
             }
             finish();
         });
+    }
+
+    public void setValues(){
+        mEditHolidayNameView.setText(mHoliday.getName());
+        mStartingLoc.setText(mHoliday.getStartingLoc());
+        mDestination.setText(mHoliday.getDestination());
+        mTravellersView.setText(mHoliday.getTravellers());
+        mTravelNotes.setText(mHoliday.getNotes());
+
     }
 }

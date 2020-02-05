@@ -22,4 +22,17 @@ public interface HolidayDAO {
     @Query("SELECT * from holiday_table")
     LiveData<List<Holiday>> getAllHolidays();
 
+    @Query("UPDATE holiday_table SET NAME = :hName," +
+            "STARTING_LOC = :hStartLoc," +
+            "DESTINATION = :hEndLoc," +
+            "TRAVELLERS = :hTravellers," +
+            "NOTES = :hNotes" +
+            " WHERE id = :hID")
+    void updateHoliday(int hID,
+                       String hName,
+                       String hStartLoc,
+                       String hEndLoc,
+                       String hTravellers,
+                       String hNotes );
+
 }

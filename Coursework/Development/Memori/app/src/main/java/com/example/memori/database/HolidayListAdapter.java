@@ -63,4 +63,5 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
     public Holiday getWordAtPosition (int position) {
         return mHolidays.get(position);
     }
+
 }

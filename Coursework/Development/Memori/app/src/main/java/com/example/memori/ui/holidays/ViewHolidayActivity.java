@@ -2,11 +2,7 @@ package com.example.memori.ui.holidays;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +34,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayDestination.setText(impHoliday.getDestination());
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
+
+        setResult(2, obtainIntent);
 
     }
 }

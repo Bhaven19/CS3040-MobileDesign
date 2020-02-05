@@ -14,20 +14,20 @@ public class HolidayViewModel extends AndroidViewModel {
 
     private HolidayRepository mRepository;
 
-    private LiveData<List<Holiday>> mAllHolidayNames;
+    private LiveData<List<Holiday>> mAllHolidays;
 
     public HolidayViewModel(Application application) {
         super(application);
         mRepository = new HolidayRepository(application);
-        mAllHolidayNames = mRepository.getAllHolidayNames();
+        mAllHolidays = mRepository.getAllHolidays();
     }
 
-    LiveData<List<Holiday>> getAllHolidayNames() { return mAllHolidayNames; }
+    LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
 
     public String holidayNamesToString(){
         String list = "";
 
-        LiveData<List<Holiday>> holidayLiveList = getAllHolidayNames();
+        LiveData<List<Holiday>> holidayLiveList = getAllHolidays();
         List<Holiday> holidayList = holidayLiveList.getValue();
 
         for (Holiday currentH : holidayList) {
@@ -38,6 +38,7 @@ public class HolidayViewModel extends AndroidViewModel {
     }
 
     public void insert(Holiday impHoliday) { mRepository.insert(impHoliday); }
+    public void update(Holiday impHoliday) { mRepository.update(impHoliday); }
     //public void deleteAll() { mRepository.insert(mRepository.deleteAll()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
 

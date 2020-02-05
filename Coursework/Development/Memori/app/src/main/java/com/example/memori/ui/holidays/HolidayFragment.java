@@ -39,9 +39,11 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private HolidayViewModel mHolidayViewModel;
     private Toolbar hToolbar;
 
+    private Boolean editClicked = false, deleteClicked = false;
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-    public static final int VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE = 2;
+    public static final int NEW_HOLIDAY_ACTIVITY_REQUEST_CODE = 1;
+    public static final int VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE = 2;
+    public static final int SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE = 3;
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -49,17 +51,32 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         if (id == R.id.action_edit) {
             displayToast("Edit Selected");
+
+            editClicked = true;
+            deleteClicked = false;
+
             return true;
 
         } else if (id == R.id.action_delete) {
             displayToast("Delete Selected");
+
+            editClicked = false;
+            deleteClicked = true;
+
             return true;
 
         } else if (id == R.id.action_deleteAll) {
             displayToast("DeleteAll Selected");
+
+            editClicked = false;
+            deleteClicked = false;
+
             return true;
 
         }
+
+        editClicked = false;
+        deleteClicked = false;
 
         return super.onOptionsItemSelected(item);
     }
@@ -74,7 +91,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
         createHoliday_btn.setOnClickListener(v -> {
             Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
-            startActivityForResult(createIntent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(createIntent, VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE);
 
         });
 
@@ -92,7 +109,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == NEW_WORD_ACTIVITY_REQUEST_CODE){
+        if (resultCode == NEW_HOLIDAY_ACTIVITY_REQUEST_CODE){
             Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
@@ -101,14 +118,22 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             mHolidayViewModel.insert(holiday);
 
-        } else if (resultCode == VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE) {
-            Log.d("HolidayList", "3. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
+        } else if (resultCode == VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE) {
+            Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
-        } else {
-            Toast.makeText(
-                    getActivity().getApplicationContext(),
-                    "Not Saved as it is empty",
-                    Toast.LENGTH_LONG).show();
+        } else if (resultCode == SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE) {
+            Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
+                    data.getStringExtra("holidayStartingLoc"),
+                    data.getStringExtra("holidayDestination"),
+                    data.getStringExtra("holidayTravellers"),
+                    data.getStringExtra("holidayNotes"));
+
+            mHolidayViewModel.update(holiday);
+
+            Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
+
+        } else if (resultCode == 0) {
+            displayToast("Not Saved as it is empty");
         }
     }
 
@@ -134,11 +159,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
-        mHolidayViewModel.getAllHolidayNames().observe(this, words -> {
+        mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
             // Update the cached copy of the words in the adapter.
-            adapter.setWords(words);
-
-            Log.d("HolidayList", "1. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
+            adapter.setWords(holidays);
 
         });
 
@@ -158,12 +181,26 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         int position = viewHolder.getAdapterPosition();
                         Holiday myHoliday = adapter.getWordAtPosition(position);
 
-                        Log.d("HolidayList", "2. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
+                        if (editClicked == true){
+                            Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
+                            editIntent.putExtra("chosenHoliday", myHoliday);
 
-                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
-                        viewIntent.putExtra("chosenHoliday", myHoliday);
+                            startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
 
-                        startActivityForResult(viewIntent, 2);
+
+                        } else if (deleteClicked == true){
+                            displayToast(myHoliday.getName() + " has been deleted");
+
+
+                        } else {
+                            Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
+                            viewIntent.putExtra("chosenHoliday", myHoliday);
+
+                            startActivityForResult(viewIntent, 2);
+
+                        }
+
+
 
                     }
 
@@ -171,4 +208,5 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         helper.attachToRecyclerView(recyclerView);
     }
+
 }
