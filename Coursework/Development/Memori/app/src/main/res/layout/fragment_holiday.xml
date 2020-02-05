@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorScreenBackground">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/label_holidays"
@@ -14,7 +13,7 @@
         android:paddingBottom="16dp"
         android:textAlignment="center"
         android:text="All Holidays"
-        android:textColor="#000000"
+        android:textColor="#AAAAAA"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +23,12 @@
         android:id="@+id/toolbar_holidays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu_holiday">
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <Button
         android:id="@+id/create_holiday_btn"
@@ -45,54 +44,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/your_holidays"
-        android:textColor="#000000"
+        android:textColor="#AAAAAA"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
-
-    <Button
-        android:id="@+id/filter_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
-
-    <Button
-        android:id="@+id/edit_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/edit"
-        app:layout_constraintEnd_toStartOf="@+id/filter_btn"
         app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:paddingBottom="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_btn">
+        app:layout_constraintTop_toBottomOf="@+id/holidays_label">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="0dp"
             android:background="@android:color/darker_gray"
-            tools:listitem="@layout/recyclerview_item"
-            android:layout_marginRight="0dp" />
+            tools:listitem="@layout/recyclerview_item" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

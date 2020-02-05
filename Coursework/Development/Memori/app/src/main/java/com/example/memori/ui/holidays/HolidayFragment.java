@@ -32,7 +32,7 @@ import java.sql.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayFragment extends Fragment{
+public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
     private HolidayViewModel holidayViewModel;
     private NavController navController;
@@ -43,17 +43,33 @@ public class HolidayFragment extends Fragment{
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     public static final int VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE = 2;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        holidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
 
-        return root;
+        if (id == R.id.action_edit) {
+            displayToast("Edit Selected");
+            return true;
+
+        } else if (id == R.id.action_delete) {
+            displayToast("Delete Selected");
+            return true;
+
+        } else if (id == R.id.action_deleteAll) {
+            displayToast("DeleteAll Selected");
+            return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+        createToolbar(view);
 
         Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
         createHoliday_btn.setOnClickListener(v -> {
@@ -62,6 +78,55 @@ public class HolidayFragment extends Fragment{
 
         });
 
+        setupRecyclerView();
+
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        holidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
+
+        return root;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == NEW_WORD_ACTIVITY_REQUEST_CODE){
+            Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
+                    data.getStringExtra("holidayStartingLoc"),
+                    data.getStringExtra("holidayDestination"),
+                    data.getStringExtra("holidayTravellers"),
+                    data.getStringExtra("holidayNotes"));
+
+            mHolidayViewModel.insert(holiday);
+
+        } else if (resultCode == VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE) {
+            Log.d("HolidayList", "3. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
+
+        } else {
+            Toast.makeText(
+                    getActivity().getApplicationContext(),
+                    "Not Saved as it is empty",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void displayToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void createToolbar(View view){
+        setHasOptionsMenu(true);
+        hToolbar = view.findViewById(R.id.toolbar_holidays);
+
+        hToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
+        hToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
+        hToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
+    }
+
+    public void setupRecyclerView(){
         RecyclerView recyclerView = getView().findViewById(R.id.recyclerview);
         final HolidayListAdapter adapter = new HolidayListAdapter(getActivity().getApplicationContext());
         recyclerView.setAdapter(adapter);
@@ -105,30 +170,5 @@ public class HolidayFragment extends Fragment{
                 });
 
         helper.attachToRecyclerView(recyclerView);
-
     }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == NEW_WORD_ACTIVITY_REQUEST_CODE){
-            Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
-                    data.getStringExtra("holidayStartingLoc"),
-                    data.getStringExtra("holidayDestination"),
-                    data.getStringExtra("holidayTravellers"),
-                    data.getStringExtra("holidayNotes"));
-
-            mHolidayViewModel.insert(holiday);
-
-        } else if (resultCode == VIEW_ALL_WORDS_ACTIVITY_REQUEST_CODE) {
-            Log.d("HolidayList", "3. List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
-
-        } else {
-            Toast.makeText(
-                    getActivity().getApplicationContext(),
-                    "Not Saved as it is empty",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
 }
