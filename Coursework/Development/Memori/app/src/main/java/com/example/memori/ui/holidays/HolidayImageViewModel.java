@@ -39,7 +39,7 @@ public class HolidayImageViewModel extends AndroidViewModel {
         return list;
     }
 
-    public void insert(HolidayImage impHoliday) { mRepository.insert(impHoliday); }
+    public void insert(HolidayImage impHolidayImage) { mRepository.insert(impHolidayImage); }
     //public void deleteAll() { mRepository.insert(mRepository.deleteAll()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
 

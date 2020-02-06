@@ -40,6 +40,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private HolidayViewModel mHolidayViewModel;
     private HolidayImageViewModel mHolidayImageViewModel;
     private Toolbar hToolbar;
+    private int latestHolidayID = 0;
 
     private Boolean editClicked = false, deleteClicked = false;
 
@@ -121,10 +122,14 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             mHolidayViewModel.insert(holiday);
 
+            Log.d("HolidayList", "Holiday Saved");
+
             List<String> holidayPaths =data.getStringArrayListExtra("holidayImages");
 
             for (String currentPath:holidayPaths){
-                HolidayImage holidayImage = new HolidayImage(holiday.get_id(), currentPath);
+                HolidayImage holidayImage = new HolidayImage(mHolidayViewModel.getLatestHolidayID(), currentPath);
+
+                Log.d("HolidayList", "Image Path: " + holidayImage.getImagePath());
 
                 mHolidayImageViewModel.insert(holidayImage);
             }
@@ -145,6 +150,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         } else if (resultCode == 0) {
             displayToast("Not Saved as it is empty");
+
+        } else {
+            Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
+
         }
     }
 
@@ -218,6 +227,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 });
 
         helper.attachToRecyclerView(recyclerView);
+    }
+
+    public void setLatestHolidayID(int mID){
+        latestHolidayID = mID;
     }
 
 }

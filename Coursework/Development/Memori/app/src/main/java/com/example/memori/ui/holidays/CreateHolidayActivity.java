@@ -105,7 +105,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     saveHolidayIntent.putExtra("holidayNotes", hNotes);
                     saveHolidayIntent.putExtra("holidayImages", allImagePaths);
 
-                    setResult(RESULT_OK, saveHolidayIntent);
+                    setResult(1, saveHolidayIntent);
                 }
                 finish();
 

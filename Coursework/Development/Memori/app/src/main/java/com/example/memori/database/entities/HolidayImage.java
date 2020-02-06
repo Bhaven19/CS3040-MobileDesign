@@ -24,7 +24,7 @@ public class HolidayImage implements Serializable {
     private String imagePath;
 
 
-    public HolidayImage(@NonNull int holidayID, String imagePath) {
+    public HolidayImage(@NonNull int holidayID, @NonNull String imagePath) {
         this.holidayID = holidayID;
         this.imagePath = imagePath;
     }
