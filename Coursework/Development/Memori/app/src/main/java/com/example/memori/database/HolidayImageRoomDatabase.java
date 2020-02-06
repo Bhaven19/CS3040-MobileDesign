@@ -9,20 +9,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.memori.database.dao.HolidayDAO;
-import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.dao.HolidayImageDAO;
+import com.example.memori.database.entities.HolidayImage;
 
-@Database(entities = {Holiday.class}, version = 8, exportSchema = false)
-public abstract class HolidayRoomDatabase extends RoomDatabase {
+@Database(entities = {HolidayImage.class}, version = 8, exportSchema = false)
+public abstract class HolidayImageRoomDatabase extends RoomDatabase {
 
-    public abstract HolidayDAO holidayDAO();
-    private static HolidayRoomDatabase INSTANCE;
+    public abstract HolidayImageDAO holidayImageDAO();
+    private static HolidayImageRoomDatabase INSTANCE;
 
-    static HolidayRoomDatabase getDatabase(final Context context) {
+    static HolidayImageRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (HolidayRoomDatabase.class) {
+            synchronized (HolidayImageRoomDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), HolidayRoomDatabase.class, "holiday_database")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), HolidayImageRoomDatabase.class, "holidayImage_database")
                             // Wipes and rebuilds instead of migrating
                             // if no Migration object.
                             // Migration is not part of this practical.
@@ -46,29 +46,24 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final HolidayDAO mDao;
-        String [] holidayNames = {"Devon", "Cornwall", "New York"};
-        String startingLoc = "Birmingham";
-        String destination = "Paris";
-        String travellerNames = "John, Mark, Sophie";
-        String travelNotes = "Here are some notes";
+        private final HolidayImageDAO mDao;
 
-
-        PopulateDbAsync(HolidayRoomDatabase db) {
-            mDao = db.holidayDAO();
+        PopulateDbAsync(HolidayImageRoomDatabase db) {
+            mDao = db.holidayImageDAO();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
 
-            mDao.deleteAll();
+//            mDao.deleteAll();
 
-            for (int i = 0; i <= holidayNames.length - 1; i++) {
-                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes);
-                mDao.insert(holiday);
-            }
+//            for (int i = 0; i <= holidayNames.length - 1; i++) {
+//                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes);
+//                mDao.insert(holiday);
+//            }
 
             return null;
         }
     }
 }
+

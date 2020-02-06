@@ -1,14 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android=
-    "http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/text_view_style"
-        tools:text="placeholder text" />
+        android:background="#DDDDDD">
+
+        <TextView
+            android:id="@+id/textView_hName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_hEndLoc"
+            app:layout_constraintStart_toStartOf="@+id/textView_hStartLoc"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/textView_hStartLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hName"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/textView_ToLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="To"
+            app:layout_constraintStart_toEndOf="@+id/textView_hStartLoc"
+            app:layout_constraintTop_toTopOf="@+id/textView_hStartLoc"/>
+
+        <TextView
+            android:id="@+id/textView_hEndLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/textView_ToLbl"
+            app:layout_constraintTop_toTopOf="@+id/textView_hStartLoc"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/textView_hStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/textView_hStartLoc"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hStartLoc"
+            tools:text="placeholder text" />
+
+        <TextView
+            android:id="@+id/textView_ToLbl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="To"
+            app:layout_constraintStart_toEndOf="@+id/textView_hStartLoc"
+            app:layout_constraintTop_toTopOf="@+id/textView_hStartDate" />
+
+        <TextView
+            android:id="@+id/textView_hEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/textView_ToLbl"
+            app:layout_constraintTop_toTopOf="@+id/textView_hStartDate"
+            tools:text="placeholder text" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_holidays"
+            android:layout_width="28dp"
+            android:layout_height="29dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_hEndLoc"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_holiday">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

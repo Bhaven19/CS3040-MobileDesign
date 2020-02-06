@@ -55,7 +55,6 @@ public class HolidayRepository {
 
         updateAsyncTask(HolidayDAO dao) {mDao = dao;}
 
-
         @Override
         protected Void doInBackground(Void... voids) {
             mDao.updateHoliday(currentEditHoliday.get_id(),

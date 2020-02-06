@@ -88,6 +88,25 @@
             app:layout_constraintStart_toStartOf="@+id/edit_StartDate"
             app:layout_constraintTop_toBottomOf="@+id/edit_StartDate" />
 
+        <TextView
+            android:id="@+id/label_images"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="16dp"
+            android:text="Would you like to add any images?"
+            app:layout_constraintStart_toStartOf="@+id/edit_Notes"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Notes" />
+
+        <Button
+            android:id="@+id/btn_saveImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Add an Image"
+            app:layout_constraintEnd_toEndOf="@+id/edit_Notes"
+            app:layout_constraintStart_toStartOf="@+id/label_images"
+            app:layout_constraintTop_toBottomOf="@+id/label_images" />
+
         <EditText
             android:id="@+id/edit_Name"
             android:layout_width="0dp"
@@ -199,13 +218,15 @@
 
         <Button
             android:id="@+id/btn_saveHoliday"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:text="Save Holiday"
-            app:layout_constraintEnd_toEndOf="@+id/edit_Notes"
-            app:layout_constraintStart_toStartOf="@+id/edit_Notes"
-            app:layout_constraintTop_toBottomOf="@+id/edit_Notes" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_saveImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
