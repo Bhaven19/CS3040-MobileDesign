@@ -10,12 +10,15 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.memori.database.dao.HolidayDAO;
+import com.example.memori.database.dao.HolidayImageDAO;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.HolidayImage;
 
-@Database(entities = {Holiday.class}, version = 8, exportSchema = false)
+@Database(entities = {Holiday.class, HolidayImage.class}, version = 10, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
+    public abstract HolidayImageDAO holidayImageDAO();
     private static HolidayRoomDatabase INSTANCE;
 
     static HolidayRoomDatabase getDatabase(final Context context) {
@@ -46,26 +49,28 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final HolidayDAO mDao;
+        private final HolidayDAO mHolidayDao;
+        private final HolidayImageDAO mHolidayImageDao;
+
         String [] holidayNames = {"Devon", "Cornwall", "New York"};
         String startingLoc = "Birmingham";
         String destination = "Paris";
         String travellerNames = "John, Mark, Sophie";
         String travelNotes = "Here are some notes";
 
-
         PopulateDbAsync(HolidayRoomDatabase db) {
-            mDao = db.holidayDAO();
+            mHolidayDao = db.holidayDAO();
+            mHolidayImageDao = db.holidayImageDAO();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
 
-            mDao.deleteAll();
+            mHolidayDao.deleteAll();
 
             for (int i = 0; i <= holidayNames.length - 1; i++) {
                 Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes);
-                mDao.insert(holiday);
+                mHolidayDao.insert(holiday);
             }
 
             return null;

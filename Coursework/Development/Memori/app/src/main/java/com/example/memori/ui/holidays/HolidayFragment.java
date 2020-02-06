@@ -26,17 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.HolidayImage;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
-    private HolidayViewModel holidayViewModel;
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
+    private HolidayImageViewModel mHolidayImageViewModel;
     private Toolbar hToolbar;
 
     private Boolean editClicked = false, deleteClicked = false;
@@ -100,7 +102,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        holidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+        mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+        mHolidayImageViewModel = ViewModelProviders.of(this).get(HolidayImageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_holiday, container, false);
 
         return root;
@@ -117,6 +120,14 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayNotes"));
 
             mHolidayViewModel.insert(holiday);
+
+            List<String> holidayPaths =data.getStringArrayListExtra("holidayImages");
+
+            for (String currentPath:holidayPaths){
+                HolidayImage holidayImage = new HolidayImage(holiday.get_id(), currentPath);
+
+                mHolidayImageViewModel.insert(holidayImage);
+            }
 
         } else if (resultCode == VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE) {
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());

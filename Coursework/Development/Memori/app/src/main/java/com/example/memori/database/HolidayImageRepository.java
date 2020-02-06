@@ -19,7 +19,7 @@ public class HolidayImageRepository {
     public static HolidayImage currentHolidayImage;
 
     public HolidayImageRepository(Application application) {
-        HolidayImageRoomDatabase db = HolidayImageRoomDatabase.getDatabase(application);
+        HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayImageDAO = db.holidayImageDAO();
         mAllHolidayImages = mHolidayImageDAO.getAllHolidayImages();
     }
