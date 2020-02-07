@@ -52,7 +52,9 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
     private static final String IMAGE_DIRECTORY = "/memori";
 
-    private ArrayList<String> allImagePaths;
+    private Boolean pictureSaved = false;
+
+    private String mimagePath ="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         mSaveHoliday = findViewById(R.id.btn_saveHoliday);
         mSaveHoliday.setOnClickListener(this);
 
-        allImagePaths = new ArrayList<>();
-
     }
 
     @Override
@@ -81,11 +81,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
             case R.id.btn_saveHoliday:
                 Intent saveHolidayIntent = new Intent();
 
-                if (TextUtils.isEmpty(mEditHolidayNameView.getText()) ||
-                        TextUtils.isEmpty(mStartingLoc.getText()) ||
-                        TextUtils.isEmpty(mDestination.getText()) ||
-                        TextUtils.isEmpty(mTravellersView.getText()) ||
-                        TextUtils.isEmpty(mTravelNotes.getText())) {
+                if (TextUtils.isEmpty(mEditHolidayNameView.getText())) {
 
                     setResult(0, saveHolidayIntent);
 
@@ -97,13 +93,14 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     String hDestination = mDestination.getText().toString();
                     String hCompanions = mTravellersView.getText().toString();
                     String hNotes = mTravelNotes.getText().toString();
+                    String hImagePath = mimagePath;
 
                     saveHolidayIntent.putExtra("holidayName", hName);
                     saveHolidayIntent.putExtra("holidayStartingLoc", hStartingLoc);
                     saveHolidayIntent.putExtra("holidayDestination", hDestination);
                     saveHolidayIntent.putExtra("holidayTravellers", hCompanions);
                     saveHolidayIntent.putExtra("holidayNotes", hNotes);
-                    saveHolidayIntent.putExtra("holidayImages", allImagePaths);
+                    saveHolidayIntent.putExtra("holidayImagePath", hImagePath);
 
                     setResult(1, saveHolidayIntent);
                 }
@@ -111,25 +108,58 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.btn_saveImage:
-                AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-                pictureDialog.setTitle("Select Action");
-                String[] pictureDialogItems = {
-                        "Select Image from gallery",
-                        "Take new Image with camera"};
-                pictureDialog.setItems(pictureDialogItems,
-                        (dialog, which) -> {
-                            switch (which) {
-                                case 0:
-                                    choosePhotoFromGallary();
-                                    break;
-                                case 1:
-                                    takePhotoFromCamera();
-                                    break;
-                            }
-                        });
-                pictureDialog.show();
+                if (pictureSaved == false) {
+                    AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+                    pictureDialog.setTitle("Select Action");
+                    String[] pictureDialogItems = {
+                            "Select Image from gallery",
+                            "Take new Image with camera"};
+                    pictureDialog.setItems(pictureDialogItems,
+                            (dialog, which) -> {
+                                switch (which) {
+                                    case 0:
+                                        choosePhotoFromGallary();
+                                        break;
+                                    case 1:
+                                        takePhotoFromCamera();
+                                        break;
+                                }
+                            });
+                    pictureDialog.show();
 
+                    pictureSaved = true;
+
+                } else {
+                    displayToast("You can only save 1 image, any new images will overwrite previous images");
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+
+                    }
+
+                    AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+                    pictureDialog.setTitle("Select Action");
+                    String[] pictureDialogItems = {
+                            "Select Image from gallery",
+                            "Take new Image with camera"};
+                    pictureDialog.setItems(pictureDialogItems,
+                            (dialog, which) -> {
+                                switch (which) {
+                                    case 0:
+                                        choosePhotoFromGallary();
+                                        break;
+                                    case 1:
+                                        takePhotoFromCamera();
+                                        break;
+                                }
+                            });
+                    pictureDialog.show();
+
+
+                }
                 break;
+
         }
     }
 
@@ -159,8 +189,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(bitmap);
 
-                    allImagePaths.add(path);
-                    Toast.makeText(CreateHolidayActivity.this, "Image " + allImagePaths.size() + " Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -172,8 +201,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             String path = saveImage(thumbnail);
 
-            allImagePaths.add(path);
-            Toast.makeText(CreateHolidayActivity.this, "Image " + allImagePaths.size() + " Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -207,5 +235,9 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         return "";
     }
 
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+    }
 
 }

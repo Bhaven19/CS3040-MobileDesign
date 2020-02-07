@@ -22,20 +22,19 @@ public interface HolidayDAO {
     @Query("SELECT * from holiday_table")
     LiveData<List<Holiday>> getAllHolidays();
 
-    @Query("SELECT * from holiday_table ORDER BY ID DESC LIMIT 1")
-    int getLatestHolidayID();
-
     @Query("UPDATE holiday_table SET NAME = :hName," +
             "STARTING_LOC = :hStartLoc," +
             "DESTINATION = :hEndLoc," +
             "TRAVELLERS = :hTravellers," +
-            "NOTES = :hNotes" +
+            "NOTES = :hNotes," +
+            "IMAGE_PATH = :hImagePath" +
             " WHERE id = :hID")
     void updateHoliday(int hID,
                        String hName,
                        String hStartLoc,
                        String hEndLoc,
                        String hTravellers,
-                       String hNotes );
+                       String hNotes,
+                       String hImagePath);
 
 }

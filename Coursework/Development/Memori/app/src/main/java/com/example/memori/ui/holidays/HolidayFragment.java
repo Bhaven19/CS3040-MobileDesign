@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
 import com.example.memori.database.entities.Holiday;
-import com.example.memori.database.entities.HolidayImage;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,9 +34,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
-    private HolidayImageViewModel mHolidayImageViewModel;
     private Toolbar hToolbar;
-    private int latestHolidayID = 0;
 
     private Boolean editClicked = false, deleteClicked = false;
 
@@ -104,7 +98,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-        mHolidayImageViewModel = ViewModelProviders.of(this).get(HolidayImageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_holiday, container, false);
 
         return root;
@@ -118,21 +111,13 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
                     data.getStringExtra("holidayTravellers"),
-                    data.getStringExtra("holidayNotes"));
+                    data.getStringExtra("holidayNotes"),
+                    data.getStringExtra("holidayImagePath"));
 
             mHolidayViewModel.insert(holiday);
 
             Log.d("HolidayList", "Holiday Saved");
 
-            List<String> holidayPaths =data.getStringArrayListExtra("holidayImages");
-
-            for (String currentPath:holidayPaths){
-                HolidayImage holidayImage = new HolidayImage(mHolidayViewModel.getLatestHolidayID(), currentPath);
-
-                Log.d("HolidayList", "Image Path: " + holidayImage.getImagePath());
-
-                mHolidayImageViewModel.insert(holidayImage);
-            }
 
         } else if (resultCode == VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE) {
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
@@ -142,7 +127,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
                     data.getStringExtra("holidayTravellers"),
-                    data.getStringExtra("holidayNotes"));
+                    data.getStringExtra("holidayNotes"),
+                    data.getStringExtra("holidayImagePath"));
 
             mHolidayViewModel.update(holiday);
 
@@ -229,8 +215,5 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         helper.attachToRecyclerView(recyclerView);
     }
 
-    public void setLatestHolidayID(int mID){
-        latestHolidayID = mID;
-    }
 
 }

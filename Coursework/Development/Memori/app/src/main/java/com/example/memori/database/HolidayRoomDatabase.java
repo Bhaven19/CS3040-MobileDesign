@@ -10,15 +10,12 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.memori.database.dao.HolidayDAO;
-import com.example.memori.database.dao.HolidayImageDAO;
 import com.example.memori.database.entities.Holiday;
-import com.example.memori.database.entities.HolidayImage;
 
-@Database(entities = {Holiday.class, HolidayImage.class}, version = 10, exportSchema = false)
+@Database(entities = {Holiday.class}, version = 11, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
-    public abstract HolidayImageDAO holidayImageDAO();
     private static HolidayRoomDatabase INSTANCE;
 
     static HolidayRoomDatabase getDatabase(final Context context) {
@@ -50,17 +47,16 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final HolidayDAO mHolidayDao;
-        private final HolidayImageDAO mHolidayImageDao;
 
         String [] holidayNames = {"Devon", "Cornwall", "New York"};
         String startingLoc = "Birmingham";
         String destination = "Paris";
         String travellerNames = "John, Mark, Sophie";
         String travelNotes = "Here are some notes";
+        String imagePath = "IMG_20200207-155528.jpg";
 
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
-            mHolidayImageDao = db.holidayImageDAO();
         }
 
         @Override
@@ -69,7 +65,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             mHolidayDao.deleteAll();
 
             for (int i = 0; i <= holidayNames.length - 1; i++) {
-                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes);
+                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes, imagePath);
                 mHolidayDao.insert(holiday);
             }
 

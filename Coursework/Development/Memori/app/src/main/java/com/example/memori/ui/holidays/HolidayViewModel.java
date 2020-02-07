@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.HolidayRepository;
 import com.example.memori.database.entities.Holiday;
-import com.example.memori.database.entities.HolidayImage;
 
 import java.util.List;
 
@@ -40,7 +39,6 @@ public class HolidayViewModel extends AndroidViewModel {
 
     public void insert(Holiday impHoliday) { mRepository.insert(impHoliday); }
     public void update(Holiday impHoliday) { mRepository.update(impHoliday); }
-    public int getLatestHolidayID() { return mRepository.getLatestID(); }
 
     //public void deleteAll() { mRepository.insert(mRepository.deleteAll()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }

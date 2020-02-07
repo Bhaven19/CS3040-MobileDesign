@@ -7,35 +7,29 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
-import com.example.memori.ui.holidays.HolidayFragment;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class HolidayRepository {
 
     private HolidayDAO mHolidayDAO;
     private LiveData<List<Holiday>> mAllHoliday;
-    private int latestHolidayID;
     public static Holiday currentEditHoliday;
 
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();
-
-        latestHolidayID = mHolidayDAO.getLatestHolidayID();
         mAllHoliday = mHolidayDAO.getAllHolidays();
     }
 
     public LiveData<List<Holiday>> getAllHolidays() {
         return mAllHoliday;
     }
-    public int getLatestID () { return latestHolidayID; }
 
     public void insert (Holiday impHoliday) {
         new insertAsyncTask(mHolidayDAO).execute(impHoliday);
     }
-
-
 
     public void update (Holiday impHoliday){
         new updateAsyncTask(mHolidayDAO);
@@ -69,7 +63,8 @@ public class HolidayRepository {
                     currentEditHoliday.getStartingLoc(),
                     currentEditHoliday.getDestination(),
                     currentEditHoliday.getTravellers(),
-                    currentEditHoliday.getNotes());
+                    currentEditHoliday.getNotes(),
+                    currentEditHoliday.getImagePath());
 
             return null;
         }
