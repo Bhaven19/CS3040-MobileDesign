@@ -50,7 +50,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
     private int GALLERY = 1, CAMERA = 2;
 
-    private static final String IMAGE_DIRECTORY = "/memori";
+    private static final String IMAGE_DIRECTORY = "/memori/";
 
     private Boolean pictureSaved = false;
 
@@ -226,7 +226,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
-            Log.d("TAG", "File Saved::---&gt;" + f.getAbsolutePath());
+            Log.d("ImageFind", "CreateHoliday: " + f.getAbsolutePath());
 
             return f.getAbsolutePath();
         } catch (IOException e1) {

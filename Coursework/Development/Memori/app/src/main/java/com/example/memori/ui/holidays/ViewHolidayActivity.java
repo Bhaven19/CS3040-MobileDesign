@@ -45,16 +45,21 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        String pathName = "storage/self/primary/memori/" + impHoliday.getImagePath();
+        String pathName = Environment.getExternalStorageDirectory() + "/memori/" + impHoliday.getImagePath();
+        Log.d("ImageFind", "Image path, pathName: " + pathName);
         File imageFile = new File(pathName);
 
-        if (imageFile.exists()){
+        if (imageFile.mkdir()){
             Toast.makeText(getApplicationContext(), "Image Found", Toast.LENGTH_LONG).show();
             viewHolidayImage.setImageBitmap(Bitmap.createBitmap(BitmapFactory.decodeFile(impHoliday.getImagePath())));
+
+            Log.d("ImageFind", "Image path, IMAGE FOUND");
+
         } else {
             Toast.makeText(getApplicationContext(), "Image Not Found", Toast.LENGTH_LONG).show();
-            Log.d("ImageFind", "Image path, pathName: " + pathName);
-            Log.d("ImageFind", "Image path, absolutePath: " + imageFile.getAbsolutePath());
+
+            Log.d("ImageFind", "Image path, IMAGE NOT FOUND");
+
         }
 
 

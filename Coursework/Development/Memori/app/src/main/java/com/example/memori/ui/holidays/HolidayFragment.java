@@ -187,6 +187,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         int position = viewHolder.getAdapterPosition();
                         Holiday myHoliday = adapter.getWordAtPosition(position);
 
+                        Log.d("ImageFind", "HolidayFragment, pathName: " + myHoliday.getImagePath());
+
                         if (editClicked == true){
                             Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
                             editIntent.putExtra("chosenHoliday", myHoliday);
