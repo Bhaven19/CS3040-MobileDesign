@@ -1,6 +1,7 @@
 package com.example.memori.ui.gallery;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -15,7 +16,6 @@ import java.util.List;
 public class GalleryViewModel extends AndroidViewModel {
 
     private HolidayRepository mRepository;
-
     private LiveData<List<Holiday>> mAllHolidays;
 
     public GalleryViewModel(Application application) {
@@ -29,7 +29,13 @@ public class GalleryViewModel extends AndroidViewModel {
     public ArrayList getAllHolidayImagePaths(){
         ArrayList<String> allImagePaths = new ArrayList<>();
 
-        for (Holiday currentHoliday : mRepository.getAllHolidays().getValue()){
+        LiveData<List<Holiday>> holidayLiveList = getAllHolidays();
+        List<Holiday> holidayList = holidayLiveList.getValue();
+
+        Log.d("GalleryImages", "GalleryViewModel, mRepoHolidays: " + holidayLiveList);
+        Log.d("GalleryImages", "GalleryViewModel, holidayList: " + holidayList);
+
+        for (Holiday currentHoliday : holidayList){
             String currentImgPath = currentHoliday.getImagePath();
 
             allImagePaths.add(currentImgPath);

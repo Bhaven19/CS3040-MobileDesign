@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
+import com.example.memori.database.entities.Holiday;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,59 +25,61 @@ import java.util.List;
 public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.memori.database.GalleryImageListAdapter.ViewHolder> {
 
     private ArrayList<String> allImages;
+    private List<Holiday> mAllHolidays;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public GalleryImageListAdapter(Context context, List<String> data) {
+    public GalleryImageListAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
-        allImages = listToArrayList(data);
     }
 
-    // inflates the cell layout from xml when needed
     @Override
-    @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("GalleryImages", "GalleryImageListAdapter: Image path: " + allImages.get(position));
-        String pathName = allImages.get(position);
+        if (mAllHolidays != null) {
+            Log.d("GalleryImages", "GalleryImageListAdapter: Image path: " + allImages.get(position));
+            String pathName = allImages.get(position);
 
-        if (pathName == null) {
-            Log.d("GalleryImages", "ViewHolidayActivity, NO IMAGE SAVED");
+            if (pathName != null) {
+                File imageFile = new File(pathName);
 
-        } else {
-            File imageFile = new File(pathName);
+                if (imageFile.exists()) {
+                    Log.d("GalleryImages", "GalleryImageListAdapter, IMAGE FOUND");
 
-            if (imageFile.exists()){
-                Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                holder.myImageView.setImageBitmap(mHolidayImage);
+                    Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                    holder.myImageView.setImageBitmap(mHolidayImage);
 
-                Log.d("GalleryImages", "ViewHolidayActivity, IMAGE FOUND");
+                } else {
+                    Log.d("GalleryImages", "GalleryImageListAdapter, IMAGE NOT FOUND");
 
-            } else {
-                Log.d("GalleryImages", "ViewHolidayActivity, IMAGE NOT FOUND");
-
+                }
             }
         }
     }
 
-    // total number of cells
     @Override
     public int getItemCount() {
-        return allImages.size();
+        if (mAllHolidays != null)
+            return mAllHolidays.size();
+        else return 0;
     }
 
-    // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView myImageView;
+    public void setHolidays(List<Holiday> holidays){
+        mAllHolidays = holidays;
+        notifyDataSetChanged();
+        listToArrayList(mAllHolidays);
+    }
 
-        ViewHolder(View itemView) {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final ImageView myImageView;
+
+        private ViewHolder(View itemView) {
             super(itemView);
             myImageView = itemView.findViewById(R.id.recyclerview_holidayimage);
             itemView.setOnClickListener(this);
@@ -105,15 +108,14 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
         void onItemClick(View view, int position);
     }
 
-    public ArrayList listToArrayList(List<String> mData){
-        ArrayList<String> holidayImages = new ArrayList<>();
+    public void listToArrayList(List<Holiday> mData){
+        allImages = new ArrayList<>();
 
-        for (String currentImage : mData){
-            holidayImages.add(currentImage);
+        for (Holiday currentHoliday : mData){
+            allImages.add(currentHoliday.getImagePath());
         }
 
-        return holidayImages;
-
     }
+
 
 }

@@ -14,10 +14,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
 import com.example.memori.database.GalleryImageListAdapter;
+import com.example.memori.database.HolidayListAdapter;
+import com.example.memori.ui.holidays.HolidayViewModel;
 
 import java.util.ArrayList;
 
@@ -37,20 +40,25 @@ public class GalleryFragment extends Fragment implements GalleryImageListAdapter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        createToolbar(view);
+        setUpRecyclerView();
     }
 
 
-    public void createToolbar(View view) {
-        ArrayList<String> data = galleryViewModel.getAllHolidayImagePaths();
-
-        // set up the RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview_holidayimage);
+    public void setUpRecyclerView() {
+        RecyclerView recyclerView = getView().findViewById(R.id.gallery_recyclerview);
+        final GalleryImageListAdapter adapter = new GalleryImageListAdapter(getActivity().getApplicationContext());
+        recyclerView.setAdapter(adapter);
         int numberOfColumns = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), numberOfColumns));
-        galleryImageListAdapter = new GalleryImageListAdapter(this.getContext(), data);
-        galleryImageListAdapter.setClickListener(this);
-        recyclerView.setAdapter(galleryImageListAdapter);
+
+        galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
+
+        galleryViewModel.getAllHolidays().observe(this, holidays -> {
+            // Update the cached copy of the words in the adapter.
+            adapter.setHolidays(holidays);
+
+        });
+
 
     }
 

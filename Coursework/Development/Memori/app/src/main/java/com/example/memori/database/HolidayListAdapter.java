@@ -84,8 +84,6 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
             holidayEndLoc = itemView.findViewById(R.id.textView_hEndLoc);
             //holidayImage = itemView.findViewById(R.id.imageView_hImage);
 
-
-
         }
     }
 
