@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
     private Holiday impHoliday;
 
-    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayCompanions, viewHolidayName;
+    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayCompanions, viewHolidayName, viewNoImage;
     private ImageView viewHolidayImage;
 
     @Override
@@ -38,6 +39,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions = findViewById(R.id.text_holidayCompanions);
         viewHolidayNotes = findViewById(R.id.text_holidayNotes);
         viewHolidayImage = findViewById(R.id.holidayImage);
+        viewNoImage = findViewById(R.id.label_noImage);
 
         viewHolidayNotes.setText(impHoliday.getNotes());
         viewHolidayStartingLoc.setText(impHoliday.getStartingLoc());
@@ -45,21 +47,29 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        String pathName = Environment.getExternalStorageDirectory() + "/memori/" + impHoliday.getImagePath();
-        Log.d("ImageFind", "Image path, pathName: " + pathName);
-        File imageFile = new File(pathName);
+        Log.d("ImageFind", "Image path, impHoliday.getImagePath(): " + impHoliday.getImagePath());
+        String pathName = impHoliday.getImagePath();
 
-        if (imageFile.mkdir()){
-            Toast.makeText(getApplicationContext(), "Image Found", Toast.LENGTH_LONG).show();
-            viewHolidayImage.setImageBitmap(Bitmap.createBitmap(BitmapFactory.decodeFile(impHoliday.getImagePath())));
-
-            Log.d("ImageFind", "Image path, IMAGE FOUND");
+        if (pathName == null) {
+            Log.d("ImageFind", "ViewHolidayActivity, NO IMAGE SAVED");
 
         } else {
-            Toast.makeText(getApplicationContext(), "Image Not Found", Toast.LENGTH_LONG).show();
+            File imageFile = new File(pathName);
 
-            Log.d("ImageFind", "Image path, IMAGE NOT FOUND");
+            if (imageFile.exists()){
+                viewNoImage.setVisibility(View.INVISIBLE);
 
+                Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                viewHolidayImage.setImageBitmap(mHolidayImage);
+
+                Log.d("ImageFind", "ViewHolidayActivity, IMAGE FOUND");
+
+            } else {
+                viewNoImage.setVisibility(View.VISIBLE);
+
+                Log.d("ImageFind", "ViewHolidayActivity, IMAGE NOT FOUND");
+
+            }
         }
 
 

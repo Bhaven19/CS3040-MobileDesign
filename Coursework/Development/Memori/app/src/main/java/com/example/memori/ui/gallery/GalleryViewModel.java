@@ -1,19 +1,43 @@
 package com.example.memori.ui.gallery;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+import com.example.memori.database.HolidayRepository;
+import com.example.memori.database.entities.Holiday;
 
-    private MutableLiveData<String> mText;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
-    public GalleryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+public class GalleryViewModel extends AndroidViewModel {
+
+    private HolidayRepository mRepository;
+
+    private LiveData<List<Holiday>> mAllHolidays;
+
+    public GalleryViewModel(Application application) {
+        super(application);
+        mRepository = new HolidayRepository(application);
+        mAllHolidays = mRepository.getAllHolidays();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
+
+    public ArrayList getAllHolidayImagePaths(){
+        ArrayList<String> allImagePaths = new ArrayList<>();
+
+        for (Holiday currentHoliday : mRepository.getAllHolidays().getValue()){
+            String currentImgPath = currentHoliday.getImagePath();
+
+            allImagePaths.add(currentImgPath);
+        }
+
+        return allImagePaths;
     }
+
+
+
 }

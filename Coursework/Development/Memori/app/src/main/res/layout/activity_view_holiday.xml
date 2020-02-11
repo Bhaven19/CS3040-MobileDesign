@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.holidays.ViewHolidayActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,6 +19,15 @@
             android:text="Holiday Notes"
             app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
             app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartLoc" />
+
+        <TextView
+            android:id="@+id/label_noImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Image Has Been Saved"
+            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
+            app:layout_constraintStart_toStartOf="@+id/label_holidayImages"
+            app:layout_constraintTop_toBottomOf="@+id/label_holidayImages" />
 
         <TextView
             android:id="@+id/label_HolidayEndLoc"
@@ -57,97 +68,63 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Images"
-            app:layout_constraintStart_toStartOf="@+id/scrollview_notes"
-            app:layout_constraintTop_toBottomOf="@+id/scrollview_notes" />
+            app:layout_constraintStart_toStartOf="@+id/text_holidayNotes"
+            app:layout_constraintTop_toBottomOf="@+id/text_holidayNotes" />
 
         <TextView
             android:id="@+id/label_holidayMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="Map"
-            app:layout_constraintStart_toStartOf="@+id/scrollview_images"
-            app:layout_constraintTop_toBottomOf="@+id/scrollview_images" />
+            app:layout_constraintStart_toStartOf="@+id/text_holidayNotes"
+            app:layout_constraintTop_toBottomOf="@+id/holidayImage" />
 
         <TextView
             android:id="@+id/label_holidayPeople"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Travel Companions"
+            app:layout_constraintEnd_toEndOf="@+id/text_holidayCompanions"
+            app:layout_constraintStart_toStartOf="@+id/button6"
+            app:layout_constraintTop_toBottomOf="@+id/text_holidayCompanions" />
+
+        <TextView
+            android:id="@+id/text_holidayNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Holiday Notes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_HolidayNotes"
+            app:layout_constraintTop_toBottomOf="@+id/label_HolidayNotes" />
+
+        <ImageView
+            android:id="@+id/holidayImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Travel Companions"
-            app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
-
-        <ScrollView
-            android:id="@+id/scrollview_notes"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayNotes">
-
-            <TextView
-                android:id="@+id/text_holidayNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Holiday Notes" />
-
-        </ScrollView>
-
-        <HorizontalScrollView
-            android:id="@+id/scrollview_images"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="@+id/scrollview_notes"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayImages"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayImages">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/holidayImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/label_holidayImages" />
 
         <Button
             android:id="@+id/button6"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:text="Map"
-            app:layout_constraintEnd_toEndOf="@+id/scrollview_images"
+            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayMap" />
 
-        <ScrollView
-            android:id="@+id/scrollview_travellers"
+        <TextView
+            android:id="@+id/text_holidayCompanions"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayPeople">
-
-            <TextView
-                android:id="@+id/text_holidayCompanions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Holiday Travel Companions" />
-
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Holiday Travel Companions"
+            app:layout_constraintEnd_toEndOf="@+id/button6"
+            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
+            app:layout_constraintTop_toBottomOf="@+id/button6" />
 
         <TextView
             android:id="@+id/text_HolidayName"
@@ -163,4 +140,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

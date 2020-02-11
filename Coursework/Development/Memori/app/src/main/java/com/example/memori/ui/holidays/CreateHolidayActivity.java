@@ -54,7 +54,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
     private Boolean pictureSaved = false;
 
-    private String mimagePath ="";
+    private String mImagePath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     String hDestination = mDestination.getText().toString();
                     String hCompanions = mTravellersView.getText().toString();
                     String hNotes = mTravelNotes.getText().toString();
-                    String hImagePath = mimagePath;
+                    String hImagePath = mImagePath;
 
                     saveHolidayIntent.putExtra("holidayName", hName);
                     saveHolidayIntent.putExtra("holidayStartingLoc", hStartingLoc);
@@ -209,8 +209,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File wallpaperDirectory = new File(
-                Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
+        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         // have the object build the directory structure, if needed.
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
@@ -227,6 +226,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     new String[]{"image/jpeg"}, null);
             fo.close();
             Log.d("ImageFind", "CreateHoliday: " + f.getAbsolutePath());
+            mImagePath = f.getAbsolutePath();
 
             return f.getAbsolutePath();
         } catch (IOException e1) {

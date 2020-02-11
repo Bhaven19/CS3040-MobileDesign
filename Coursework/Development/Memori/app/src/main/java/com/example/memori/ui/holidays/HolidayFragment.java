@@ -114,6 +114,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayNotes"),
                     data.getStringExtra("holidayImagePath"));
 
+            Log.d("HolidayList", "HolidayFragment, imagePath: " + data.getStringExtra("holidayImagePath"));
+
             mHolidayViewModel.insert(holiday);
 
             Log.d("HolidayList", "Holiday Saved");
@@ -135,7 +137,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
         } else if (resultCode == 0) {
-            displayToast("Not Saved as it is empty");
+            Log.d("HolidayList", "Result Code is 0: " + resultCode);
 
         } else {
             Log.d("HolidayList", "Unregistered Result Code: " + resultCode);

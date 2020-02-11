@@ -2,6 +2,7 @@ package com.example.memori.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -53,7 +54,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         String destination = "Paris";
         String travellerNames = "John, Mark, Sophie";
         String travelNotes = "Here are some notes";
-        String imagePath = "IMG_20200207-155528.jpg";
+        String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
 
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
