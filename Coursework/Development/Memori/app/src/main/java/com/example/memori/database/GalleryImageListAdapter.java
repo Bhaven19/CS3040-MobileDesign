@@ -28,6 +28,8 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
     private List<Holiday> mAllHolidays;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private int imageCount = 0;
+    private int imageHeight, imageWidth, startX, startY, distanceX, distanceY;
 
     // data is passed into the constructor
     public GalleryImageListAdapter(Context context) {
@@ -36,29 +38,76 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerview_images, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        imageCount++;
+        Log.d("GalleryImages", "GalleryImageListAdapter: imageCount: " + imageCount);
+
         if (mAllHolidays != null) {
-            Log.d("GalleryImages", "GalleryImageListAdapter: Image path: " + allImages.get(position));
             String pathName = allImages.get(position);
 
-            if (pathName != null) {
+            if (pathName == null) {
+
+            } else {
                 File imageFile = new File(pathName);
 
-                if (imageFile.exists()) {
-                    Log.d("GalleryImages", "GalleryImageListAdapter, IMAGE FOUND");
-
+                if (imageFile.exists()){
                     Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                    holder.myImageView.setImageBitmap(mHolidayImage);
 
-                } else {
-                    Log.d("GalleryImages", "GalleryImageListAdapter, IMAGE NOT FOUND");
+                    imageWidth = mHolidayImage.getWidth();
+                    imageHeight = mHolidayImage.getHeight();
+                    Log.d("GalleryImages", "GalleryImageListAdapter: imageX and imageY: " + imageWidth + ", " + imageHeight);
+
+                    if (imageHeight > 500 && imageWidth > 500){
+                        startX = (int) Math.round(mHolidayImage.getWidth() * 0.25);
+                        startY = (int) Math.round(mHolidayImage.getHeight() * 0.25);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: X and Y: " + startX + ", " + startY);
+
+                        distanceX = (int) Math.round(mHolidayImage.getWidth() * 0.75);
+                        distanceY = (int) Math.round(mHolidayImage.getHeight() * 0.75);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: distanceX and distanceY: " + distanceX + ", " + distanceY);
+
+                    } else if (imageWidth > 500){
+                        startY = 0;
+                        distanceY = imageHeight;
+
+                        startX = (int) Math.round(mHolidayImage.getWidth() * 0.25);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: X and Y: " + startX + ", " + startY);
+
+                        distanceX = (int) Math.round(mHolidayImage.getWidth() * 0.75);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: distanceX and distanceY: " + distanceX + ", " + distanceY);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: distanceX and distanceY: " + distanceX + ", " + distanceY);
+
+                    } else if (imageHeight > 500){
+                        startX = 0;
+                        distanceX = imageWidth;
+
+                        startY = (int) Math.round(mHolidayImage.getHeight() * 0.25);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: X and Y: " + startX + ", " + startY);
+
+                        distanceY = (int) Math.round(mHolidayImage.getHeight() * 0.75);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: distanceX and distanceY: " + distanceX + ", " + distanceY);
+
+                    } else {
+                        startX = (int) Math.round(mHolidayImage.getWidth() * 0.15);
+                        startY = (int) Math.round(mHolidayImage.getHeight() * 0.15);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: X and Y: " + startX + ", " + startY);
+
+                        distanceX = (int) Math.round(mHolidayImage.getWidth() * 0.85);
+                        distanceY = (int) Math.round(mHolidayImage.getHeight() * 0.85);
+                        Log.d("GalleryImages", "GalleryImageListAdapter: distanceX and distanceY: " + distanceX + ", " + distanceY);
+                    }
+
+                    Bitmap croppedImage = Bitmap.createBitmap(mHolidayImage, startX, startY, distanceX, distanceY);
+
+                    holder.myImageView.setImageBitmap(croppedImage);
 
                 }
+
             }
         }
     }
@@ -117,5 +166,10 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
 
     }
 
+    public void sortHolidays(int option){
+        if (option == 1){
 
+        }
+
+    }
 }

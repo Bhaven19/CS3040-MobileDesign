@@ -49,7 +49,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mHolidayDao;
 
-        String [] holidayNames = {"Devon", "Cornwall", "New York"};
+        String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
         String startingLoc = "Birmingham";
         String destination = "Paris";
         String travellerNames = "John, Mark, Sophie";
@@ -73,4 +73,5 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             return null;
         }
     }
+
 }
