@@ -166,10 +166,5 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
 
     }
 
-    public void sortHolidays(int option){
-        if (option == 1){
 
-        }
-
-    }
 }
