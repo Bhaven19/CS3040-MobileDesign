@@ -4,10 +4,29 @@
     tools:context="com.example.droidcafe.MainActivity">
 
     <item
-        android:id="@+id/action_sort"
+        android:id="@+id/action_sort_name"
         android:orderInCategory="10"
-        android:title="Sort"
+        android:title="Sort By Name"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_date"
+        android:orderInCategory="10"
+        android:title="Sort By Date"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_location"
+        android:orderInCategory="10"
+        android:title="Sort By Location"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_tag"
+        android:orderInCategory="10"
+        android:title="Sort By Tag"
+        app:showAsAction="never" />
+
 
 
 </menu>

@@ -112,7 +112,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayDestination"),
                     data.getStringExtra("holidayTravellers"),
                     data.getStringExtra("holidayNotes"),
-                    data.getStringExtra("holidayImagePath"));
+                    data.getStringExtra("holidayImagePath"),
+                    data.getStringExtra("holidayImageTag"));
 
             Log.d("HolidayList", "HolidayFragment, imagePath: " + data.getStringExtra("holidayImagePath"));
 
@@ -130,7 +131,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayDestination"),
                     data.getStringExtra("holidayTravellers"),
                     data.getStringExtra("holidayNotes"),
-                    data.getStringExtra("holidayImagePath"));
+                    data.getStringExtra("holidayImagePath"),
+                    data.getStringExtra("holidayImageTag"));
 
             mHolidayViewModel.update(holiday);
 

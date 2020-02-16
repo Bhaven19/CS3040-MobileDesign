@@ -34,13 +34,18 @@ public class Holiday implements Serializable {
     @ColumnInfo(name = "IMAGE_PATH")
     private String imagePath;
 
-    public Holiday(@NonNull String name, String startingLoc, String destination, String travellers, String notes, String imagePath) {
+    @ColumnInfo(name = "IMAGE_TAG")
+    private String imageTag;
+
+    public Holiday(@NonNull String name, String startingLoc, String destination, String travellers, String notes, String imagePath, String imageTag) {
         this.name = name;
         this.startingLoc = startingLoc;
         this.destination = destination;
         this.travellers = travellers;
         this.notes = notes;
         this.imagePath = imagePath;
+        this.imageTag = imageTag;
+
     }
 
     public void set_id(int mID){
@@ -70,4 +75,6 @@ public class Holiday implements Serializable {
     }
 
     public String getImagePath(){ return imagePath; }
+
+    public String getImageTag(){ return imageTag; }
 }

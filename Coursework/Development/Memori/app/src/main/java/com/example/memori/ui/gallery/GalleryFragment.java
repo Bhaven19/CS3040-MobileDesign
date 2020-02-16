@@ -58,53 +58,44 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_sort) {
+        if (id == R.id.action_sort_name) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Select an Action");
+            pictureDialog.setTitle("Sort Name By...");
             String[] pictureDialogItems = {
-                    "Sort by Name (Ascending)",
-                    "Sort by Name (Descending)",
-                    "Sort by Location (Ascending)",
-                    "Sort by Location (Descending)",
-                    "Sort by Date (Earliest to Latest)",
-                    "Sort by Date (Latest to Earliest)"};
+                    "Ascending",
+                    "Descending"};
             pictureDialog.setItems(pictureDialogItems,
                     (dialog, which) -> {
                         switch (which) {
                             case 0:
-                                displayToast("Sort By Name ASC");
+                                Log.d("SortingGallery", "Sort By Name ASC");
 
                                 setUpRecyclerView(SORT_OPTIONS_NAME_A_TO_Z);
 
                                 break;
                             case 1:
-                                displayToast("Sort By Name DESC");
+                                Log.d("SortingGallery", "Sort By Name DESC");
 
                                 setUpRecyclerView(SORT_OPTIONS_NAME_Z_TO_A);
-                                break;
-                            case 2:
-                                displayToast("Sort By Location ASC");
-
-                                setUpRecyclerView(SORT_OPTIONS_LOCATION_A_TO_Z);
-                                break;
-                            case 3:
-                                displayToast("Sort By Location DESC");
-
-                                setUpRecyclerView(SORT_OPTIONS_LOCATION_Z_TO_A);
-                                break;
-                            case 4:
-                                displayToast("Sort By Date ASC");
-
-                                setUpRecyclerView(SORT_OPTIONS_DATE_OLD_TO_NEW);
-                                break;
-                            case 5:
-                                displayToast("Sort By Date DESC");
-
-                                setUpRecyclerView(SORT_OPTIONS_DATE_NEW_TO_OLD);
                                 break;
                         }
                     });
             pictureDialog.show();
+
+            return true;
+
+        } else if (id == R.id.action_sort_date) {
+            displayToast("Sort Date Selected");
+
+            return true;
+
+        } else if (id == R.id.action_sort_location) {
+            displayToast("Sort Location Selected");
+
+            return true;
+
+        } else if (id == R.id.action_sort_tag) {
+            displayToast("Sort Tag Selected");
 
             return true;
 
@@ -130,7 +121,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         galleryImageListAdapter.setClickListener(new GalleryImageListAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "You clicked number " + galleryImageListAdapter.getItem(position) + ", which is at cell position " + position, Toast.LENGTH_LONG).show();
+                displayToast("You clicked an image, which is at cell position " + position);
             }
         });
 
@@ -155,6 +146,9 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         gToolbar = view.findViewById(R.id.toolbar_holidays);
 
         gToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
+        gToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
+        gToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
+        gToolbar.getMenu().getItem(3).setOnMenuItemClickListener(this);
 
     }
 
@@ -308,4 +302,5 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
     }
+
 }

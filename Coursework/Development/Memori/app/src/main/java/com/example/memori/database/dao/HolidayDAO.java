@@ -27,7 +27,8 @@ public interface HolidayDAO {
             "DESTINATION = :hEndLoc," +
             "TRAVELLERS = :hTravellers," +
             "NOTES = :hNotes," +
-            "IMAGE_PATH = :hImagePath" +
+            "IMAGE_PATH = :hImagePath," +
+            "IMAGE_TAG = :hImageTag" +
             " WHERE id = :hID")
     void updateHoliday(int hID,
                        String hName,
@@ -35,6 +36,7 @@ public interface HolidayDAO {
                        String hEndLoc,
                        String hTravellers,
                        String hNotes,
-                       String hImagePath);
+                       String hImagePath,
+                       String hImageTag);
 
 }

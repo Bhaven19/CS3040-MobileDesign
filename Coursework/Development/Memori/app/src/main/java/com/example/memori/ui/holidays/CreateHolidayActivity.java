@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
-    public static final String EXTRA_REPLY = "com.example.android.roomwordssample.REPLY";
 
     private EditText mEditHolidayNameView, mStartingLoc, mDestination, mTravellersView, mTravelNotes;
 

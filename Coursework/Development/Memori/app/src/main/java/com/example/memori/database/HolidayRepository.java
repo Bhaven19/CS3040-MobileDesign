@@ -64,7 +64,8 @@ public class HolidayRepository {
                     currentEditHoliday.getDestination(),
                     currentEditHoliday.getTravellers(),
                     currentEditHoliday.getNotes(),
-                    currentEditHoliday.getImagePath());
+                    currentEditHoliday.getImagePath(),
+                    currentEditHoliday.getImageTag());
 
             return null;
         }
