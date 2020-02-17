@@ -175,7 +175,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                                 if (selectedDate.validDate()){
                                     textViewStartDate.setText(selectedDate.toString());
-
+                                    
                                 } else {
                                     displayToast("You have entered an invalid date, please try again");
 

@@ -16,6 +16,39 @@ public class HolidayDate {
 
     }
 
+    public HolidayDate toObject(String stringDate){
+        int date;
+        int month;
+        int year;
+
+        if ("/".equals(stringDate.charAt(1)) && "/".equals(stringDate.charAt(3)) ) {
+            date = stringDate.charAt(0);
+            month = stringDate.charAt(2);
+            year = Integer.parseInt(stringDate.substring(4, 7));
+
+        } else if ("/".equals(stringDate.charAt(1)) && "/".equals(stringDate.charAt(4)) ) {
+            date = stringDate.charAt(0);
+            month = Integer.parseInt(stringDate.substring(2, 3));
+            year = Integer.parseInt(stringDate.substring(5, 8));
+
+        } else if ("/".equals(stringDate.charAt(2)) && "/".equals(stringDate.charAt(4)) ) {
+            date = Integer.parseInt(stringDate.substring(0, 1));
+            month = stringDate.charAt(3);
+            year = Integer.parseInt(stringDate.substring(5, 8));
+
+        } else if ("/".equals(stringDate.charAt(2)) && "/".equals(stringDate.charAt(5)) ) {
+            date = Integer.parseInt(stringDate.substring(0, 1));
+            month = Integer.parseInt(stringDate.substring(3, 4));
+            year = Integer.parseInt(stringDate.substring(5, 8));
+
+        } else {
+            return null;
+        }
+
+        return new HolidayDate(date, month, year);
+
+    }
+
     public String toString(){
         return date + "/" + month + "/" + year;
     }
