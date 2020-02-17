@@ -33,6 +33,16 @@
         app:layout_constraintTop_toBottomOf="@+id/label_holidays" />
 
     <TextView
+        android:id="@+id/label_HolidayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="#AAAAAA"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_latestHoliday" />
+
+    <TextView
         android:id="@+id/label_latestHoliday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,12 +68,13 @@
         android:id="@+id/btn_map"
         android:layout_width="0dp"
         android:layout_height="200dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="@string/temp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/label_latestHoliday"
-        app:layout_constraintTop_toBottomOf="@+id/label_latestHoliday" />
+        app:layout_constraintTop_toBottomOf="@+id/label_HolidayName" />
 
     <HorizontalScrollView
         android:layout_width="wrap_content"

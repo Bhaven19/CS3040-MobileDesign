@@ -1,10 +1,7 @@
 package com.example.memori.ui.holidays;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -15,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,37 +20,26 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.example.memori.ui.HolidayDate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText mEditHolidayNameView, mStartingLoc, mDestination, mTravellersView, mTravelNotes;
+    private EditText textViewHolidayName, textViewStartingLoc, textViewDestination, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
+    private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate;
 
-    private Button mAddImage, mSaveHoliday;
+    private final Calendar c = Calendar.getInstance();
+    private int mYear, mMonth, mDay;
+    private Boolean validDate = false;
 
     private int GALLERY = 1, CAMERA = 2;
-
     private static final String IMAGE_DIRECTORY = "/memori/";
-
     private Boolean pictureSaved = false;
-
     private String mImagePath;
 
     @Override
@@ -60,17 +47,31 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_holiday);
 
-        mEditHolidayNameView = findViewById(R.id.edit_Name);
-        mStartingLoc = findViewById(R.id.edit_StartLoc);
-        mDestination = findViewById(R.id.edit_EndLoc);
-        mTravellersView = findViewById(R.id.edit_Companions);
-        mTravelNotes = findViewById(R.id.edit_Notes);
+        textViewHolidayName = findViewById(R.id.edit_Name);
+        textViewStartingLoc = findViewById(R.id.edit_StartLoc);
+        textViewDestination = findViewById(R.id.edit_EndLoc);
+
+        textViewStartDate = findViewById(R.id.edit_StartDate);
+        textViewEndDate = findViewById(R.id.edit_EndDate);
+        textViewStartDate.setEnabled(false);
+        textViewEndDate.setEnabled(false);
+
+        textViewTravellers = findViewById(R.id.edit_Companions);
+        textViewNotes = findViewById(R.id.edit_Notes);
 
         mAddImage = findViewById(R.id.btn_saveImage);
         mAddImage.setOnClickListener(this);
 
         mSaveHoliday = findViewById(R.id.btn_saveHoliday);
         mSaveHoliday.setOnClickListener(this);
+
+        btnStartDate = findViewById(R.id.btn_startDate);
+        btnStartDate.setOnClickListener(this);
+
+        btnEndDate = findViewById(R.id.btn_endDate);
+        btnEndDate.setOnClickListener(this);
+
+
 
     }
 
@@ -80,18 +81,18 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
             case R.id.btn_saveHoliday:
                 Intent saveHolidayIntent = new Intent();
 
-                if (TextUtils.isEmpty(mEditHolidayNameView.getText())) {
+                if (TextUtils.isEmpty(textViewHolidayName.getText())) {
 
                     setResult(0, saveHolidayIntent);
 
                     Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
 
                 } else {
-                    String hName = mEditHolidayNameView.getText().toString();
-                    String hStartingLoc = mStartingLoc.getText().toString();
-                    String hDestination = mDestination.getText().toString();
-                    String hCompanions = mTravellersView.getText().toString();
-                    String hNotes = mTravelNotes.getText().toString();
+                    String hName = textViewHolidayName.getText().toString();
+                    String hStartingLoc = textViewStartingLoc.getText().toString();
+                    String hDestination = textViewDestination.getText().toString();
+                    String hCompanions = textViewTravellers.getText().toString();
+                    String hNotes = textViewNotes.getText().toString();
                     String hImagePath = mImagePath;
 
                     saveHolidayIntent.putExtra("holidayName", hName);
@@ -158,7 +159,58 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                 }
                 break;
+            case R.id.btn_startDate:
+                // Get Current Date
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                validDate = false;
 
+                DatePickerDialog startDatePickerDialog = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                HolidayDate selectedDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+
+                                if (selectedDate.validDate()){
+                                    textViewStartDate.setText(selectedDate.toString());
+
+                                } else {
+                                    displayToast("You have entered an invalid date, please try again");
+
+                                }
+
+                            }
+                        }, mYear, mMonth, mDay);
+                startDatePickerDialog.show();
+                break;
+            case R.id.btn_endDate:
+                // Get Current Date
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                validDate = false;
+
+                DatePickerDialog endDatePickerDialog = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                HolidayDate selectedDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+
+                                if (selectedDate.validDate()){
+                                    textViewEndDate.setText(selectedDate.toString());
+
+                                } else {
+                                    displayToast("You have entered an invalid date, please try again");
+
+                                }
+
+                            }
+                        }, mYear, mMonth, mDay);
+                endDatePickerDialog.show();
+                break;
         }
     }
 

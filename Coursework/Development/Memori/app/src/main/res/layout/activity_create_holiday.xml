@@ -185,12 +185,32 @@
             android:id="@+id/edit_StartDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
-            app:layout_constraintEnd_toEndOf="@+id/edit_EndLoc"
+            app:layout_constraintEnd_toStartOf="@+id/btn_startDate"
             app:layout_constraintStart_toStartOf="@+id/label_startDate"
             app:layout_constraintTop_toBottomOf="@+id/label_startDate" />
+
+        <Button
+            android:id="@+id/btn_startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="SELECT DATE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_StartDate" />
+
+
+        <Button
+            android:id="@+id/btn_endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="SELECT DATE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_EndDate" />
 
         <EditText
             android:id="@+id/edit_EndDate"
