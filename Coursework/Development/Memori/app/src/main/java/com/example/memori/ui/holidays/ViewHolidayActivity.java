@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +20,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
     private Holiday impHoliday;
 
-    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayCompanions, viewHolidayName, viewNoImage;
+    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
     private ImageView viewHolidayImage;
 
     @Override
@@ -36,6 +34,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayName = findViewById(R.id.text_HolidayName);
         viewHolidayStartingLoc = findViewById(R.id.label_HolidayStartLoc);
         viewHolidayDestination = findViewById(R.id.label_HolidayEndLoc);
+        viewHolidayStartDate = findViewById(R.id.label_HolidayStartDate);
+        viewHolidayEndDate = findViewById(R.id.label_HolidayEndDate);
         viewHolidayCompanions = findViewById(R.id.text_holidayCompanions);
         viewHolidayNotes = findViewById(R.id.text_holidayNotes);
         viewHolidayImage = findViewById(R.id.holidayImage);
@@ -44,6 +44,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayNotes.setText(impHoliday.getNotes());
         viewHolidayStartingLoc.setText(impHoliday.getStartingLoc());
         viewHolidayDestination.setText(impHoliday.getDestination());
+        viewHolidayStartDate.setText(impHoliday.getStartDate());
+        viewHolidayEndDate.setText(impHoliday.getEndDate());
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 

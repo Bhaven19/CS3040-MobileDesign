@@ -92,6 +92,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     String hName = textViewHolidayName.getText().toString();
                     String hStartingLoc = textViewStartingLoc.getText().toString();
                     String hDestination = textViewDestination.getText().toString();
+                    String hStartDate = startDate.toString();
+                    String hEndDate = endDate.toString();
                     String hCompanions = textViewTravellers.getText().toString();
                     String hNotes = textViewNotes.getText().toString();
                     String hImagePath = mImagePath;
@@ -99,6 +101,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     saveHolidayIntent.putExtra("holidayName", hName);
                     saveHolidayIntent.putExtra("holidayStartingLoc", hStartingLoc);
                     saveHolidayIntent.putExtra("holidayDestination", hDestination);
+                    saveHolidayIntent.putExtra("holidayStartDate", hStartDate);
+                    saveHolidayIntent.putExtra("holidayEndDate", hEndDate);
                     saveHolidayIntent.putExtra("holidayTravellers", hCompanions);
                     saveHolidayIntent.putExtra("holidayNotes", hNotes);
                     saveHolidayIntent.putExtra("holidayImagePath", hImagePath);

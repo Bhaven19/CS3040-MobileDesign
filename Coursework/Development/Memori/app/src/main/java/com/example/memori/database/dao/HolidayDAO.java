@@ -25,6 +25,8 @@ public interface HolidayDAO {
     @Query("UPDATE holiday_table SET NAME = :hName," +
             "STARTING_LOC = :hStartLoc," +
             "DESTINATION = :hEndLoc," +
+            "START_DATE = :hStartDate," +
+            "END_DATE = :hEndDate," +
             "TRAVELLERS = :hTravellers," +
             "NOTES = :hNotes," +
             "IMAGE_PATH = :hImagePath," +
@@ -34,6 +36,8 @@ public interface HolidayDAO {
                        String hName,
                        String hStartLoc,
                        String hEndLoc,
+                       String hStartDate,
+                       String hEndDate,
                        String hTravellers,
                        String hNotes,
                        String hImagePath,

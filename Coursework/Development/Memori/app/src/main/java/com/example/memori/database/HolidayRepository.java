@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class HolidayRepository {
@@ -62,6 +61,8 @@ public class HolidayRepository {
                     currentEditHoliday.getName(),
                     currentEditHoliday.getStartingLoc(),
                     currentEditHoliday.getDestination(),
+                    currentEditHoliday.getStartDate(),
+                    currentEditHoliday.getEndDate(),
                     currentEditHoliday.getTravellers(),
                     currentEditHoliday.getNotes(),
                     currentEditHoliday.getImagePath(),

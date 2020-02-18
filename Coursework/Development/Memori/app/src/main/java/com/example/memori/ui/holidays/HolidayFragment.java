@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,8 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
 import com.example.memori.database.entities.Holiday;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,6 +108,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
+                    data.getStringExtra("holidayStartDate"),
+                    data.getStringExtra("holidayEndDate"),
                     data.getStringExtra("holidayTravellers"),
                     data.getStringExtra("holidayNotes"),
                     data.getStringExtra("holidayImagePath"),
@@ -129,6 +129,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
                     data.getStringExtra("holidayStartingLoc"),
                     data.getStringExtra("holidayDestination"),
+                    data.getStringExtra("holidayStartDate"),
+                    data.getStringExtra("holidayEndDate"),
                     data.getStringExtra("holidayTravellers"),
                     data.getStringExtra("holidayNotes"),
                     data.getStringExtra("holidayImagePath"),

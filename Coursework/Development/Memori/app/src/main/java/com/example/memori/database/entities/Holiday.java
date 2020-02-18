@@ -25,6 +25,12 @@ public class Holiday implements Serializable {
     @ColumnInfo(name = "DESTINATION")
     private String destination;
 
+    @ColumnInfo(name = "START_DATE")
+    private String startDate;
+
+    @ColumnInfo(name = "END_DATE")
+    private String endDate;
+
     @ColumnInfo(name = "TRAVELLERS")
     private String travellers;
 
@@ -37,10 +43,12 @@ public class Holiday implements Serializable {
     @ColumnInfo(name = "IMAGE_TAG")
     private String imageTag;
 
-    public Holiday(@NonNull String name, String startingLoc, String destination, String travellers, String notes, String imagePath, String imageTag) {
+    public Holiday(@NonNull String name, String startingLoc, String destination, String startDate, String endDate, String travellers, String notes, String imagePath, String imageTag) {
         this.name = name;
         this.startingLoc = startingLoc;
         this.destination = destination;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.travellers = travellers;
         this.notes = notes;
         this.imagePath = imagePath;
@@ -73,6 +81,10 @@ public class Holiday implements Serializable {
     public String getDestination(){
         return destination;
     }
+
+    public String getStartDate(){ return startDate; }
+
+    public String getEndDate(){ return  endDate; }
 
     public String getImagePath(){ return imagePath; }
 

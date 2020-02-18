@@ -12,13 +12,22 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/label_HolidayDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Dates"
+            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
+            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartLoc" />
+
+        <TextView
             android:id="@+id/label_HolidayNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Holiday Notes"
             app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartDate" />
 
         <TextView
             android:id="@+id/label_noImage"
@@ -41,6 +50,16 @@
             app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
 
         <TextView
+            android:id="@+id/label_HolidayEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="end date"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/label_HolidayLocation2"
+            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartDate" />
+
+        <TextView
             android:id="@+id/label_HolidayStartLoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +68,16 @@
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
             app:layout_constraintTop_toBottomOf="@+id/text_HolidayName" />
+
+        <TextView
+            android:id="@+id/label_HolidayStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="start date"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
+            app:layout_constraintTop_toBottomOf="@+id/label_HolidayDates" />
 
         <TextView
             android:id="@+id/label_HolidayLocation"
@@ -61,6 +90,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/label_HolidayStartLoc"
             app:layout_constraintStart_toEndOf="@+id/label_HolidayStartLoc"
             app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
+
+        <TextView
+            android:id="@+id/label_HolidayLocation2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
+            android:text="to"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/label_HolidayStartDate"
+            app:layout_constraintStart_toEndOf="@+id/label_HolidayStartDate"
+            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartDate" />
 
         <TextView
             android:id="@+id/label_holidayImages"
@@ -84,10 +125,11 @@
             android:id="@+id/label_holidayPeople"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Travel Companions"
             app:layout_constraintEnd_toEndOf="@+id/text_holidayCompanions"
             app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/text_holidayCompanions" />
+            app:layout_constraintTop_toBottomOf="@+id/button6" />
 
         <TextView
             android:id="@+id/text_holidayNotes"
@@ -96,7 +138,7 @@
             android:layout_marginEnd="16dp"
             android:text="Holiday Notes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_HolidayNotes"
+            app:layout_constraintStart_toStartOf="@+id/label_HolidayDates"
             app:layout_constraintTop_toBottomOf="@+id/label_HolidayNotes" />
 
         <ImageView
@@ -120,11 +162,10 @@
             android:id="@+id/text_holidayCompanions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Holiday Travel Companions"
             app:layout_constraintEnd_toEndOf="@+id/button6"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            app:layout_constraintTop_toBottomOf="@+id/label_holidayPeople" />
 
         <TextView
             android:id="@+id/text_HolidayName"

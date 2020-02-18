@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
 
-@Database(entities = {Holiday.class}, version = 12, exportSchema = false)
+@Database(entities = {Holiday.class}, version = 13, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -52,10 +52,12 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
         String startingLoc = "Birmingham";
         String destination = "Paris";
+        String [] dates = {"02/01/2020", "10/02/2020"};
         String travellerNames = "John, Mark, Sophie";
         String travelNotes = "Here are some notes";
         String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
         String imageTag = "summer";
+
 
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
@@ -67,7 +69,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             mHolidayDao.deleteAll();
 
             for (int i = 0; i <= holidayNames.length - 1; i++) {
-                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, travellerNames, travelNotes, imagePath, imageTag);
+                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imagePath, imageTag);
                 mHolidayDao.insert(holiday);
             }
 
