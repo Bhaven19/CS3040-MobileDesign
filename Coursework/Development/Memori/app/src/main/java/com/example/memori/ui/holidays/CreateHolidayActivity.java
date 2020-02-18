@@ -36,6 +36,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
     private Boolean validDate = false;
+    private HolidayDate startDate, endDate;
 
     private int GALLERY = 1, CAMERA = 2;
     private static final String IMAGE_DIRECTORY = "/memori/";
@@ -171,15 +172,9 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                HolidayDate selectedDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+                                startDate = new HolidayDate(dayOfMonth, monthOfYear, year);
 
-                                if (selectedDate.validDate()){
-                                    textViewStartDate.setText(selectedDate.toString());
-
-                                } else {
-                                    displayToast("You have entered an invalid date, please try again");
-
-                                }
+                                textViewStartDate.setText(startDate.toString());
 
                             }
                         }, mYear, mMonth, mDay);
@@ -197,13 +192,13 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                HolidayDate selectedDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+                                endDate = new HolidayDate(dayOfMonth, monthOfYear, year);
 
-                                if (selectedDate.validDate()){
-                                    textViewEndDate.setText(selectedDate.toString());
+                                if (endDate.validDate(startDate)){
+                                    textViewEndDate.setText(endDate.toString());
 
                                 } else {
-                                    displayToast("You have entered an invalid date, please try again");
+                                    displayToast("Invalid Date: The End Date must not be before the Start Date, please try again");
 
                                 }
 

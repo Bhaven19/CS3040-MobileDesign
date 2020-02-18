@@ -49,22 +49,28 @@ public class HolidayDate {
 
     }
 
+    public int getYear(){ return year;}
+
+    public int getMonth(){ return month;}
+
+    public int getDate(){ return date;}
+
     public String toString(){
         return date + "/" + month + "/" + year;
     }
 
-    public Boolean validDate(){
+    public Boolean validDate(HolidayDate startDate){
         Log.d("DateObject", "HolidayDate: Calendar.YEAR: " + Calendar.getInstance().get(Calendar.YEAR));
         Log.d("DateObject", "HolidayDate: Calendar.MONTH: " + Calendar.getInstance().get(Calendar.MONTH));
         Log.d("DateObject", "HolidayDate: Calendar.DAY_OF_MONTH: " + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-        if (year > Calendar.getInstance().get(Calendar.YEAR)){
+        if (startDate.getYear() > year){
             return false;
 
-        } else if (year == Calendar.getInstance().get(Calendar.YEAR) && month > Calendar.getInstance().get(Calendar.MONTH)){
+        } else if (startDate.getYear() == year && startDate.getMonth() > month){
             return false;
 
-        } else if (year == Calendar.getInstance().get(Calendar.YEAR) && month == Calendar.getInstance().get(Calendar.MONTH) && date > Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
+        } else if (startDate.getYear() == year && startDate.getMonth() == month && startDate.getDate() > date){
             return false;
 
         } else {
