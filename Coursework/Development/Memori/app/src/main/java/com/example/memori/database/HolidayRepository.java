@@ -14,6 +14,7 @@ public class HolidayRepository {
 
     private HolidayDAO mHolidayDAO;
     private LiveData<List<Holiday>> mAllHoliday;
+    private static Holiday mLatestHoliday;
     public static Holiday currentEditHoliday;
 
     public HolidayRepository(Application application) {

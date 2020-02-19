@@ -92,8 +92,23 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     String hName = textViewHolidayName.getText().toString();
                     String hStartingLoc = textViewStartingLoc.getText().toString();
                     String hDestination = textViewDestination.getText().toString();
-                    String hStartDate = startDate.toString();
-                    String hEndDate = endDate.toString();
+
+
+                    String hStartDate = "";
+                    String hEndDate = "";
+                    if (startDate == null && endDate == null){
+
+                    } else if (startDate == null){
+                        hStartDate = startDate.toString();
+
+                    } else if (endDate == null){
+                        hStartDate = startDate.toString();
+
+                    } else {
+                        hStartDate = startDate.toString();
+                        hEndDate = endDate.toString();
+                    }
+
                     String hCompanions = textViewTravellers.getText().toString();
                     String hNotes = textViewNotes.getText().toString();
                     String hImagePath = mImagePath;

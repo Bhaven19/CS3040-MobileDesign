@@ -22,6 +22,9 @@ public interface HolidayDAO {
     @Query("SELECT * from holiday_table")
     LiveData<List<Holiday>> getAllHolidays();
 
+    @Query("SELECT * from holiday_table WHERE ID = (SELECT MAX(ID) FROM holiday_table)")
+    Holiday getLatestHoliday();
+
     @Query("UPDATE holiday_table SET NAME = :hName," +
             "STARTING_LOC = :hStartLoc," +
             "DESTINATION = :hEndLoc," +

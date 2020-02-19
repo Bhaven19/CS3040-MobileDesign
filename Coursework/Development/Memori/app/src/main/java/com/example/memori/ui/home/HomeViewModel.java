@@ -1,19 +1,29 @@
 package com.example.memori.ui.home;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import com.example.memori.database.HolidayRepository;
+import com.example.memori.database.entities.Holiday;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+public class HomeViewModel extends AndroidViewModel {
+
+    private HolidayRepository mRepository;
+    private LiveData<List<Holiday>> mAllHolidays;
+
+    public HomeViewModel(Application application) {
+        super(application);
+        mRepository = new HolidayRepository(application);
+        mAllHolidays = mRepository.getAllHolidays();
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+    LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
+
+    public void insert(Holiday impHoliday) { mRepository.insert(impHoliday); }
+    public void update(Holiday impHoliday) { mRepository.update(impHoliday); }
+
 }
