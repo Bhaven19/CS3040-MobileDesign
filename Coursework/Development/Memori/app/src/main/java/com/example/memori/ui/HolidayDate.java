@@ -6,8 +6,7 @@ import java.util.Calendar;
 
 public class HolidayDate {
 
-    private int year, month, date = 0;
-    private final Calendar c = Calendar.getInstance();
+    private int year, month, date;
 
     public HolidayDate(int date, int month, int year){
         this.year = year;

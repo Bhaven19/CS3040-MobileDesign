@@ -6,29 +6,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
 import com.example.memori.database.GalleryImageListAdapter;
-import com.example.memori.database.HolidayListAdapter;
 import com.example.memori.database.entities.Holiday;
-import com.example.memori.ui.holidays.HolidayViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +37,8 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     private static final int SORT_OPTIONS_LOCATION_Z_TO_A = 4;
     private static final int SORT_OPTIONS_DATE_OLD_TO_NEW = 5;
     private static final int SORT_OPTIONS_DATE_NEW_TO_OLD = 6;
+    private static final int SORT_OPTIONS_TAG_A_TO_Z = 7;
+    private static final int SORT_OPTIONS_TAG_Z_TO_A = 8;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -60,7 +55,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         if (id == R.id.action_sort_name) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Sort Name By...");
+            pictureDialog.setTitle("Select the order for sorting the Image Name...");
             String[] pictureDialogItems = {
                     "Ascending",
                     "Descending"};
@@ -95,7 +90,28 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             return true;
 
         } else if (id == R.id.action_sort_tag) {
-            displayToast("Sort Tag Selected");
+            AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+            pictureDialog.setTitle("Select the order for sorting the Image Tag...");
+            String[] pictureDialogItems = {
+                    "Ascending",
+                    "Descending"};
+            pictureDialog.setItems(pictureDialogItems,
+                    (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                Log.d("SortingGallery", "Sort By Tag ASC");
+
+                                setUpRecyclerView(SORT_OPTIONS_TAG_A_TO_Z);
+
+                                break;
+                            case 1:
+                                Log.d("SortingGallery", "Sort By Tag DESC");
+
+                                setUpRecyclerView(SORT_OPTIONS_TAG_Z_TO_A);
+                                break;
+                        }
+                    });
+            pictureDialog.show();
 
             return true;
 
@@ -292,6 +308,49 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //
 //
 //                return holidays;
+            case SORT_OPTIONS_TAG_A_TO_Z:
+                ArrayList<String> hAZTagsNames = new ArrayList<>();
+
+                for (Holiday currentHoliday : mHolidays){
+                    hAZTagsNames.add(currentHoliday.getImageTag());
+                }
+
+                Collections.reverse(hAZTagsNames);
+
+                for (String currentHolidayTag : hAZTagsNames){
+                    for (Holiday currentHoliday : mHolidays){
+                        if (currentHolidayTag == currentHoliday.getImageTag()){
+                            holidays.add(currentHoliday);
+
+                        }
+
+                    }
+                }
+
+
+                return holidays;
+
+            case SORT_OPTIONS_TAG_Z_TO_A:
+                ArrayList<String> hZATagsNames = new ArrayList<>();
+
+                for (Holiday currentHoliday : mHolidays){
+                    hZATagsNames.add(currentHoliday.getImageTag());
+                }
+
+                Collections.sort(hZATagsNames);
+
+                for (String currentHolidayTag : hZATagsNames){
+                    for (Holiday currentHoliday : mHolidays){
+                        if (currentHolidayTag == currentHoliday.getImageTag()){
+                            holidays.add(currentHoliday);
+
+                        }
+
+                    }
+                }
+
+
+                return holidays;
         }
 
         return mHolidays;
