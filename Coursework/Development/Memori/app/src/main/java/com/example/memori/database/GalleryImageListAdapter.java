@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -125,6 +122,18 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
         listToArrayList(mAllHolidays);
     }
 
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        Log.d("GalleryClick", "GalleryImageListAdapter, setClickListener()");
+
+        this.mClickListener = itemClickListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView myImageView;
 
@@ -136,7 +145,9 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
 
         @Override
         public void onClick(View view) {
+            Log.d("GalleryClick", "GalleryImageListAdapter, onClick()");
             if (mClickListener != null) {
+                Log.d("GalleryClick", "GalleryImageListAdapter, mClickListener is true");
                 mClickListener.onItemClick(view, getAdapterPosition());
             }
         }
@@ -147,15 +158,7 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
         return allImages.get(id);
     }
 
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
 
     public void listToArrayList(List<Holiday> mData){
         allImages = new ArrayList<>();
@@ -165,6 +168,7 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.me
         }
 
     }
+
 
 
 }

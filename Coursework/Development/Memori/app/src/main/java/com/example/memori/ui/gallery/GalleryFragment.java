@@ -134,9 +134,13 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         galleryImageListAdapter = new GalleryImageListAdapter(getContext());
 
+        Log.d("GalleryClick", "GalleryFragment, setting up recycler view");
+
         galleryImageListAdapter.setClickListener(new GalleryImageListAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Log.d("GalleryClick", "GalleryFragment, onItemClick");
+
                 displayToast("You clicked an image, which is at cell position " + position);
             }
         });

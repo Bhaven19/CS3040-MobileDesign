@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +31,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
+    private HolidayListAdapter holidayListAdapter;
     private Toolbar hToolbar;
 
     private Boolean editClicked = false, deleteClicked = false;
@@ -86,7 +86,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
         createHoliday_btn.setOnClickListener(v -> {
             Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
-            startActivityForResult(createIntent, VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
 
         });
 
@@ -165,63 +165,53 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public void setupRecyclerView(){
         RecyclerView recyclerView = getView().findViewById(R.id.recyclerview);
-        final HolidayListAdapter adapter = new HolidayListAdapter(getActivity().getApplicationContext());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        holidayListAdapter = new HolidayListAdapter(getActivity().getApplicationContext());
+
+        Log.d("HolidayClick", "HolidayFragment, setting up recycler view");
+
+        holidayListAdapter.setClickListener(new HolidayListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
+
+                displayToast("You clicked an image, which is at cell position " + position);
+
+                Log.d("HolidayClick", "HolidayFragment, onItemClicked");
+
+                if (editClicked == true){
+                    Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
+                    editIntent.putExtra("chosenHoliday", myHoliday);
+
+                    startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
+
+                } else if (deleteClicked == true){
+                    displayToast(myHoliday.getName() + " has been deleted");
+
+
+                } else {
+                    Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
+                    viewIntent.putExtra("chosenHoliday", myHoliday);
+
+                    startActivityForResult(viewIntent, 2);
+
+                }
+            }
+
+        });
+
+        recyclerView.setAdapter(holidayListAdapter);
 
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
         mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
-            // Update the cached copy of the words in the adapter.
-            adapter.setWords(holidays);
+        // Update the cached copy of the words in the adapter.
+            holidayListAdapter.setWords(holidays);
 
         });
 
-        // Add the functionality to swipe items in the recycler view to delete that item
-        ItemTouchHelper helper = new ItemTouchHelper(
-                new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
-                    @Override
-                    public boolean onMove(RecyclerView recyclerView,
-                                          RecyclerView.ViewHolder viewHolder,
-                                          RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        int position = viewHolder.getAdapterPosition();
-                        Holiday myHoliday = adapter.getWordAtPosition(position);
-
-                        Log.d("ImageFind", "HolidayFragment, pathName: " + myHoliday.getImagePath());
-
-                        if (editClicked == true){
-                            Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
-                            editIntent.putExtra("chosenHoliday", myHoliday);
-
-                            startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
-
-
-                        } else if (deleteClicked == true){
-                            displayToast(myHoliday.getName() + " has been deleted");
-
-
-                        } else {
-                            Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
-                            viewIntent.putExtra("chosenHoliday", myHoliday);
-
-                            startActivityForResult(viewIntent, 2);
-
-                        }
-
-
-
-                    }
-
-                });
-
-        helper.attachToRecyclerView(recyclerView);
-    }
+        }
 
 
 }
