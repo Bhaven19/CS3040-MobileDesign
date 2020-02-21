@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +32,7 @@ import java.util.Calendar;
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText textViewHolidayName, textViewStartingLoc, textViewDestination, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
+    private ImageView imageViewHolidayImage;
     private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate;
 
     private final Calendar c = Calendar.getInstance();
@@ -42,6 +44,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
     private static final String IMAGE_DIRECTORY = "/memori/";
     private Boolean pictureSaved = false;
     private String mImagePath;
+    private Bitmap bmpHolidayImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
         textViewTravellers = findViewById(R.id.edit_Companions);
         textViewNotes = findViewById(R.id.edit_Notes);
+
+        imageViewHolidayImage = findViewById(R.id.imageView_image);
 
         mAddImage = findViewById(R.id.btn_saveImage);
         mAddImage.setOnClickListener(this);
@@ -178,6 +183,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
 
                 }
+
+                imageViewHolidayImage.setImageBitmap(bmpHolidayImage);
                 break;
             case R.id.btn_startDate:
                 // Get Current Date
@@ -254,6 +261,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(bitmap);
 
+                    bmpHolidayImage = bitmap;
+
                     Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
@@ -265,6 +274,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             String path = saveImage(thumbnail);
+
+            bmpHolidayImage = thumbnail;
 
             Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
 
