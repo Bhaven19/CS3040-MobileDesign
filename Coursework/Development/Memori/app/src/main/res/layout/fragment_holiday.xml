@@ -5,73 +5,212 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/label_holidays"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:textAlignment="center"
-        android:text="All Holidays"
-        android:textColor="#AAAAAA"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_holidays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_holiday">
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <Button
-        android:id="@+id/create_holiday_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <RadioGroup
+        android:id="@+id/toggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="75dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/create_a_holiday"
+        android:background="@drawable/toggle_chosen"
+        android:checkedButton="@+id/toggle_holidays"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_holidays" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/holidays_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/your_holidays"
-        android:textColor="#AAAAAA"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
+        <RadioButton
+            android:id="@+id/toggle_holidays"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Holidays"
+            android:textColor="#FFFFFF" />
 
-    <ScrollView
+        <RadioButton
+            android:id="@+id/toggle_visitedPlaces"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="VisitedPlaces"
+            android:textColor="#FFFFFF" />
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLay_holidays"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:paddingBottom="65dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/holidays_label">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/label_holidays"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="All Holidays"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_holidays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_holiday">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <Button
+            android:id="@+id/create_holiday_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="0dp"
-            android:background="@android:color/darker_gray"
-            tools:listitem="@layout/recyclerview_item" />
-    </ScrollView>
+            android:text="@string/create_a_holiday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_holidays" />
+
+        <TextView
+            android:id="@+id/holidays_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/your_holidays"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/holidays_label">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="0dp"
+                android:background="@android:color/darker_gray"
+                tools:listitem="@layout/recyclerview_item" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLay_vPlaces"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/label_vPlaces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="All Visited Places"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_vPlaces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_holiday">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <Button
+            android:id="@+id/create_visitedplaces_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:text="Add a Visited Place"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaces" />
+
+        <TextView
+            android:id="@+id/visitedPlaces_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Your Visited Places"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_visitedplaces_btn" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitedPlaces_label">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_vPlaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="0dp"
+                android:background="@android:color/darker_gray"
+                tools:listitem="@layout/recyclerview_item" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,11 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -34,11 +37,19 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private HolidayListAdapter holidayListAdapter;
     private Toolbar hToolbar;
 
+    private RadioGroup mToggle;
+    private RadioButton mCheckedBtn;
+    private ConstraintLayout constLay_Holidays, constLay_vPlaces;
+
     private Boolean editClicked = false, deleteClicked = false;
 
     public static final int NEW_HOLIDAY_ACTIVITY_REQUEST_CODE = 1;
     public static final int VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE = 2;
     public static final int SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE = 3;
+
+//    public class HolidayToggled extends HolidayFragment {
+//
+//    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -89,6 +100,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
 
         });
+
+        setupToggle(view);
 
         setupRecyclerView();
 
@@ -211,7 +224,32 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         });
 
 
-        }
+    }
 
+    public void setupToggle(View view){
+            mToggle = view.findViewById(R.id.toggle);
+            mCheckedBtn = mToggle.findViewById(mToggle.getCheckedRadioButtonId());
+            constLay_Holidays = view.findViewById(R.id.constLay_holidays);
+            constLay_vPlaces = view.findViewById(R.id.constLay_vPlaces);
+
+            mToggle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId){
+                        case R.id.toggle_holidays:
+                            constLay_vPlaces.setVisibility(View.INVISIBLE);
+                            constLay_Holidays.setVisibility(View.VISIBLE);
+
+                            break;
+                        case R.id.toggle_visitedPlaces:
+                            constLay_Holidays.setVisibility(View.INVISIBLE);
+                            constLay_vPlaces.setVisibility(View.VISIBLE);
+
+                            break;
+                    }
+                }
+
+            });
+        }
 
 }

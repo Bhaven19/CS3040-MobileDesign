@@ -7,4 +7,8 @@
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#fff3e0</color>
     <color name="colorTextHint">#E0E0E0</color>
+    <color name="transparent">#80000000</color>
+    <color name="red">#FF0000</color>
+    <color name="darkred">#550000</color>
+
 </resources>
