@@ -1,9 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.holiday.vplaces.CreateVPlaceActivity">
+    android:fillViewport="true"
+    tools:context=".ui.holiday.holidays.CreateHolidayActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="75dp">
+
+        <TextView
+            android:id="@+id/label_createvplaceolidays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_createHolidays"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/label_journeyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_journeyName"
+            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
+            app:layout_constraintTop_toBottomOf="@+id/label_createholidays" />
+
+        <TextView
+            android:id="@+id/label_startLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_startLoc"
+            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Name" />
+
+        <TextView
+            android:id="@+id/label_endLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_destLoc"
+            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
+            app:layout_constraintTop_toBottomOf="@+id/btn_searchStartLoc" />
+
+        <TextView
+            android:id="@+id/label_Companions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_companions"
+            app:layout_constraintStart_toStartOf="@+id/edit_EndDate"
+            app:layout_constraintTop_toBottomOf="@+id/edit_EndDate" />
+
+        <TextView
+            android:id="@+id/label_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_notes"
+            app:layout_constraintStart_toStartOf="@+id/edit_Companions"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Companions" />
+
+        <TextView
+            android:id="@+id/label_startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_startdate"
+            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
+            app:layout_constraintTop_toBottomOf="@+id/btn_searchEndLoc" />
+
+        <TextView
+            android:id="@+id/label_startDate2"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/lbl_enddate"
+            app:layout_constraintStart_toStartOf="@+id/edit_StartDate"
+            app:layout_constraintTop_toBottomOf="@+id/edit_StartDate" />
+
+        <TextView
+            android:id="@+id/label_images"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="16dp"
+            android:text="Would you like to add any images?"
+            app:layout_constraintStart_toStartOf="@+id/edit_Notes"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Notes" />
+
+        <Button
+            android:id="@+id/btn_saveVPlaceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Add an Image"
+            app:layout_constraintEnd_toEndOf="@+id/edit_Notes"
+            app:layout_constraintStart_toStartOf="@+id/label_images"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_image" />
+
+        <EditText
+            android:id="@+id/edit_Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="e.g. John's 30th "
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintTop_toBottomOf="@+id/label_journeyName" />
+
+        <EditText
+            android:id="@+id/edit_StartLoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:ems="10"
+            android:hint="e.g. Birmingham, London"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintTop_toBottomOf="@+id/label_startLoc" />
+
+        <EditText
+            android:id="@+id/edit_EndLoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:ems="10"
+            android:hint="e.g. Barcelona, Paris"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintTop_toBottomOf="@+id/label_endLoc" />
+
+        <EditText
+            android:id="@+id/edit_Companions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:ems="10"
+            android:hint="e.g. John, Mark, Sophie "
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintTop_toBottomOf="@+id/label_Companions" />
+
+        <Button
+            android:id="@+id/btn_searchStartLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_StartLoc" />
+
+        <Button
+            android:id="@+id/btn_searchEndLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_EndLoc" />
+
+        <Button
+            android:id="@+id/btn_selectVPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="SELECT DATE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_EndDate" />
+
+        <EditText
+            android:id="@+id/edit_VPlaceDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="@+id/edit_StartDate"
+            app:layout_constraintStart_toStartOf="@+id/label_startDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_startDate2" />
+
+        <EditText
+            android:id="@+id/edit_Notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Any Notes?"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="@+id/edit_Companions"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/label_notes"
+            app:layout_constraintTop_toBottomOf="@+id/label_notes" />
+
+        <Button
+            android:id="@+id/btn_saveVPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="Save Holiday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_saveImage" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
