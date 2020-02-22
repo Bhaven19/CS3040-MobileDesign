@@ -1,10 +1,11 @@
 package com.example.memori.ui.map;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,19 +13,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.memori.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private MapViewModel mapViewModel;
-    private Button openMap;
+
+    private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
+    private double currentLat, currentLon;
+    private boolean mLocationPermissionGranted;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -33,6 +40,35 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         createMap();
 
         return root;
+    }
+
+    public void getCurrentLocation(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        Log.d("CurrentLocation", "MapFragment: fusedLocationClient.getLastLocation(): " + fusedLocationClient.getLastLocation());
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    currentLat = location.getLatitude();
+                    currentLon = location.getLongitude();
+
+                    Log.d("CurrentLocation", "MapFragment: onSuccess, currentLat: " + currentLat);
+                    Log.d("CurrentLocation", "MapFragment: onSuccess, currentLon: " + currentLon);
+                }
+            }
+        });
+
+//        currentLat = fusedLocationClient.getLastLocation().getResult().getLatitude();
+//        currentLon = fusedLocationClient.getLastLocation().getResult().getLongitude();
+
+        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLat);
+        Log.d("CurrentLocation", "MapFragment: currentLon: " + currentLon);
+
+
     }
 
     public void createMap(){
@@ -49,11 +85,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        getCurrentLocation();
+
         mMap = googleMap;
 
         // Add a marker in Sydney, Australia, and move the camera.
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng currentLocation = new LatLng(currentLat, currentLon);
+        mMap.addMarker(new MarkerOptions().position(currentLocation).title("CurrentLocation"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
+
 }
