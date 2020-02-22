@@ -31,7 +31,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
     private double currentLat, currentLon;
-    private boolean mLocationPermissionGranted;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -44,9 +43,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public void getCurrentLocation(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        Log.d("CurrentLocation", "MapFragment: fusedLocationClient.getLastLocation(): " + fusedLocationClient.getLastLocation());
-
         fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -57,18 +53,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     currentLon = location.getLongitude();
 
                     Log.d("CurrentLocation", "MapFragment: onSuccess, currentLat: " + currentLat);
-                    Log.d("CurrentLocation", "MapFragment: onSuccess, currentLon: " + currentLon);
+                    Log.d("CurrentLocation", "MapFragment: onSuccess, z: " + currentLon);
                 }
             }
         });
 
-//        currentLat = fusedLocationClient.getLastLocation().getResult().getLatitude();
-//        currentLon = fusedLocationClient.getLastLocation().getResult().getLongitude();
-
-        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLat);
-        Log.d("CurrentLocation", "MapFragment: currentLon: " + currentLon);
-
-
+        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLon);
+        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLon);
     }
 
     public void createMap(){
@@ -85,7 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        getCurrentLocation();
+        //getCurrentLocation();
 
         mMap = googleMap;
 
@@ -94,5 +85,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("CurrentLocation"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
-
 }

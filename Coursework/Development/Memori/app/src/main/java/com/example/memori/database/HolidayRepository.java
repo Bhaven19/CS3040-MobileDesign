@@ -7,13 +7,17 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
 
 public class HolidayRepository {
 
     private HolidayDAO mHolidayDAO;
+
     private LiveData<List<Holiday>> mAllHoliday;
+    private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
+
     private static Holiday mLatestHoliday;
     public static Holiday currentEditHoliday;
 
@@ -21,40 +25,68 @@ public class HolidayRepository {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();
         mAllHoliday = mHolidayDAO.getAllHolidays();
+        mAllVisitedPlaces = mHolidayDAO.getAllVisitedPlaces();
     }
+
+    //----------------------------------
 
     public LiveData<List<Holiday>> getAllHolidays() {
         return mAllHoliday;
     }
-
-    public void insert (Holiday impHoliday) {
-        new insertAsyncTask(mHolidayDAO).execute(impHoliday);
+    public LiveData<List<VisitedPlace>> getAllVisitedPlaces() {
+        return mAllVisitedPlaces;
     }
 
-    public void update (Holiday impHoliday){
-        new updateAsyncTask(mHolidayDAO);
+    //----------------------------------
 
-        currentEditHoliday = impHoliday;
+    public void insertHoliday (Holiday impHoliday) {
+        new insertHolidayAsyncTask(mHolidayDAO).execute(impHoliday);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Holiday, Void, Void> {
+    public void insertVisitedPlace (VisitedPlace visitedPlace) {
+        new insertVisitedPlaceAsyncTask(mHolidayDAO).execute(visitedPlace);
+    }
+
+    private static class insertHolidayAsyncTask extends AsyncTask<Holiday, Void, Void> {
         private HolidayDAO mAsyncTaskDao;
 
-        insertAsyncTask(HolidayDAO dao) {
+        insertHolidayAsyncTask(HolidayDAO dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final Holiday... params) {
-            mAsyncTaskDao.insert(params[0]);
+            mAsyncTaskDao.insertHoliday(params[0]);
             return null;
         }
     }
 
-    private static class updateAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class insertVisitedPlaceAsyncTask extends AsyncTask<VisitedPlace, Void, Void> {
+        private HolidayDAO mAsyncTaskDao;
+
+        insertVisitedPlaceAsyncTask(HolidayDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final VisitedPlace... params) {
+            mAsyncTaskDao.insertVisitedPlace(params[0]);
+            return null;
+        }
+    }
+
+    //----------------------------------
+
+    public void updateHoliday (Holiday impHoliday){
+        new updateHolidayAsyncTask(mHolidayDAO);
+
+        currentEditHoliday = impHoliday;
+    }
+
+    private static class updateHolidayAsyncTask extends AsyncTask<Void, Void, Void> {
         private final HolidayDAO mDao;
 
-        updateAsyncTask(HolidayDAO dao) {mDao = dao;}
+        updateHolidayAsyncTask(HolidayDAO dao) {mDao = dao;}
 
         @Override
         protected Void doInBackground(Void... voids) {

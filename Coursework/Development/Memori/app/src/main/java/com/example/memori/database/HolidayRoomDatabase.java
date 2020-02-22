@@ -12,8 +12,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
-@Database(entities = {Holiday.class}, version = 13, exportSchema = false)
+@Database(entities = {Holiday.class, VisitedPlace.class}, version = 14, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -49,16 +50,6 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mHolidayDao;
 
-        String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
-        String startingLoc = "Birmingham";
-        String destination = "Paris";
-        String [] dates = {"02/01/2020", "10/02/2020"};
-        String travellerNames = "John, Mark, Sophie";
-        String travelNotes = "Here are some notes";
-        String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
-        String imageTag = "summer";
-
-
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
         }
@@ -66,14 +57,48 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
 
-            mHolidayDao.deleteAll();
+            populateHolidays();
+            populateVisitedPlaces();
+
+            return null;
+        }
+
+        public void populateHolidays(){
+            String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
+            String startingLoc = "Birmingham";
+            String destination = "Paris";
+            String [] dates = {"02/01/2020", "10/02/2020"};
+            String travellerNames = "John, Mark, Sophie";
+            String travelNotes = "Here are some notes";
+            String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
+            String imageTag = "summer";
+
+            mHolidayDao.deleteAllHolidays();
 
             for (int i = 0; i <= holidayNames.length - 1; i++) {
                 Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imagePath, imageTag);
-                mHolidayDao.insert(holiday);
+                mHolidayDao.insertHoliday(holiday);
             }
+        }
 
-            return null;
+        public void populateVisitedPlaces(){
+            int holidayID = 1;
+
+            String [] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "Buckingham Palace", "Great Wall of China"};
+            String [] dates = {"02/01/2020", "10/02/2020"};
+            String location = "Birmingham";
+            String travellerNames = "John, Mark, Sophie";
+            String travelNotes = "Here are some notes";
+            String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
+            String imageDate = "23/01/2020";
+            String imageTag = "summer";
+
+            mHolidayDao.deleteAllVisitedPlaces();
+
+            for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
+                VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imagePath, imageDate, imageTag);
+                mHolidayDao.insertVisitedPlace(visitedPlace);
+            }
         }
     }
 

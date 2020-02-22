@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
 
@@ -14,16 +15,22 @@ import java.util.List;
 public interface HolidayDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Holiday holiday);
+    void insertHoliday(Holiday holiday);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertVisitedPlace(VisitedPlace visitedPlace);
 
     @Query("DELETE FROM holiday_table")
-    void deleteAll();
+    void deleteAllHolidays();
+
+    @Query("DELETE FROM visited_places_table")
+    void deleteAllVisitedPlaces();
 
     @Query("SELECT * from holiday_table")
     LiveData<List<Holiday>> getAllHolidays();
 
-    @Query("SELECT * from holiday_table WHERE ID = (SELECT MAX(ID) FROM holiday_table)")
-    Holiday getLatestHoliday();
+    @Query("SELECT * from visited_places_table")
+    LiveData<List<VisitedPlace>> getAllVisitedPlaces();
 
     @Query("UPDATE holiday_table SET NAME = :hName," +
             "STARTING_LOC = :hStartLoc," +
