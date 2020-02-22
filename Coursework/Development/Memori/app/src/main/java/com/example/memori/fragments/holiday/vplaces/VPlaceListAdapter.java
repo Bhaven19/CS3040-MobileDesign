@@ -1,4 +1,4 @@
-package com.example.memori.database;
+package com.example.memori.fragments.holiday.vplaces;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,7 +16,7 @@ import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
 
-public class VPlaceListAdapter extends RecyclerView.Adapter<com.example.memori.database.VPlaceListAdapter.VPlaceViewHolder> {
+public class VPlaceListAdapter extends RecyclerView.Adapter<VPlaceListAdapter.VPlaceViewHolder> {
 
     private final LayoutInflater mInflater;
     private List<VisitedPlace> mVPlaces;

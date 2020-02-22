@@ -1,4 +1,4 @@
-package com.example.memori.database;
+package com.example.memori.fragments.gallery;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GalleryImageListAdapter extends RecyclerView.Adapter<com.example.memori.database.GalleryImageListAdapter.ViewHolder> {
+public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageListAdapter.ViewHolder> {
 
     private ArrayList<String> allImages;
     private List<Holiday> mAllHolidays;

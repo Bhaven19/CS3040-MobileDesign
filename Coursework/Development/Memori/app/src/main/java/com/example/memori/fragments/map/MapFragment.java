@@ -1,4 +1,4 @@
-package com.example.memori.ui.map;
+package com.example.memori.fragments.map;
 
 import android.location.Location;
 import android.os.Bundle;

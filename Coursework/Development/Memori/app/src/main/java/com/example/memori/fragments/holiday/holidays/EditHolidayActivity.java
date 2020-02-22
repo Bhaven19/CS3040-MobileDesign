@@ -1,9 +1,8 @@
-package com.example.memori.ui.holidays;
+package com.example.memori.fragments.holiday.holidays;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
 import com.example.memori.database.entities.Holiday;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class EditHolidayActivity extends AppCompatActivity {
     private EditText mEditHolidayNameView, mStartingLoc, mDestination, mTravellersView, mTravelNotes;

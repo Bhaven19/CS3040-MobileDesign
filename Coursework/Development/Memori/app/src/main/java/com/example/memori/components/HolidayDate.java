@@ -1,4 +1,4 @@
-package com.example.memori.ui;
+package com.example.memori.components;
 
 import android.util.Log;
 

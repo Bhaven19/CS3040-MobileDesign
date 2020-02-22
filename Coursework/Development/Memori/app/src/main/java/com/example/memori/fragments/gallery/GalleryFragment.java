@@ -1,4 +1,4 @@
-package com.example.memori.ui.gallery;
+package com.example.memori.fragments.gallery;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
-import com.example.memori.database.GalleryImageListAdapter;
 import com.example.memori.database.entities.Holiday;
 
 import java.util.ArrayList;
@@ -229,7 +228,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //            case SORT_OPTIONS_LOCATION_A_TO_Z:
 //                Log.d("SortingGallery", "GalleryFragment: Sorting Location ASC");
 //
-//                holidays.clear();
+//                holiday.clear();
 //                hSortField.clear();
 //
 //                for (Holiday currentHoliday : mHolidays){
@@ -241,14 +240,14 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                for (String currentHolidayName : hSortField){
 //                    for (Holiday currentHoliday : mHolidays){
 //                        if (currentHolidayName == currentHoliday.getName()){
-//                            holidays.add(currentHoliday);
+//                            holiday.add(currentHoliday);
 //
 //                        }
 //
 //                    }
 //                }
 //
-//                return holidays;
+//                return holiday;
 //            case SORT_OPTIONS_LOCATION_Z_TO_A:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
@@ -261,7 +260,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                for (String currentHolidayName : hNames){
 //                    for (Holiday currentHoliday : mHolidays){
 //                        if (currentHolidayName == currentHoliday.getName()){
-//                            holidays.add(currentHoliday);
+//                            holiday.add(currentHoliday);
 //
 //                        }
 //
@@ -269,7 +268,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                }
 //
 //
-//                return holidays;
+//                return holiday;
 //            case SORT_OPTIONS_NAME_A_TO_Z:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
@@ -282,7 +281,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                for (String currentHolidayName : hNames){
 //                    for (Holiday currentHoliday : mHolidays){
 //                        if (currentHolidayName == currentHoliday.getName()){
-//                            holidays.add(currentHoliday);
+//                            holiday.add(currentHoliday);
 //
 //                        }
 //
@@ -290,7 +289,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                }
 //
 //
-//                return holidays;
+//                return holiday;
 //            case SORT_OPTIONS_NAME_Z_TO_A:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
@@ -303,7 +302,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                for (String currentHolidayName : hNames){
 //                    for (Holiday currentHoliday : mHolidays){
 //                        if (currentHolidayName == currentHoliday.getName()){
-//                            holidays.add(currentHoliday);
+//                            holiday.add(currentHoliday);
 //
 //                        }
 //
@@ -311,7 +310,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //                }
 //
 //
-//                return holidays;
+//                return holiday;
             case SORT_OPTIONS_TAG_A_TO_Z:
                 ArrayList<String> hAZTagsNames = new ArrayList<>();
 

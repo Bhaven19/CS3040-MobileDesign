@@ -1,4 +1,4 @@
-package com.example.memori.ui.gallery;
+package com.example.memori.fragments.gallery;
 
 import android.app.Application;
 import android.util.Log;
@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.example.memori.database.HolidayRepository;
 import com.example.memori.database.entities.Holiday;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

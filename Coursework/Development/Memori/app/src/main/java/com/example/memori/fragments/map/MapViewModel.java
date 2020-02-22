@@ -1,4 +1,4 @@
-package com.example.memori.ui.map;
+package com.example.memori.fragments.map;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

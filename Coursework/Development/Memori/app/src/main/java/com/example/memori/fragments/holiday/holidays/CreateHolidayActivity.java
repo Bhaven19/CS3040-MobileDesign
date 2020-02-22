@@ -1,4 +1,4 @@
-package com.example.memori.ui.holidays;
+package com.example.memori.fragments.holiday.holidays;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
-import com.example.memori.ui.HolidayDate;
+import com.example.memori.components.HolidayDate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.example.memori.ui.home;
+package com.example.memori.fragments.home;
 
 import android.os.Bundle;
 import android.util.Log;

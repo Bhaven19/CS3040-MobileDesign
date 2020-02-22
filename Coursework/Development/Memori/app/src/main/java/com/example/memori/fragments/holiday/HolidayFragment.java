@@ -1,4 +1,4 @@
-package com.example.memori.ui.holidays;
+package com.example.memori.fragments.holiday;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,10 +23,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
-import com.example.memori.database.HolidayListAdapter;
-import com.example.memori.database.VPlaceListAdapter;
+import com.example.memori.fragments.holiday.holidays.HolidayListAdapter;
+import com.example.memori.fragments.holiday.vplaces.VPlaceListAdapter;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.VisitedPlace;
+import com.example.memori.fragments.holiday.holidays.CreateHolidayActivity;
+import com.example.memori.fragments.holiday.holidays.EditHolidayActivity;
+import com.example.memori.fragments.holiday.holidays.ViewHolidayActivity;
+import com.example.memori.fragments.holiday.vplaces.CreateVPlaceActivity;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package com.example.memori.database;
+package com.example.memori.fragments.holiday.holidays;
 
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +17,7 @@ import com.example.memori.database.entities.Holiday;
 
 import java.util.List;
 
-public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.database.HolidayListAdapter.HolidayViewHolder> {
+public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.HolidayViewHolder> {
 
     private final LayoutInflater mInflater;
     private List<Holiday> mHolidays;
