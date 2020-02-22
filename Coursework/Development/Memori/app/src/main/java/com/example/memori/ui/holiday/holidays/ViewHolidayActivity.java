@@ -1,4 +1,4 @@
-package com.example.memori.fragments.holiday.holidays;
+package com.example.memori.ui.holiday.holidays;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

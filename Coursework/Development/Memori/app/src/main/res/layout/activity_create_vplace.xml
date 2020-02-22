@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.holiday.vplaces.CreateVPlaceActivity">
+    tools:context=".ui.holiday.vplaces.CreateVPlaceActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

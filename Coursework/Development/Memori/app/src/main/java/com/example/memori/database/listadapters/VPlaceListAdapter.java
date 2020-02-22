@@ -1,4 +1,4 @@
-package com.example.memori.fragments.holiday.vplaces;
+package com.example.memori.database.listadapters;
 
 import android.content.Context;
 import android.util.Log;

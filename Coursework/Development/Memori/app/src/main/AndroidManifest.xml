@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragments.holiday.vplaces.CreateVPlaceActivity"></activity>
+        <activity android:name=".ui.holiday.vplaces.CreateVPlaceActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -26,9 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragments.holiday.holidays.EditHolidayActivity" />
-        <activity android:name=".fragments.holiday.holidays.CreateHolidayActivity" />
-        <activity android:name=".fragments.holiday.holidays.ViewHolidayActivity" />
+        <activity android:name=".ui.holiday.holidays.EditHolidayActivity" />
+        <activity android:name=".ui.holiday.holidays.CreateHolidayActivity" />
+        <activity android:name=".ui.holiday.holidays.ViewHolidayActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

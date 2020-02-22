@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.memori.fragments.home.HomeFragment"
+        android:name="com.example.memori.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.example.memori.fragments.map.MapFragment"
+        android:name="com.example.memori.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/navigation_gallery"
-        android:name="com.example.memori.fragments.gallery.GalleryFragment"
+        android:name="com.example.memori.ui.gallery.GalleryFragment"
         android:label="@string/title_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/navigation_holiday"
-        android:name="com.example.memori.fragments.holiday.HolidayFragment"
+        android:name="com.example.memori.ui.holiday.HolidayFragment"
         android:label="@string/title_holiday"
         tools:layout="@layout/fragment_holiday">
 

@@ -1,4 +1,4 @@
-package com.example.memori.fragments.holiday;
+package com.example.memori.ui.holiday;
 
 import android.app.Application;
 

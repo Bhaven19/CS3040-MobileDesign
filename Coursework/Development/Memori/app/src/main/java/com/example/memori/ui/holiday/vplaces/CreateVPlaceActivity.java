@@ -1,4 +1,4 @@
-package com.example.memori.fragments.holiday.vplaces;
+package com.example.memori.ui.holiday.vplaces;
 
 import android.os.Bundle;
 

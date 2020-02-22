@@ -1,4 +1,4 @@
-package com.example.memori.fragments.gallery;
+package com.example.memori.ui.gallery;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
+import com.example.memori.database.listadapters.GalleryImageListAdapter;
 import com.example.memori.database.entities.Holiday;
 
 import java.util.ArrayList;

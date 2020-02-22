@@ -1,4 +1,4 @@
-package com.example.memori.fragments.gallery;
+package com.example.memori.database.listadapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
