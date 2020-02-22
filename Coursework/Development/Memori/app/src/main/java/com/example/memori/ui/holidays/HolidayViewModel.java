@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.HolidayRepository;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
 
@@ -14,14 +15,17 @@ public class HolidayViewModel extends AndroidViewModel {
 
     private HolidayRepository mRepository;
     private LiveData<List<Holiday>> mAllHolidays;
+    private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
 
     public HolidayViewModel(Application application) {
         super(application);
         mRepository = new HolidayRepository(application);
         mAllHolidays = mRepository.getAllHolidays();
+        mAllVisitedPlaces = mRepository.getAllVisitedPlaces();
     }
 
     LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
+    LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mAllVisitedPlaces; }
 
     public String holidayNamesToString(){
         String list = "";

@@ -24,7 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
 import com.example.memori.database.HolidayListAdapter;
+import com.example.memori.database.VPlaceListAdapter;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
     private HolidayListAdapter holidayListAdapter;
+    private VPlaceListAdapter vPlaceListAdapter;
     private Toolbar currentToolbar;
 
     private RadioGroup mToggle;
@@ -128,56 +131,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         }
     }
 
-    public void setupRecyclerView(){
-        RecyclerView recyclerView = getView().findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        holidayListAdapter = new HolidayListAdapter(getActivity().getApplicationContext());
-
-        Log.d("HolidayClick", "HolidayFragment, setting up recycler view");
-
-        holidayListAdapter.setClickListener(new HolidayListAdapter.ItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
-
-                displayToast("You clicked an image, which is at cell position " + position);
-
-                Log.d("HolidayClick", "HolidayFragment, onItemClicked");
-
-                if (editClicked == true){
-                    Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
-                    editIntent.putExtra("chosenHoliday", myHoliday);
-
-                    startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
-
-                } else if (deleteClicked == true){
-                    displayToast(myHoliday.getName() + " has been deleted");
-
-
-                } else {
-                    Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
-                    viewIntent.putExtra("chosenHoliday", myHoliday);
-
-                    startActivityForResult(viewIntent, 2);
-
-                }
-            }
-
-        });
-
-        recyclerView.setAdapter(holidayListAdapter);
-
-        mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-
-        mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
-        // Update the cached copy of the words in the adapter.
-            holidayListAdapter.setWords(holidays);
-
-        });
-
-
-    }
-
     //----------------EVERYTHING BELOW THIS LINE HAS BEEN REDEVELOPED FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
     @Override
@@ -237,6 +190,107 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         deleteClicked = false;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setupRecyclerView(){
+        if (currentActive == HOLIDAY_ACTIVE) {
+            RecyclerView recyclerView = getView().findViewById(R.id.recyclerview_holiday);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+            holidayListAdapter = new HolidayListAdapter(getActivity().getApplicationContext());
+
+            Log.d("HolidayClick", "HolidayFragment, setting up recycler view");
+
+            holidayListAdapter.setClickListener(new HolidayListAdapter.ItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
+
+                    displayToast("You clicked an image, which is at cell position " + position);
+
+                    Log.d("HolidayClick", "HolidayFragment, onItemClicked");
+
+                    if (editClicked == true){
+                        Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
+                        editIntent.putExtra("chosenHoliday", myHoliday);
+
+                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
+
+                    } else if (deleteClicked == true){
+                        displayToast(myHoliday.getName() + " has been deleted");
+
+
+                    } else {
+                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
+                        viewIntent.putExtra("chosenHoliday", myHoliday);
+
+                        startActivityForResult(viewIntent, 2);
+
+                    }
+                }
+
+            });
+
+            recyclerView.setAdapter(holidayListAdapter);
+
+            mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
+            mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+                // Update the cached copy of the words in the adapter.
+                holidayListAdapter.setWords(holidays);
+
+            });
+
+        } else if (currentActive == VPLACE_ACTIVE) {
+            RecyclerView recyclerView = getView().findViewById(R.id.recyclerview_vPlaces);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+            vPlaceListAdapter = new VPlaceListAdapter(getActivity().getApplicationContext());
+
+            Log.d("VPlaceClick", "HolidayFragment, setting up recycler view");
+
+            vPlaceListAdapter.setClickListener(new VPlaceListAdapter.ItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    VisitedPlace myVisitedPlace = vPlaceListAdapter.getWordAtPosition(position);
+
+                    displayToast("You clicked an image, which is at cell position " + position);
+
+                    Log.d("VPlaceClick", "HolidayFragment, onItemClicked");
+
+                    if (editClicked == true){
+//                        Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
+//                        editIntent.putExtra("chosenHoliday", myHoliday);
+//
+//                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
+
+                    } else if (deleteClicked == true){
+//                        displayToast(myHoliday.getName() + " has been deleted");
+
+
+                    } else {
+//                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
+//                        viewIntent.putExtra("chosenHoliday", myVisitedPlace);
+//
+//                        startActivityForResult(viewIntent, 2);
+
+                    }
+                }
+
+            });
+
+            recyclerView.setAdapter(vPlaceListAdapter);
+
+            mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
+            mHolidayViewModel.getAllVisitedPlaces().observe(this, visitedplaces -> {
+                // Update the cached copy of the words in the adapter.
+                vPlaceListAdapter.setVPlaces(visitedplaces);
+
+            });
+
+
+        }
+
+
     }
 
     public void createToolbar(View view){

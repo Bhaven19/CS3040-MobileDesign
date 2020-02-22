@@ -34,7 +34,7 @@ public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.
 
     @Override
     public HolidayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recyclerview_holidayitem, parent, false);
 
         return new HolidayViewHolder(itemView);
     }
