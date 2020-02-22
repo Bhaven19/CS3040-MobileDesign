@@ -3,7 +3,6 @@ package com.example.memori.database;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import com.example.memori.database.entities.Holiday;
 
 import java.util.List;
 
-public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.database.HolidayListAdapter.HolidayViewHolder> implements MenuItem.OnMenuItemClickListener{
+public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.database.HolidayListAdapter.HolidayViewHolder> {
 
     private final LayoutInflater mInflater;
     private List<Holiday> mHolidays;
@@ -36,8 +35,6 @@ public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.
     @Override
     public HolidayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
-
-        createToolbar(itemView);
 
         return new HolidayViewHolder(itemView);
     }
@@ -117,42 +114,6 @@ public class HolidayListAdapter extends RecyclerView.Adapter<com.example.memori.
 
     public Holiday getWordAtPosition (int position) {
         return mHolidays.get(position);
-    }
-
-    //----------------------------------------------
-
-    //NEED TO IMPLEMENT CODE TO ALLOW FOR TOOLBAR WITHIN RECYCLER VIEW/ADAPTER CLASS
-    //NEED TO USE SETHASOPTIONSMENU(TRUE) WITHIN THIS CLASS
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_edit) {
-            //displayToast("Edit Selected");
-            displayToast("Edit Pressed");
-
-
-        } else if (id == R.id.action_delete) {
-            //displayToast("Delete Selected");
-            displayToast("Delete Pressed");
-
-
-        } else if (id == R.id.action_deleteAll) {
-            //displayToast("DeleteAll Selected");
-            displayToast("DeleteAll Pressed");
-
-
-        }
-        return false;
-    }
-
-    public void createToolbar(View view){
-        hToolbar = view.findViewById(R.id.toolbar_holidays);
-
-        hToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
-        hToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
-        hToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
     }
 
     public void displayToast(String message){

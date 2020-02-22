@@ -4,19 +4,19 @@
     tools:context="com.example.droidcafe.MainActivity">
 
     <item
-        android:id="@+id/holiday_action_edit"
+        android:id="@+id/vplace_action_edit"
         android:orderInCategory="10"
         android:title="Edit"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/holiday_action_delete"
+        android:id="@+id/vplace_action_delete"
         android:orderInCategory="20"
         android:title="Delete"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/holiday_action_deleteAll"
+        android:id="@+id/vplace_action_deleteAll"
         android:orderInCategory="30"
         android:title="Delete All"
         app:showAsAction="never" />

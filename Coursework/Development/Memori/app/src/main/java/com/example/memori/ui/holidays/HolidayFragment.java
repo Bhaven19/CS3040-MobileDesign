@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -35,56 +34,28 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
     private HolidayListAdapter holidayListAdapter;
-    private Toolbar hToolbar;
+    private Toolbar currentToolbar;
 
     private RadioGroup mToggle;
-    private RadioButton mCheckedBtn;
     private ConstraintLayout constLay_Holidays, constLay_vPlaces;
 
     private Boolean editClicked = false, deleteClicked = false;
 
+    public static final String HOLIDAY_ACTIVE = "holiday_active", VPLACE_ACTIVE = "vplace_active";
+    public String currentActive = HOLIDAY_ACTIVE;
+
     public static final int NEW_HOLIDAY_ACTIVITY_REQUEST_CODE = 1;
     public static final int VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE = 2;
     public static final int SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE = 3;
+    public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
 
-//    public class HolidayToggled extends HolidayFragment {
-//
-//    }
+    //----------------EVERYTHING BELOW THIS LINE DOES NOT NEED REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
 
-        if (id == R.id.action_edit) {
-            displayToast("Edit Selected");
-
-            editClicked = true;
-            deleteClicked = false;
-
-            return true;
-
-        } else if (id == R.id.action_delete) {
-            displayToast("Delete Selected");
-
-            editClicked = false;
-            deleteClicked = true;
-
-            return true;
-
-        } else if (id == R.id.action_deleteAll) {
-            displayToast("DeleteAll Selected");
-
-            editClicked = false;
-            deleteClicked = false;
-
-            return true;
-
-        }
-
-        editClicked = false;
-        deleteClicked = false;
-
-        return super.onOptionsItemSelected(item);
+        return root;
     }
 
     @Override
@@ -94,12 +65,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         createToolbar(view);
 
-        Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
-        createHoliday_btn.setOnClickListener(v -> {
-            Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
-            startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
-
-        });
+        setupCreateButton(view);
 
         setupToggle(view);
 
@@ -107,12 +73,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
+    public void displayToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
-        return root;
     }
+
+    //----------------EVERYTHING BELOW THIS LINE NEEDS REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -160,20 +126,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
 
         }
-    }
-
-    public void displayToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void createToolbar(View view){
-        setHasOptionsMenu(true);
-        hToolbar = view.findViewById(R.id.toolbar_holidays);
-
-        hToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
-        hToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
-        hToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
     }
 
     public void setupRecyclerView(){
@@ -226,9 +178,111 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
+    //----------------EVERYTHING BELOW THIS LINE HAS BEEN REDEVELOPED FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.holiday_action_edit:
+                displayToast("Holiday Edit Selected");
+
+                editClicked = true;
+                deleteClicked = false;
+
+                return true;
+
+            case R.id.holiday_action_delete:
+                displayToast("Holiday Delete Selected");
+
+                editClicked = false;
+                deleteClicked = true;
+
+                return true;
+
+            case R.id.holiday_action_deleteAll:
+                displayToast("Holiday DeleteAll Selected");
+
+                editClicked = false;
+                deleteClicked = false;
+
+                return true;
+
+            case R.id.vplace_action_edit:
+                displayToast("Vplace Edit Selected");
+
+                editClicked = true;
+                deleteClicked = false;
+
+                return true;
+
+            case R.id.vplace_action_delete:
+                displayToast("Vplace Delete Selected");
+
+                editClicked = false;
+                deleteClicked = true;
+
+                return true;
+
+            case R.id.vplace_action_deleteAll:
+                displayToast("Vplace DeleteAll Selected");
+
+                editClicked = false;
+                deleteClicked = false;
+
+                return true;
+
+        }
+
+        editClicked = false;
+        deleteClicked = false;
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void createToolbar(View view){
+        setHasOptionsMenu(true);
+
+        if (currentActive == HOLIDAY_ACTIVE) {
+            currentToolbar = view.findViewById(R.id.toolbar_holidays);
+
+            currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
+            currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
+            currentToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
+
+        } else if (currentActive == VPLACE_ACTIVE) {
+            currentToolbar = view.findViewById(R.id.toolbar_vPlaces);
+
+            currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
+            currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
+            currentToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
+        }
+
+
+    }
+
+    public void setupCreateButton(View view){
+        if (currentActive == HOLIDAY_ACTIVE) {
+            Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
+
+            createHoliday_btn.setOnClickListener(v -> {
+                Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
+                startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
+
+            });
+        } else if (currentActive == VPLACE_ACTIVE) {
+            Button createVPlace_btn = view.findViewById(R.id.create_visitedplaces_btn);
+
+            createVPlace_btn.setOnClickListener(v -> {
+
+                Intent createIntent = new Intent(getActivity(), CreateVPlaceActivity.class);
+                startActivityForResult(createIntent, NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
+
+            });
+        }
+    }
+
     public void setupToggle(View view){
             mToggle = view.findViewById(R.id.toggle);
-            mCheckedBtn = mToggle.findViewById(mToggle.getCheckedRadioButtonId());
             constLay_Holidays = view.findViewById(R.id.constLay_holidays);
             constLay_vPlaces = view.findViewById(R.id.constLay_vPlaces);
 
@@ -240,16 +294,32 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                             constLay_vPlaces.setVisibility(View.INVISIBLE);
                             constLay_Holidays.setVisibility(View.VISIBLE);
 
+                            currentActive = HOLIDAY_ACTIVE;
+
+                            displayToast("Holidays Toggled");
+
                             break;
                         case R.id.toggle_visitedPlaces:
                             constLay_Holidays.setVisibility(View.INVISIBLE);
                             constLay_vPlaces.setVisibility(View.VISIBLE);
 
+                            currentActive = VPLACE_ACTIVE;
+
+                            displayToast("VPlace Toggled");
+
                             break;
                     }
+
+                    setupCreateButton(view); //REDEVELOPED
+                    setupToggle(view); //REDEVELOPED
+
+                    createToolbar(view);
+                    setupRecyclerView();
                 }
 
             });
         }
+
+
 
 }

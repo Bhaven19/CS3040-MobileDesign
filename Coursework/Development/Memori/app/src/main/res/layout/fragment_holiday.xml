@@ -48,6 +48,7 @@
             android:textColor="#FFFFFF" />
     </RadioGroup>
 
+    <!--Holidays-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constLay_holidays"
         android:layout_width="0dp"
@@ -129,6 +130,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--VPlaces-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constLay_vPlaces"
         android:layout_width="0dp"
@@ -160,7 +162,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/menu_holiday">
+            app:menu="@menu/menu_visitedplace">
 
         </androidx.appcompat.widget.Toolbar>
 
