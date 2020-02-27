@@ -20,6 +20,7 @@ public class HolidayRepository {
 
     private static Holiday mLatestHoliday;
     public static Holiday currentEditHoliday;
+    public static VisitedPlace currentEditVisitedPlace;
 
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
@@ -100,6 +101,34 @@ public class HolidayRepository {
                     currentEditHoliday.getNotes(),
                     currentEditHoliday.getImagePath(),
                     currentEditHoliday.getImageTag());
+
+            return null;
+        }
+    }
+
+    public void updateVisitedPlace (VisitedPlace impVisitedPlace){
+        new updateVisitedPlaceAsyncTask(mHolidayDAO);
+
+        currentEditVisitedPlace = impVisitedPlace;
+    }
+
+    private static class updateVisitedPlaceAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final HolidayDAO mDao;
+
+        updateVisitedPlaceAsyncTask(HolidayDAO dao) {mDao = dao;}
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mDao.updateVisitedPlace(currentEditVisitedPlace.get_id(),
+                    currentEditVisitedPlace.getHolidayID(),
+                    currentEditVisitedPlace.getName(),
+                    currentEditVisitedPlace.getDate(),
+                    currentEditVisitedPlace.getLocation(),
+                    currentEditVisitedPlace.getTravellers(),
+                    currentEditVisitedPlace.getNotes(),
+                    currentEditVisitedPlace.getImagePath(),
+                    currentEditVisitedPlace.getImageDate(),
+                    currentEditVisitedPlace.getImageTag());
 
             return null;
         }

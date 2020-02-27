@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,11 +28,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CreateVPlaceActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceLoc, textViewVPlaceTravellers, textViewVPlaceNotes;
+    private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
     private Button mAddImage, mSaveVPlace, btnDate;
 
@@ -46,26 +49,36 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
     private String mImagePath;
     private Bitmap bmpHolidayImage;
 
+    private ArrayList<String> allHolidays;
+    private String chosenHoliday = "", imageDate = "";
+
+    public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vplace);
 
-        textViewVPlaceName = findViewById(R.id.edit_Name);
-        textViewVPlaceLoc = findViewById(R.id.edit_StartLoc);
-        textViewVPlaceTravellers = findViewById(R.id.edit_EndLoc);
-        textViewVPlaceNotes = findViewById(R.id.edit_Notes);
+        allHolidays = getIntent().getStringArrayListExtra("holidayList");
 
-        textViewVPlaceDate = findViewById(R.id.edit_StartDate);
+        spinnerChooseHoliday = findViewById(R.id.spinner_vPlaceChooseHoliday);
+        setupSpinner();
+
+        textViewVPlaceName = findViewById(R.id.edit_vPlaceName);
+        textViewVPlaceDate = findViewById(R.id.edit_VPlaceDate);
+        textViewVPlaceLoc = findViewById(R.id.edit_vPlaceLoc);
+        textViewVPlaceTravellers = findViewById(R.id.edit_vPlaceCompanions);
+        textViewVPlaceNotes = findViewById(R.id.edit_vPlaceNotes);
+
         textViewVPlaceDate.setEnabled(false);
 
-        mAddImage = findViewById(R.id.btn_saveImage);
+        mAddImage = findViewById(R.id.btn_saveVPlaceImage);
         mAddImage.setOnClickListener(this);
 
-        mSaveVPlace = findViewById(R.id.btn_saveHoliday);
+        mSaveVPlace = findViewById(R.id.btn_saveVPlace);
         mSaveVPlace.setOnClickListener(this);
 
-        btnDate = findViewById(R.id.btn_startDate);
+        btnDate = findViewById(R.id.btn_selectVPlaceDate);
         btnDate.setOnClickListener(this);
 
     }
@@ -74,35 +87,40 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_saveVPlace:
-                Intent saveHolidayIntent = new Intent();
+                Intent saveVPlaceIntent = new Intent();
 
-                if (TextUtils.isEmpty(textViewVPlaceName.getText()) || TextUtils.isEmpty(textViewVPlaceDate.getText()) ) {
+                if (chosenHoliday == null || TextUtils.isEmpty(textViewVPlaceName.getText()) || TextUtils.isEmpty(textViewVPlaceDate.getText()) ) {
 
-                    setResult(0, saveHolidayIntent);
+                    setResult(0, saveVPlaceIntent);
 
                     Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
 
                 } else {
+                    String vPlaceHoliday = chosenHoliday;
                     String vPlaceName = textViewVPlaceName.getText().toString();
-                    String vPlaceDestination = textViewVPlaceLoc.getText().toString();
+                    String vPlaceDate = "";
+                    String vPlaceLocation = textViewVPlaceLoc.getText().toString();
                     String vPlaceCompanions = textViewVPlaceTravellers.getText().toString();
                     String vPlaceNotes = textViewVPlaceNotes.getText().toString();
-                    String vPlaceDate = "";
 
                     if (date != null){
                         vPlaceDate = date.toString();
                     }
 
                     String vPlaceImagePath = mImagePath;
+                    String vPlaceImageDate = imageDate;
 
-                    saveHolidayIntent.putExtra("vPlaceName", vPlaceName);
-                    saveHolidayIntent.putExtra("vPlaceDestination", vPlaceDestination);
-                    saveHolidayIntent.putExtra("vPlaceCompanions", vPlaceCompanions);
-                    saveHolidayIntent.putExtra("vPlaceNotes", vPlaceNotes);
-                    saveHolidayIntent.putExtra("vPlaceDate", vPlaceDate);
-                    saveHolidayIntent.putExtra("hImagePath", vPlaceImagePath);
+                    saveVPlaceIntent.putExtra("vPlaceHoliday", vPlaceHoliday);
+                    saveVPlaceIntent.putExtra("vPlaceName", vPlaceName);
+                    saveVPlaceIntent.putExtra("vPlaceDate", vPlaceDate);
+                    saveVPlaceIntent.putExtra("vPlaceLocation", vPlaceLocation);
+                    saveVPlaceIntent.putExtra("vPlaceCompanions", vPlaceCompanions);
+                    saveVPlaceIntent.putExtra("vPlaceNotes", vPlaceNotes);
+                    saveVPlaceIntent.putExtra("vImagePath", vPlaceImagePath);
+                    saveVPlaceIntent.putExtra("vPlaceImageDate", vPlaceImagePath);
+                    saveVPlaceIntent.putExtra("vImageTag", vPlaceImagePath);
 
-                    setResult(1, saveHolidayIntent);
+                    setResult(NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }
                 finish();
 
@@ -251,8 +269,10 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
-            Log.d("ImageFind", "CreateHoliday: " + f.getAbsolutePath());
             mImagePath = f.getAbsolutePath();
+
+            HolidayDate currentImageDate = new HolidayDate(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR);
+            imageDate = currentImageDate.toString();
 
             return f.getAbsolutePath();
         } catch (IOException e1) {
@@ -263,6 +283,17 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void setupSpinner(){
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerChooseHoliday.setAdapter(adapter);
+
+        for (String currentHolidayName : allHolidays){
+            adapter.add(currentHolidayName);
+        }
 
     }
 

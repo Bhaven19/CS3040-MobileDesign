@@ -23,14 +23,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
-import com.example.memori.database.listadapters.HolidayListAdapter;
-import com.example.memori.database.listadapters.VPlaceListAdapter;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.VisitedPlace;
+import com.example.memori.database.listadapters.HolidayListAdapter;
+import com.example.memori.database.listadapters.VPlaceListAdapter;
 import com.example.memori.ui.holiday.holidays.CreateHolidayActivity;
 import com.example.memori.ui.holiday.holidays.EditHolidayActivity;
 import com.example.memori.ui.holiday.holidays.ViewHolidayActivity;
 import com.example.memori.ui.holiday.vplaces.CreateVPlaceActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +46,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private VPlaceListAdapter vPlaceListAdapter;
     private Toolbar currentToolbar;
 
+    public List<Holiday> allHolidays;
+
     private RadioGroup mToggle;
     private ConstraintLayout constLay_Holidays, constLay_vPlaces;
 
@@ -54,7 +59,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public static final int NEW_HOLIDAY_ACTIVITY_REQUEST_CODE = 1;
     public static final int VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE = 2;
     public static final int SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE = 3;
+
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
+    public static final int VIEW_ALL_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 5;
+    public static final int SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 6;
 
     //----------------EVERYTHING BELOW THIS LINE DOES NOT NEED REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
@@ -126,10 +134,28 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
+        } else if (resultCode == NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
+            VisitedPlace visitedPlace = new VisitedPlace(getHolidayID(data.getStringExtra("vPlaceHoliday")),
+                    data.getStringExtra("vPlaceName"),
+                    data.getStringExtra("vPlaceDate"),
+                    data.getStringExtra("vPlaceLocation"),
+                    data.getStringExtra("vPlaceCompanions"),
+                    data.getStringExtra("vPlaceNotes"),
+                    data.getStringExtra("vImagePath"),
+                    data.getStringExtra("vImageDate"),
+                    data.getStringExtra("vImageTag"));
+
+            mHolidayViewModel.insertVisitedPlace(visitedPlace);
+
+            Log.d("VisitedPlaceStorage", "HolidayFragment: visitedPlace Stored");
+
         } else if (resultCode == 0) {
             Log.d("HolidayList", "Result Code is 0: " + resultCode);
 
         } else {
+            Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
+
+        }{
             Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
 
         }
@@ -242,6 +268,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 // Update the cached copy of the words in the adapter.
                 holidayListAdapter.setWords(holidays);
 
+                allHolidays = holidays;
+
+
             });
 
         } else if (currentActive == VPLACE_ACTIVE) {
@@ -324,6 +353,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             createHoliday_btn.setOnClickListener(v -> {
                 Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
+
+
                 startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
 
             });
@@ -333,6 +364,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             createVPlace_btn.setOnClickListener(v -> {
 
                 Intent createIntent = new Intent(getActivity(), CreateVPlaceActivity.class);
+
+                createIntent.putExtra("holidayList", getAllHolidays());
+
                 startActivityForResult(createIntent, NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
             });
@@ -340,43 +374,65 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     public void setupToggle(View view){
-            mToggle = view.findViewById(R.id.toggle);
-            constLay_Holidays = view.findViewById(R.id.constLay_holidays);
-            constLay_vPlaces = view.findViewById(R.id.constLay_vPlaces);
+        mToggle = view.findViewById(R.id.toggle);
+        constLay_Holidays = view.findViewById(R.id.constLay_holidays);
+        constLay_vPlaces = view.findViewById(R.id.constLay_vPlaces);
 
-            mToggle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch (checkedId){
-                        case R.id.toggle_holidays:
-                            constLay_vPlaces.setVisibility(View.INVISIBLE);
-                            constLay_Holidays.setVisibility(View.VISIBLE);
+        mToggle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.toggle_holidays:
+                        constLay_vPlaces.setVisibility(View.INVISIBLE);
+                        constLay_Holidays.setVisibility(View.VISIBLE);
 
-                            currentActive = HOLIDAY_ACTIVE;
+                        currentActive = HOLIDAY_ACTIVE;
 
-                            displayToast("Holidays Toggled");
+                        displayToast("Holidays Toggled");
 
-                            break;
-                        case R.id.toggle_visitedPlaces:
-                            constLay_Holidays.setVisibility(View.INVISIBLE);
-                            constLay_vPlaces.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.toggle_visitedPlaces:
+                        constLay_Holidays.setVisibility(View.INVISIBLE);
+                        constLay_vPlaces.setVisibility(View.VISIBLE);
 
-                            currentActive = VPLACE_ACTIVE;
+                        currentActive = VPLACE_ACTIVE;
 
-                            displayToast("VPlace Toggled");
-
-                            break;
-                    }
-
-                    setupCreateButton(view); //REDEVELOPED
-                    setupToggle(view); //REDEVELOPED
-
-                    createToolbar(view);
-                    setupRecyclerView();
+                        displayToast("VPlace Toggled");
+                        break;
                 }
 
-            });
+                setupCreateButton(view); //REDEVELOPED
+                setupToggle(view); //REDEVELOPED
+
+                createToolbar(view);
+                setupRecyclerView();
+            }
+        });
+    }
+
+    public ArrayList getAllHolidays(){
+
+        ArrayList<String> holidayNames = new ArrayList<>();
+
+        for (Holiday currentHoliday : allHolidays) {
+            Log.d("ChoosingHoliday", "HolidayFragment: currentHoliday.getName(): " + currentHoliday.getName());
+
+            holidayNames.add(currentHoliday.getName());
         }
+        return holidayNames;
+    }
+
+    public int getHolidayID(String holidayName){
+        int currentID = -1;
+
+        for (Holiday currentHoliday : allHolidays){
+            if (holidayName == currentHoliday.getName()){
+                currentID = currentHoliday.get_id();
+            }
+        }
+
+        return currentID;
+    }
 
 
 

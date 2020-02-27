@@ -43,6 +43,9 @@ public class HolidayViewModel extends AndroidViewModel {
     public void insert(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
     public void update(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
 
+    public void insertVisitedPlace(VisitedPlace impVPlace) { mRepository.insertVisitedPlace(impVPlace); }
+    public void updateVisitedPlace(VisitedPlace impVPlace) { mRepository.updateVisitedPlace(impVPlace); }
+
     //public void deleteAllHolidays() { mRepository.insertHoliday(mRepository.deleteAllHolidays()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
 

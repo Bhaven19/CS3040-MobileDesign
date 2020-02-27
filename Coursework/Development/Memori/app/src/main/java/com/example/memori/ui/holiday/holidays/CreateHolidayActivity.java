@@ -51,8 +51,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_holiday);
 
-        textViewHolidayName = findViewById(R.id.edit_Name);
-        textViewStartingLoc = findViewById(R.id.edit_StartLoc);
+        textViewHolidayName = findViewById(R.id.edit_vPlaceName);
+        textViewStartingLoc = findViewById(R.id.edit_vPlaceLoc);
         textViewDestination = findViewById(R.id.edit_EndLoc);
 
         textViewStartDate = findViewById(R.id.edit_StartDate);
@@ -60,8 +60,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         textViewStartDate.setEnabled(false);
         textViewEndDate.setEnabled(false);
 
-        textViewTravellers = findViewById(R.id.edit_Companions);
-        textViewNotes = findViewById(R.id.edit_Notes);
+        textViewTravellers = findViewById(R.id.edit_vPlaceCompanions);
+        textViewNotes = findViewById(R.id.edit_vPlaceNotes);
 
         imageViewHolidayImage = findViewById(R.id.imageView_image);
 

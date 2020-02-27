@@ -23,11 +23,11 @@ public class EditHolidayActivity extends AppCompatActivity {
 
         mHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
 
-        mEditHolidayNameView = findViewById(R.id.edit_Name);
-        mStartingLoc = findViewById(R.id.edit_StartLoc);
+        mEditHolidayNameView = findViewById(R.id.edit_vPlaceName);
+        mStartingLoc = findViewById(R.id.edit_vPlaceLoc);
         mDestination = findViewById(R.id.edit_EndLoc);
-        mTravellersView = findViewById(R.id.edit_Companions);
-        mTravelNotes = findViewById(R.id.edit_Notes);
+        mTravellersView = findViewById(R.id.edit_vPlaceCompanions);
+        mTravelNotes = findViewById(R.id.edit_vPlaceNotes);
 
         final Button button = findViewById(R.id.btn_saveHoliday);
 

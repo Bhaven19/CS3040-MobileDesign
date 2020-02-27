@@ -53,4 +53,26 @@ public interface HolidayDAO {
                        String hImagePath,
                        String hImageTag);
 
+    @Query("UPDATE visited_places_table SET " +
+            "HOLIDAY_ID = :hID," +
+            "NAME = :vpName," +
+            "DATE = :vpDate," +
+            "LOCATION = :vpLoc," +
+            "TRAVELLERS = :vpTravellers," +
+            "NOTES = :vpNotes," +
+            "IMAGE_PATH = :vpImagePath," +
+            "IMAGE_DATE = :vpImageDate," +
+            "IMAGE_TAG = :vpImageTag" +
+            " WHERE id = :vPlaceID")
+    void updateVisitedPlace(int vPlaceID,
+                       int hID,
+                       String vpName,
+                       String vpDate,
+                       String vpLoc,
+                       String vpTravellers,
+                       String vpNotes,
+                       String vpImagePath,
+                       String vpImageDate,
+                       String vpImageTag);
+
 }

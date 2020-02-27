@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/label_journeyName"
+            android:id="@+id/label_vPlaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -35,13 +35,13 @@
             app:layout_constraintTop_toBottomOf="@+id/label_createholidays" />
 
         <TextView
-            android:id="@+id/label_startLoc"
+            android:id="@+id/label_vPlaceLoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_startLoc"
             app:layout_constraintStart_toStartOf="@+id/label_createholidays"
-            app:layout_constraintTop_toBottomOf="@+id/edit_Name" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
 
         <TextView
             android:id="@+id/label_endLoc"
@@ -50,7 +50,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/lbl_destLoc"
             app:layout_constraintStart_toStartOf="@+id/label_createholidays"
-            app:layout_constraintTop_toBottomOf="@+id/btn_searchStartLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_searchVPlaceLoc" />
 
         <TextView
             android:id="@+id/label_Companions"
@@ -67,11 +67,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_notes"
-            app:layout_constraintStart_toStartOf="@+id/edit_Companions"
-            app:layout_constraintTop_toBottomOf="@+id/edit_Companions" />
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceCompanions"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceCompanions" />
 
         <TextView
-            android:id="@+id/label_startDate"
+            android:id="@+id/label_vPlaceDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -94,8 +94,8 @@
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
             android:text="Would you like to add any images?"
-            app:layout_constraintStart_toStartOf="@+id/edit_Notes"
-            app:layout_constraintTop_toBottomOf="@+id/edit_Notes" />
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
         <Button
             android:id="@+id/btn_saveImage"
@@ -103,12 +103,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Add an Image"
-            app:layout_constraintEnd_toEndOf="@+id/edit_Notes"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/label_images"
             app:layout_constraintTop_toBottomOf="@+id/imageView_image" />
 
         <EditText
-            android:id="@+id/edit_Name"
+            android:id="@+id/edit_vPlaceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -118,11 +118,11 @@
             android:hint="e.g. John's 30th "
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
-            app:layout_constraintTop_toBottomOf="@+id/label_journeyName" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceName" />
 
         <EditText
-            android:id="@+id/edit_StartLoc"
+            android:id="@+id/edit_vPlaceLoc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -132,8 +132,8 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
-            app:layout_constraintTop_toBottomOf="@+id/label_startLoc" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
 
         <EditText
             android:id="@+id/edit_EndLoc"
@@ -146,11 +146,11 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_endLoc" />
 
         <EditText
-            android:id="@+id/edit_Companions"
+            android:id="@+id/edit_vPlaceCompanions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -160,17 +160,17 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/label_journeyName"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_Companions" />
 
         <Button
-            android:id="@+id/btn_searchStartLoc"
+            android:id="@+id/btn_searchVPlaceLoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_StartLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceLoc" />
 
         <Button
             android:id="@+id/btn_searchEndLoc"
@@ -190,8 +190,8 @@
             android:hint="DD/MM/YYYY"
             android:inputType="date"
             app:layout_constraintEnd_toStartOf="@+id/btn_startDate"
-            app:layout_constraintStart_toStartOf="@+id/label_startDate"
-            app:layout_constraintTop_toBottomOf="@+id/label_startDate" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate" />
 
         <Button
             android:id="@+id/btn_startDate"
@@ -220,18 +220,18 @@
             android:hint="DD/MM/YYYY"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="@+id/edit_StartDate"
-            app:layout_constraintStart_toStartOf="@+id/label_startDate"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_startDate2" />
 
         <EditText
-            android:id="@+id/edit_Notes"
+            android:id="@+id/edit_vPlaceNotes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="start|top"
             android:hint="Any Notes?"
             android:inputType="textMultiLine"
-            app:layout_constraintEnd_toEndOf="@+id/edit_Companions"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/label_notes"
             app:layout_constraintTop_toBottomOf="@+id/label_notes" />
@@ -253,7 +253,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/edit_Notes"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/label_images"
             app:layout_constraintTop_toBottomOf="@+id/label_images"
             app:srcCompat="@color/colorPrimaryDark" />
