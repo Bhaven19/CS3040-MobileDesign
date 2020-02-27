@@ -15,10 +15,10 @@
             android:id="@+id/textView_hName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView_hEndLoc"
-            app:layout_constraintStart_toStartOf="@+id/textView_hStartLoc"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="placeholder text" />
 
@@ -55,6 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView_hStartLoc"
             app:layout_constraintTop_toBottomOf="@+id/textView_hStartLoc"
             tools:text="placeholder text" />
@@ -76,19 +78,6 @@
             app:layout_constraintStart_toEndOf="@+id/textView_ToLbl"
             app:layout_constraintTop_toTopOf="@+id/textView_hStartDate"
             tools:text="placeholder text" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_holidays"
-            android:layout_width="28dp"
-            android:layout_height="29dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView_hEndLoc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/menu_holiday">
-
-        </androidx.appcompat.widget.Toolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

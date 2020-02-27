@@ -12,15 +12,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
-import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.VisitedPlace;
 
 import java.io.File;
 
 public class ViewVPlace extends AppCompatActivity {
 
-    private Holiday impHoliday;
+    private VisitedPlace impVisitedPlace;
 
-    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
+    private TextView viewVPlaceName, viewVPlaceDate, viewVPlaceNotes, viewVPlaceCompanions, viewNoImage;
     private ImageView viewHolidayImage;
 
     @Override
@@ -29,31 +29,30 @@ public class ViewVPlace extends AppCompatActivity {
         setContentView(R.layout.activity_view_vplace);
 
         Intent obtainIntent = getIntent();
-        impHoliday = (Holiday) obtainIntent.getSerializableExtra("chosenHoliday");
 
-        viewHolidayName = findViewById(R.id.text_HolidayName);
-        viewHolidayStartingLoc = findViewById(R.id.label_HolidayStartLoc);
-        viewHolidayDestination = findViewById(R.id.label_HolidayEndLoc);
-        viewHolidayStartDate = findViewById(R.id.label_HolidayStartDate);
-        viewHolidayEndDate = findViewById(R.id.label_HolidayEndDate);
-        viewHolidayCompanions = findViewById(R.id.text_holidayCompanions);
-        viewHolidayNotes = findViewById(R.id.text_holidayNotes);
+        impVisitedPlace = (VisitedPlace) obtainIntent.getSerializableExtra("chosenVisitedPlace");
+
+        viewVPlaceName = findViewById(R.id.text_VPlaceName);
+        viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
+        viewVPlaceNotes = findViewById(R.id.text_VPlaceNotes);
+        viewVPlaceCompanions = findViewById(R.id.text_VPlaceCompanions);
+        //viewVPlaceLocation = findViewById(R.id.label_HolidayEndDate);
+
+
         viewHolidayImage = findViewById(R.id.holidayImage);
         viewNoImage = findViewById(R.id.label_noImage);
 
-        viewHolidayNotes.setText(impHoliday.getNotes());
-        viewHolidayStartingLoc.setText(impHoliday.getStartingLoc());
-        viewHolidayDestination.setText(impHoliday.getDestination());
-        viewHolidayStartDate.setText(impHoliday.getStartDate());
-        viewHolidayEndDate.setText(impHoliday.getEndDate());
-        viewHolidayCompanions.setText(impHoliday.getTravellers());
-        viewHolidayName.setText(impHoliday.getName());
+        viewVPlaceName.setText(impVisitedPlace.getName());
+        viewVPlaceDate.setText(impVisitedPlace.getDate());
+        viewVPlaceNotes.setText(impVisitedPlace.getNotes());
+        viewVPlaceCompanions.setText(impVisitedPlace.getTravellers());
 
-        Log.d("ImageFind", "Image path, impHoliday.getImagePath(): " + impHoliday.getImagePath());
-        String pathName = impHoliday.getImagePath();
+
+        Log.d("ImageFind", "Image path, impVisitedPlace.getImagePath(): " + impVisitedPlace.getImagePath());
+        String pathName = impVisitedPlace.getImagePath();
 
         if (pathName == null) {
-            Log.d("ImageFind", "ViewHolidayActivity, NO IMAGE SAVED");
+            Log.d("ImageFind", "ViewVPlace, NO IMAGE SAVED");
 
         } else {
             File imageFile = new File(pathName);
@@ -64,18 +63,18 @@ public class ViewVPlace extends AppCompatActivity {
                 Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 viewHolidayImage.setImageBitmap(mHolidayImage);
 
-                Log.d("ImageFind", "ViewHolidayActivity, IMAGE FOUND");
+                Log.d("ImageFind", "ViewVPlace, IMAGE FOUND");
 
             } else {
                 viewNoImage.setVisibility(View.VISIBLE);
 
-                Log.d("ImageFind", "ViewHolidayActivity, IMAGE NOT FOUND");
+                Log.d("ImageFind", "ViewVPlace, IMAGE NOT FOUND");
 
             }
         }
 
 
-        setResult(2, obtainIntent);
+        setResult(5, obtainIntent);
 
     }
 }

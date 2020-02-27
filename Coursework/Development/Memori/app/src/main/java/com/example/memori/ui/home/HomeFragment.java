@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        extractLatestHoliday();
         assignFields(root);
 
         return root;
@@ -53,7 +52,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     public void assignFields(View view){
         mHolidayName = view.findViewById(R.id.label_HolidayName);
-        mHolidayStartDate = view.findViewById(R.id.label_HolidayStartDate);
+        mHolidayStartDate = view.findViewById(R.id.text_VPlaceDate);
         mHolidayEndDate = view.findViewById(R.id.label_HolidayEndDate);
 
         btnPhoto = view.findViewById(R.id.btn_addPhoto);
@@ -67,6 +66,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         btnPeople.setOnClickListener(this);
         btnNotes.setOnClickListener(this);
         btnTag.setOnClickListener(this);
+
+        extractLatestHoliday();
 
     }
 

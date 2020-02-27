@@ -31,13 +31,13 @@ public class ViewHolidayActivity extends AppCompatActivity {
         Intent obtainIntent = getIntent();
         impHoliday = (Holiday) obtainIntent.getSerializableExtra("chosenHoliday");
 
-        viewHolidayName = findViewById(R.id.text_HolidayName);
-        viewHolidayStartingLoc = findViewById(R.id.label_HolidayStartLoc);
-        viewHolidayDestination = findViewById(R.id.label_HolidayEndLoc);
-        viewHolidayStartDate = findViewById(R.id.label_HolidayStartDate);
+        viewHolidayName = findViewById(R.id.text_VPlaceName);
+        viewHolidayStartingLoc = findViewById(R.id.label_VPlaceLoc);
+        viewHolidayDestination = findViewById(R.id.text_VPlaceLocation);
+        viewHolidayStartDate = findViewById(R.id.text_VPlaceDate);
         viewHolidayEndDate = findViewById(R.id.label_HolidayEndDate);
-        viewHolidayCompanions = findViewById(R.id.text_holidayCompanions);
-        viewHolidayNotes = findViewById(R.id.text_holidayNotes);
+        viewHolidayCompanions = findViewById(R.id.text_VPlaceCompanions);
+        viewHolidayNotes = findViewById(R.id.text_VPlaceNotes);
         viewHolidayImage = findViewById(R.id.holidayImage);
         viewNoImage = findViewById(R.id.label_noImage);
 

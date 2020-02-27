@@ -12,34 +12,34 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/label_HolidayDates"
+            android:id="@+id/label_VPlaceDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Dates"
-            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartLoc" />
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceLoc" />
 
         <TextView
-            android:id="@+id/label_HolidayNotes"
+            android:id="@+id/label_VPlaceNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Holiday Notes"
-            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayStartDate" />
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceDate" />
 
         <TextView
             android:id="@+id/label_noImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No Image Has Been Saved"
-            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayImages"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayImages" />
+            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
+            app:layout_constraintStart_toStartOf="@+id/label_VPlaceImages"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
 
         <TextView
-            android:id="@+id/label_HolidayEndLoc"
+            android:id="@+id/text_VPlaceLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -47,7 +47,7 @@
             android:text="ending loc"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@+id/label_HolidayLocation"
-            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
+            app:layout_constraintTop_toTopOf="@+id/label_VPlaceLoc" />
 
         <TextView
             android:id="@+id/label_HolidayEndDate"
@@ -57,27 +57,27 @@
             android:text="end date"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@+id/label_HolidayLocation2"
-            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartDate" />
+            app:layout_constraintTop_toTopOf="@+id/text_VPlaceDate" />
 
         <TextView
-            android:id="@+id/label_HolidayStartLoc"
+            android:id="@+id/label_VPlaceLoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="starting loc"
             android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
-            app:layout_constraintTop_toBottomOf="@+id/text_HolidayName" />
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceName" />
 
         <TextView
-            android:id="@+id/label_HolidayStartDate"
+            android:id="@+id/text_VPlaceDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="start date"
             android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/text_HolidayName"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayDates" />
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceDate" />
 
         <TextView
             android:id="@+id/label_HolidayLocation"
@@ -87,9 +87,9 @@
             android:layout_marginLeft="24dp"
             android:text="to"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/label_HolidayStartLoc"
-            app:layout_constraintStart_toEndOf="@+id/label_HolidayStartLoc"
-            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartLoc" />
+            app:layout_constraintBottom_toBottomOf="@+id/label_VPlaceLoc"
+            app:layout_constraintStart_toEndOf="@+id/label_VPlaceLoc"
+            app:layout_constraintTop_toTopOf="@+id/label_VPlaceLoc" />
 
         <TextView
             android:id="@+id/label_HolidayLocation2"
@@ -99,18 +99,18 @@
             android:layout_marginTop="6dp"
             android:text="to"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/label_HolidayStartDate"
-            app:layout_constraintStart_toEndOf="@+id/label_HolidayStartDate"
-            app:layout_constraintTop_toTopOf="@+id/label_HolidayStartDate" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_VPlaceDate"
+            app:layout_constraintStart_toEndOf="@+id/text_VPlaceDate"
+            app:layout_constraintTop_toTopOf="@+id/text_VPlaceDate" />
 
         <TextView
-            android:id="@+id/label_holidayImages"
+            android:id="@+id/label_VPlaceImages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Images"
-            app:layout_constraintStart_toStartOf="@+id/text_holidayNotes"
-            app:layout_constraintTop_toBottomOf="@+id/text_holidayNotes" />
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceNotes" />
 
         <TextView
             android:id="@+id/label_holidayMap"
@@ -118,57 +118,57 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Map"
-            app:layout_constraintStart_toStartOf="@+id/text_holidayNotes"
+            app:layout_constraintStart_toStartOf="@+id/text_VPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/holidayImage" />
 
         <TextView
-            android:id="@+id/label_holidayPeople"
+            android:id="@+id/label_VPlacePeople"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Travel Companions"
-            app:layout_constraintEnd_toEndOf="@+id/text_holidayCompanions"
+            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceCompanions"
             app:layout_constraintStart_toStartOf="@+id/button6"
             app:layout_constraintTop_toBottomOf="@+id/button6" />
 
         <TextView
-            android:id="@+id/text_holidayNotes"
+            android:id="@+id/text_VPlaceNotes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="Holiday Notes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_HolidayDates"
-            app:layout_constraintTop_toBottomOf="@+id/label_HolidayNotes" />
+            app:layout_constraintStart_toStartOf="@+id/label_VPlaceDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceNotes" />
 
         <ImageView
             android:id="@+id/holidayImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
+            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayImages" />
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
 
         <Button
             android:id="@+id/button6"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:text="Map"
-            app:layout_constraintEnd_toEndOf="@+id/text_holidayNotes"
+            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayMap" />
 
         <TextView
-            android:id="@+id/text_holidayCompanions"
+            android:id="@+id/text_VPlaceCompanions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Holiday Travel Companions"
             app:layout_constraintEnd_toEndOf="@+id/button6"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayPeople" />
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlacePeople" />
 
         <TextView
-            android:id="@+id/text_HolidayName"
+            android:id="@+id/text_VPlaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

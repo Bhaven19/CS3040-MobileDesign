@@ -31,6 +31,7 @@ import com.example.memori.ui.holiday.holidays.CreateHolidayActivity;
 import com.example.memori.ui.holiday.holidays.EditHolidayActivity;
 import com.example.memori.ui.holiday.holidays.ViewHolidayActivity;
 import com.example.memori.ui.holiday.vplaces.CreateVPlaceActivity;
+import com.example.memori.ui.holiday.vplaces.ViewVPlace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,6 +290,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                     Log.d("VPlaceClick", "HolidayFragment, onItemClicked");
 
+                    Log.d("ViewVPlace", "HolidayFragment, myVisitedPlace.getDate(): " + myVisitedPlace.getDate());
+
                     if (editClicked == true){
 //                        Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
 //                        editIntent.putExtra("chosenHoliday", myHoliday);
@@ -300,10 +303,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
 
                     } else {
-//                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
-//                        viewIntent.putExtra("chosenHoliday", myVisitedPlace);
-//
-//                        startActivityForResult(viewIntent, 2);
+                        Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
+                        viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+
+                        startActivityForResult(viewIntent, VIEW_ALL_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
                     }
                 }

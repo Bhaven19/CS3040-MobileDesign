@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/label_latestHoliday" />
 
     <TextView
-        android:id="@+id/label_HolidayStartDate"
+        android:id="@+id/text_VPlaceDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#AAAAAA"
@@ -58,7 +58,7 @@
         android:text="to"
         android:textColor="#AAAAAA"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/label_HolidayStartDate"
+        app:layout_constraintStart_toEndOf="@+id/text_VPlaceDate"
         app:layout_constraintTop_toBottomOf="@+id/label_latestHoliday" />
 
     <TextView
