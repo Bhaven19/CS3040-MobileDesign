@@ -32,6 +32,18 @@ public interface HolidayDAO {
     @Query("SELECT * from visited_places_table")
     LiveData<List<VisitedPlace>> getAllVisitedPlaces();
 
+    @Query("SELECT * from holiday_table WHERE ID=(Select max(ID) from holiday_table)")
+    Holiday getLatestHoliday();
+
+    @Query("SELECT * from holiday_table WHERE ID = :hID")
+    Holiday getHoliday(int hID);
+
+    @Query("SELECT COUNT(*) FROM holiday_table")
+    int isHolidayEmpty();
+
+    @Query("SELECT COUNT(*) FROM visited_places_table")
+    int isVPlaceEmpty();
+
     @Query("UPDATE holiday_table SET NAME = :hName," +
             "STARTING_LOC = :hStartLoc," +
             "DESTINATION = :hEndLoc," +

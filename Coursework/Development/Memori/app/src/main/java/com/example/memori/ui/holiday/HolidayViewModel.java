@@ -1,6 +1,7 @@
 package com.example.memori.ui.holiday;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -41,10 +42,18 @@ public class HolidayViewModel extends AndroidViewModel {
     }
 
     public void insert(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
-    public void update(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
+    public void update(Holiday impHoliday, int id) { mRepository.updateHoliday(impHoliday, id); }
 
     public void insertVisitedPlace(VisitedPlace impVPlace) { mRepository.insertVisitedPlace(impVPlace); }
-    public void updateVisitedPlace(VisitedPlace impVPlace) { mRepository.updateVisitedPlace(impVPlace); }
+    public void updateVisitedPlace(VisitedPlace impVPlace, int id) {
+        mRepository.updateVisitedPlace(impVPlace, id);
+
+        Log.d("VPlaceStorage", "-------------------------------------------");
+        Log.d("VPlaceStorage", "HolidayViewModel: Updating VPlace: " + id);
+        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getName: " + impVPlace.getName());
+        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getDate: " + impVPlace.getDate());
+        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getHolidayID: " + impVPlace.getHolidayID());
+    }
 
     //public void deleteAllHolidays() { mRepository.insertHoliday(mRepository.deleteAllHolidays()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }

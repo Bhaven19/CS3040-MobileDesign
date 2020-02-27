@@ -73,16 +73,19 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
             String imageTag = "summer";
 
-            mHolidayDao.deleteAllHolidays();
+            if (mHolidayDao.isHolidayEmpty() == 0) {
 
-            for (int i = 0; i <= holidayNames.length - 1; i++) {
-                Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imagePath, imageTag);
-                mHolidayDao.insertHoliday(holiday);
+                mHolidayDao.deleteAllHolidays();
+
+                for (int i = 0; i <= holidayNames.length - 1; i++) {
+                    Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imagePath, imageTag);
+                    mHolidayDao.insertHoliday(holiday);
+                }
             }
         }
 
         public void populateVisitedPlaces(){
-            int holidayID = 1;
+            int holidayID = mHolidayDao.getLatestHoliday().get_id();
 
             String [] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "Buckingham Palace", "Great Wall of China"};
             String [] dates = {"02/01/2020", "10/02/2020"};
@@ -93,13 +96,17 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String imageDate = "23/01/2020";
             String imageTag = "summer";
 
-            mHolidayDao.deleteAllVisitedPlaces();
+            if (mHolidayDao.isVPlaceEmpty() == 0){
 
-            for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
-                VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imagePath, imageDate, imageTag);
-                mHolidayDao.insertVisitedPlace(visitedPlace);
+                mHolidayDao.deleteAllVisitedPlaces();
+
+                for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
+                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imagePath, imageDate, imageTag);
+                    mHolidayDao.insertVisitedPlace(visitedPlace);
+                }
             }
         }
+
     }
 
 }

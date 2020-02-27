@@ -24,6 +24,5 @@ public class HomeViewModel extends AndroidViewModel {
     LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
 
     public void insert(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
-    public void update(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
 
 }

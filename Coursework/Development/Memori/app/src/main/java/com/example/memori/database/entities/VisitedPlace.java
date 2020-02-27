@@ -84,4 +84,39 @@ public class VisitedPlace implements Serializable {
 
     public String getImageTag(){ return imageTag; }
 
+    public void setDate(@NonNull String date) {
+        this.date = date;
+    }
+
+    public void setImageDate(String imageDate) {
+        this.imageDate = imageDate;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    public void setHolidayID(int holidayID) {
+        this.holidayID = holidayID;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setTravellers(String travellers) {
+        this.travellers = travellers;
+    }
+
+    public void setImageTag(String imageTag) {
+        this.imageTag = imageTag;
+    }
 }

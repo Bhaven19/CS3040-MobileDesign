@@ -31,6 +31,7 @@ import com.example.memori.ui.holiday.holidays.CreateHolidayActivity;
 import com.example.memori.ui.holiday.holidays.EditHolidayActivity;
 import com.example.memori.ui.holiday.holidays.ViewHolidayActivity;
 import com.example.memori.ui.holiday.vplaces.CreateVPlaceActivity;
+import com.example.memori.ui.holiday.vplaces.EditVPlace;
 import com.example.memori.ui.holiday.vplaces.ViewVPlace;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private Toolbar currentToolbar;
 
     public List<Holiday> allHolidays;
+    public List<VisitedPlace> allVPlaces;
 
     private RadioGroup mToggle;
     private ConstraintLayout constLay_Holidays, constLay_vPlaces;
@@ -64,6 +66,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
     public static final int VIEW_ALL_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 5;
     public static final int SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 6;
+
+    public int chosenHolidayID = -1;
+    public int chosenVPlaceID = -1;
 
     //----------------EVERYTHING BELOW THIS LINE DOES NOT NEED REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
@@ -117,9 +122,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Log.d("HolidayList", "Holiday Saved");
 
 
-        } else if (resultCode == VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE) {
-            Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
-
         } else if (resultCode == SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE) {
             Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
                     data.getStringExtra("holidayStartingLoc"),
@@ -131,7 +133,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     data.getStringExtra("holidayImagePath"),
                     data.getStringExtra("holidayImageTag"));
 
-            mHolidayViewModel.update(holiday);
+            mHolidayViewModel.update(holiday, chosenHolidayID);
 
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
@@ -150,16 +152,33 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             Log.d("VisitedPlaceStorage", "HolidayFragment: visitedPlace Stored");
 
-        } else if (resultCode == 0) {
-            Log.d("HolidayList", "Result Code is 0: " + resultCode);
+        } else if (resultCode == SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
+            VisitedPlace visitedPlace = new VisitedPlace(getHolidayID(data.getStringExtra("vPlaceHoliday")),
+                    data.getStringExtra("vPlaceName"),
+                    data.getStringExtra("vPlaceDate"),
+                    data.getStringExtra("vPlaceLocation"),
+                    data.getStringExtra("vPlaceCompanions"),
+                    data.getStringExtra("vPlaceNotes"),
+                    data.getStringExtra("vImagePath"),
+                    data.getStringExtra("vImageDate"),
+                    data.getStringExtra("vImageTag"));
+
+            Log.d("VPlaceStorage", "-------------------------------------------");
+            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- VPlaceID: " + chosenVPlaceID);
+            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceName: " + data.getStringExtra("vPlaceName"));
+            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceDate: " + data.getStringExtra("vPlaceDate"));
+            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceHolidayID: " + getHolidayID(data.getStringExtra("vPlaceHoliday")));
+
+
+            mHolidayViewModel.updateVisitedPlace(visitedPlace, chosenVPlaceID);
 
         } else {
             Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
 
-        }{
-            Log.d("HolidayList", "Unregistered Result Code: " + resultCode);
-
         }
+
+        editClicked = false;
+        deleteClicked = false;
     }
 
     //----------------EVERYTHING BELOW THIS LINE HAS BEEN REDEVELOPED FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
@@ -235,6 +254,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 @Override
                 public void onItemClick(View view, int position) {
                     Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
+                    chosenHolidayID = myHoliday.get_id();
 
                     displayToast("You clicked an image, which is at cell position " + position);
 
@@ -254,7 +274,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
                         viewIntent.putExtra("chosenHoliday", myHoliday);
 
-                        startActivityForResult(viewIntent, 2);
+                        startActivity(viewIntent);
 
                     }
                 }
@@ -285,18 +305,18 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 @Override
                 public void onItemClick(View view, int position) {
                     VisitedPlace myVisitedPlace = vPlaceListAdapter.getWordAtPosition(position);
+                    chosenVPlaceID = myVisitedPlace.get_id();
 
-                    displayToast("You clicked an image, which is at cell position " + position);
-
-                    Log.d("VPlaceClick", "HolidayFragment, onItemClicked");
-
-                    Log.d("ViewVPlace", "HolidayFragment, myVisitedPlace.getDate(): " + myVisitedPlace.getDate());
+                    displayToast("You clicked an image, which is VPlace:" + myVisitedPlace.get_id());
 
                     if (editClicked == true){
-//                        Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
-//                        editIntent.putExtra("chosenHoliday", myHoliday);
-//
-//                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
+                        Intent editIntent = new Intent(getActivity(), EditVPlace.class);
+
+                        editIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                        editIntent.putExtra("holidayList", getAllHolidays());
+                        editIntent.putExtra("chosenHoliday", getHoliday(myVisitedPlace.getHolidayID()));
+
+                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
                     } else if (deleteClicked == true){
 //                        displayToast(myHoliday.getName() + " has been deleted");
@@ -306,7 +326,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
                         viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
 
-                        startActivityForResult(viewIntent, VIEW_ALL_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
+                        startActivity(viewIntent);
 
                     }
                 }
@@ -320,6 +340,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             mHolidayViewModel.getAllVisitedPlaces().observe(this, visitedplaces -> {
                 // Update the cached copy of the words in the adapter.
                 vPlaceListAdapter.setVPlaces(visitedplaces);
+
+                allVPlaces = visitedplaces;
 
             });
 
@@ -413,6 +435,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         });
     }
 
+    //----------------HOLIDAY FUNCTIONS
+
     public ArrayList getAllHolidays(){
 
         ArrayList<String> holidayNames = new ArrayList<>();
@@ -429,7 +453,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         int currentID = -1;
 
         for (Holiday currentHoliday : allHolidays){
-            if (holidayName == currentHoliday.getName()){
+            if (holidayName.equals(currentHoliday.getName())){
                 currentID = currentHoliday.get_id();
             }
         }
@@ -437,6 +461,24 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         return currentID;
     }
 
+    public Holiday getHoliday(int id){
+        Holiday chosenHoliday = null;
 
+        for (Holiday currentHoliday : allHolidays) {
+            Log.d("SpinnerHoliday", "currentHoliday.get_id(): " + currentHoliday.get_id());
+            Log.d("SpinnerHoliday", "id: " + id);
+            if (currentHoliday.get_id() == id){
+                chosenHoliday = currentHoliday;
+
+                Log.d("SpinnerHoliday", "HolidayFound");
+            } else {
+                Log.d("SpinnerHoliday", "HolidayNotFound");
+
+            }
+        }
+        return chosenHoliday;
+    }
+
+    //----------------VPLACE FUNCTIONS
 
 }
