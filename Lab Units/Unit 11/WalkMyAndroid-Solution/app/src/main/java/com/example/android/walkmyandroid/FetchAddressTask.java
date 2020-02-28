@@ -16,11 +16,13 @@
 package com.example.android.walkmyandroid;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -32,6 +34,7 @@ import java.util.Locale;
 /**
  * AsyncTask for reverse geocoding coordinates into a physical address.
  */
+@TargetApi(Build.VERSION_CODES.CUPCAKE)
 class FetchAddressTask extends AsyncTask<Location, Void, String> {
 
     private Context mContext;

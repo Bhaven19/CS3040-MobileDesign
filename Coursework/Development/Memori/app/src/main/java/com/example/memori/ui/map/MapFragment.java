@@ -32,9 +32,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private double currentLat, currentLon;
 
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_map, container, false);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         createMap();
 
@@ -42,24 +46,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void getCurrentLocation(){
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    // Logic to handle location object
-                    currentLat = location.getLatitude();
-                    currentLon = location.getLongitude();
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            Log.d("TrackLocation", "Found Location");
 
-                    Log.d("CurrentLocation", "MapFragment: onSuccess, currentLat: " + currentLat);
-                    Log.d("CurrentLocation", "MapFragment: onSuccess, z: " + currentLon);
-                }
-            }
-        });
+                            currentLon = location.getLongitude();
+                            currentLat = location.getLatitude();
 
-        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLon);
-        Log.d("CurrentLocation", "MapFragment: currentLat: " + currentLon);
+                            Log.d("TrackLocation", "Longitude: " + location.getLongitude());
+                            Log.d("TrackLocation", "Latitude: " + location.getLatitude());
+
+                        } else {
+                            Log.d("TrackLocation", "No Location");
+                        }
+                    }
+                });
+
     }
 
     public void createMap(){
@@ -76,13 +82,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //getCurrentLocation();
-
         mMap = googleMap;
+
+        getCurrentLocation();
 
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng currentLocation = new LatLng(currentLat, currentLon);
+        Log.d("TrackLocation", "onMapReady- Longitude: " + currentLat);
+        Log.d("TrackLocation", "onMapReady- Latitude: " + currentLon);
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("CurrentLocation"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
+
+
+
 }
