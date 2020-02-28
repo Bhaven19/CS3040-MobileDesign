@@ -112,33 +112,20 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
                 } else {
                     String vPlaceHoliday = spinnerChooseHoliday.getSelectedItem().toString();
-                    String vPlaceName = textViewVPlaceName.getText().toString();
-                    String vPlaceDate = "";
-                    String vPlaceLocation = textViewVPlaceLoc.getText().toString();
-                    String vPlaceCompanions = textViewVPlaceTravellers.getText().toString();
-                    String vPlaceNotes = textViewVPlaceNotes.getText().toString();
+                    mVisitedPlace.setName(textViewVPlaceName.getText().toString());
+                    mVisitedPlace.setLocation(textViewVPlaceLoc.getText().toString());
+                    mVisitedPlace.setTravellers(textViewVPlaceTravellers.getText().toString());
+                    mVisitedPlace.setNotes(textViewVPlaceNotes.getText().toString());
+                    mVisitedPlace.setImagePath(mImagePath);
+                    mVisitedPlace.setImageDate(mImageDate);
+                    mVisitedPlace.setImageTag(mImageTag);
 
                     if (date != null){
-                        vPlaceDate = date.toString();
+                        mVisitedPlace.setDate(date.toString());
                     }
 
-                    String vPlaceImagePath = mImagePath;
-                    String vPlaceImageDate = mImageDate;
-                    String vPlaceImageTag = mImageTag;
-
                     saveVPlaceIntent.putExtra("vPlaceHoliday", vPlaceHoliday);
-                    saveVPlaceIntent.putExtra("vPlaceName", vPlaceName);
-                    saveVPlaceIntent.putExtra("vPlaceDate", vPlaceDate);
-                    saveVPlaceIntent.putExtra("vPlaceLocation", vPlaceLocation);
-                    saveVPlaceIntent.putExtra("vPlaceCompanions", vPlaceCompanions);
-                    saveVPlaceIntent.putExtra("vPlaceNotes", vPlaceNotes);
-                    saveVPlaceIntent.putExtra("vImagePath", vPlaceImagePath);
-                    saveVPlaceIntent.putExtra("vPlaceImageDate", vPlaceImageDate);
-                    saveVPlaceIntent.putExtra("vImageTag", vPlaceImageTag);
-
-                    Log.d("VPlaceStorage", "EditVPlace: ON-EXIT- vPlaceName: " + vPlaceName);
-                    Log.d("VPlaceStorage", "EditVPlace: ON-EXIT- vPlaceDate: " + vPlaceDate);
-                    Log.d("VPlaceStorage", "EditVPlace: ON-EXIT- vPlaceHoliday: " + vPlaceHoliday);
+                    saveVPlaceIntent.putExtra("editedVPlace", mVisitedPlace);
 
                     setResult(SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }

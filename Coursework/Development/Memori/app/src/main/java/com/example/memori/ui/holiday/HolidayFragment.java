@@ -123,17 +123,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
 
         } else if (resultCode == SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE) {
-            Holiday holiday = new Holiday(data.getStringExtra("holidayName"),
-                    data.getStringExtra("holidayStartingLoc"),
-                    data.getStringExtra("holidayDestination"),
-                    data.getStringExtra("holidayStartDate"),
-                    data.getStringExtra("holidayEndDate"),
-                    data.getStringExtra("holidayTravellers"),
-                    data.getStringExtra("holidayNotes"),
-                    data.getStringExtra("holidayImagePath"),
-                    data.getStringExtra("holidayImageTag"));
+            Holiday holiday = (Holiday) data.getSerializableExtra("editedHoliday");
 
-            mHolidayViewModel.update(holiday, chosenHolidayID);
+            mHolidayViewModel.update(holiday);
 
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
 
@@ -153,24 +145,11 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Log.d("VisitedPlaceStorage", "HolidayFragment: visitedPlace Stored");
 
         } else if (resultCode == SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
-            VisitedPlace visitedPlace = new VisitedPlace(getHolidayID(data.getStringExtra("vPlaceHoliday")),
-                    data.getStringExtra("vPlaceName"),
-                    data.getStringExtra("vPlaceDate"),
-                    data.getStringExtra("vPlaceLocation"),
-                    data.getStringExtra("vPlaceCompanions"),
-                    data.getStringExtra("vPlaceNotes"),
-                    data.getStringExtra("vImagePath"),
-                    data.getStringExtra("vImageDate"),
-                    data.getStringExtra("vImageTag"));
-
-            Log.d("VPlaceStorage", "-------------------------------------------");
-            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- VPlaceID: " + chosenVPlaceID);
-            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceName: " + data.getStringExtra("vPlaceName"));
-            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceDate: " + data.getStringExtra("vPlaceDate"));
-            Log.d("VPlaceStorage", "HolidayFragment: ON-RESULT- vPlaceHolidayID: " + getHolidayID(data.getStringExtra("vPlaceHoliday")));
+            VisitedPlace visitedPlace = (VisitedPlace) data.getSerializableExtra("editedVPlace");
+            visitedPlace.setHolidayID(getHolidayID(data.getStringExtra("vPlaceHoliday")));
 
 
-            mHolidayViewModel.updateVisitedPlace(visitedPlace, chosenVPlaceID);
+            mHolidayViewModel.updateVisitedPlace(visitedPlace);
 
         } else {
             Log.d("HolidayList", "Unregistered Result Code: " + resultCode);

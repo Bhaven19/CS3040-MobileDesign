@@ -89,4 +89,40 @@ public class Holiday implements Serializable {
     public String getImagePath(){ return imagePath; }
 
     public String getImageTag(){ return imageTag; }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    public void setStartingLoc(String startingLoc) {
+        this.startingLoc = startingLoc;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setTravellers(String travellers) {
+        this.travellers = travellers;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setImageTag(String imageTag) {
+        this.imageTag = imageTag;
+    }
 }

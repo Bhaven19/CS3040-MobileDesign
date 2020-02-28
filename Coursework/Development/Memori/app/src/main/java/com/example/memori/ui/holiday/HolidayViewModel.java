@@ -42,14 +42,14 @@ public class HolidayViewModel extends AndroidViewModel {
     }
 
     public void insert(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
-    public void update(Holiday impHoliday, int id) { mRepository.updateHoliday(impHoliday, id); }
+    public void update(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
 
     public void insertVisitedPlace(VisitedPlace impVPlace) { mRepository.insertVisitedPlace(impVPlace); }
-    public void updateVisitedPlace(VisitedPlace impVPlace, int id) {
-        mRepository.updateVisitedPlace(impVPlace, id);
+    public void updateVisitedPlace(VisitedPlace impVPlace) {
+        mRepository.updateVisitedPlace(impVPlace);
 
         Log.d("VPlaceStorage", "-------------------------------------------");
-        Log.d("VPlaceStorage", "HolidayViewModel: Updating VPlace: " + id);
+        Log.d("VPlaceStorage", "HolidayViewModel: Updating VPlace: " + impVPlace.get_id());
         Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getName: " + impVPlace.getName());
         Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getDate: " + impVPlace.getDate());
         Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getHolidayID: " + impVPlace.getHolidayID());

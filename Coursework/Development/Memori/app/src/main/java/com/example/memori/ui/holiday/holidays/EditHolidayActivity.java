@@ -47,11 +47,13 @@ public class EditHolidayActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Holiday was not updated, some fields were empty", Toast.LENGTH_LONG).show();
 
             } else {
-                replyIntent.putExtra("holidayName", mEditHolidayNameView.getText().toString());
-                replyIntent.putExtra("holidayStartingLoc", mStartingLoc.getText().toString());
-                replyIntent.putExtra("holidayDestination", mDestination.getText().toString());
-                replyIntent.putExtra("holidayTravellers", mTravellersView.getText().toString());
-                replyIntent.putExtra("holidayNotes", mTravelNotes.getText().toString());
+                mHoliday.setName(mEditHolidayNameView.getText().toString());
+                mHoliday.setStartingLoc(mStartingLoc.getText().toString());
+                mHoliday.setDestination(mDestination.getText().toString());
+                mHoliday.setTravellers(mTravellersView.getText().toString());
+                mHoliday.setNotes(mTravelNotes.getText().toString());
+
+                replyIntent.putExtra("editedHoliday", mHoliday);
 
                 setResult(3, replyIntent);
             }

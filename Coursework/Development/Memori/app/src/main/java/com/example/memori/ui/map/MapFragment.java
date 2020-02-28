@@ -46,6 +46,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void getCurrentLocation(){
+        Log.d("TrackLocation", "getCurrentLocation Started");
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
@@ -66,9 +67,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
 
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng currentLocation = new LatLng(currentLat, currentLon);
+        Log.d("TrackLocation", "onMapReady- Longitude: " + currentLat);
+        Log.d("TrackLocation", "onMapReady- Latitude: " + currentLon);
+        mMap.addMarker(new MarkerOptions().position(currentLocation).title("CurrentLocation"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
     }
 
     public void createMap(){
+        Log.d("TrackLocation", "createMap Started");
+
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -77,21 +87,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         mapFragment.getMapAsync(this);
 
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("TrackLocation", "onMapReady Started");
+
         mMap = googleMap;
 
-        getCurrentLocation();
-
-        // Add a marker in Sydney, Australia, and move the camera.
-        LatLng currentLocation = new LatLng(currentLat, currentLon);
-        Log.d("TrackLocation", "onMapReady- Longitude: " + currentLat);
-        Log.d("TrackLocation", "onMapReady- Latitude: " + currentLon);
-        mMap.addMarker(new MarkerOptions().position(currentLocation).title("CurrentLocation"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
 
 

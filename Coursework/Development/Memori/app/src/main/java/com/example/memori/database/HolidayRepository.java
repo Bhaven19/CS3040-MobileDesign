@@ -2,7 +2,6 @@ package com.example.memori.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -84,66 +83,36 @@ public class HolidayRepository {
 
     //----------------------------------
 
-    public void updateHoliday (Holiday impHoliday, int holidayID){
-        new updateHolidayAsyncTask(mHolidayDAO);
-
-        currentEditHoliday = impHoliday;
-        this.holidayID = holidayID;
+    public void updateHoliday (Holiday impHoliday){
+        new updateHolidayAsyncTask(mHolidayDAO).execute(impHoliday);
     }
 
-    private static class updateHolidayAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class updateHolidayAsyncTask extends AsyncTask<Holiday, Void, Void> {
         private final HolidayDAO mDao;
 
         updateHolidayAsyncTask(HolidayDAO dao) {mDao = dao;}
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            mDao.updateHoliday(holidayID,
-                    currentEditHoliday.getName(),
-                    currentEditHoliday.getStartingLoc(),
-                    currentEditHoliday.getDestination(),
-                    currentEditHoliday.getStartDate(),
-                    currentEditHoliday.getEndDate(),
-                    currentEditHoliday.getTravellers(),
-                    currentEditHoliday.getNotes(),
-                    currentEditHoliday.getImagePath(),
-                    currentEditHoliday.getImageTag());
+        protected Void doInBackground(Holiday... holidays) {
+            mDao.updateHoliday(holidays[0]);
 
             return null;
         }
     }
 
-    public void updateVisitedPlace (VisitedPlace impVisitedPlace, int vPlaceID){
-        new updateVisitedPlaceAsyncTask(mHolidayDAO);
-
-        Log.d("VPlaceStorage", "-------------------------------------------");
-        Log.d("VPlaceStorage", "HolidayRepo: Updating VPlace: " + vPlaceID);
-        Log.d("VPlaceStorage", "HolidayRepo: impVisitedPlace.getName: " + impVisitedPlace.getName());
-        Log.d("VPlaceStorage", "HolidayRepo: impVisitedPlace.getDate: " + impVisitedPlace.getDate());
-        Log.d("VPlaceStorage", "HolidayRepo: impVisitedPlace.getHolidayID: " + impVisitedPlace.getHolidayID());
-
-        currentEditVisitedPlace = impVisitedPlace;
-        this.vPlaceID = vPlaceID;
+    public void updateVisitedPlace (VisitedPlace impVisitedPlace){
+        new updateVisitedPlaceAsyncTask(mHolidayDAO).execute(impVisitedPlace);
 
     }
 
-    private static class updateVisitedPlaceAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class updateVisitedPlaceAsyncTask extends AsyncTask<VisitedPlace, Void, Void> {
         private final HolidayDAO mDao;
 
         updateVisitedPlaceAsyncTask(HolidayDAO dao) {mDao = dao;}
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            mDao.updateVisitedPlace(vPlaceID,
-                    currentEditVisitedPlace.getHolidayID(),
-                    currentEditVisitedPlace.getName(),
-                    currentEditVisitedPlace.getDate(),
-                    currentEditVisitedPlace.getLocation(),
-                    currentEditVisitedPlace.getTravellers(),
-                    currentEditVisitedPlace.getNotes(),
-                    currentEditVisitedPlace.getImagePath(),
-                    currentEditVisitedPlace.getImageDate(),
-                    currentEditVisitedPlace.getImageTag());
+        protected Void doInBackground(final VisitedPlace... visitedPlaces) {
+            mDao.updateVisitedPlace(visitedPlaces[0]);
 
             return null;
         }

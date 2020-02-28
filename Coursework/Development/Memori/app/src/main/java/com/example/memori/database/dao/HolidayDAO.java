@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.VisitedPlace;
@@ -44,47 +45,10 @@ public interface HolidayDAO {
     @Query("SELECT COUNT(*) FROM visited_places_table")
     int isVPlaceEmpty();
 
-    @Query("UPDATE holiday_table SET NAME = :hName," +
-            "STARTING_LOC = :hStartLoc," +
-            "DESTINATION = :hEndLoc," +
-            "START_DATE = :hStartDate," +
-            "END_DATE = :hEndDate," +
-            "TRAVELLERS = :hTravellers," +
-            "NOTES = :hNotes," +
-            "IMAGE_PATH = :hImagePath," +
-            "IMAGE_TAG = :hImageTag" +
-            " WHERE id = :hID")
-    void updateHoliday(int hID,
-                       String hName,
-                       String hStartLoc,
-                       String hEndLoc,
-                       String hStartDate,
-                       String hEndDate,
-                       String hTravellers,
-                       String hNotes,
-                       String hImagePath,
-                       String hImageTag);
+    @Update()
+    void updateHoliday(Holiday... holiday);
 
-    @Query("UPDATE visited_places_table SET " +
-            "HOLIDAY_ID = :hID," +
-            "NAME = :vpName," +
-            "DATE = :vpDate," +
-            "LOCATION = :vpLoc," +
-            "TRAVELLERS = :vpTravellers," +
-            "NOTES = :vpNotes," +
-            "IMAGE_PATH = :vpImagePath," +
-            "IMAGE_DATE = :vpImageDate," +
-            "IMAGE_TAG = :vpImageTag" +
-            " WHERE id = :vPlaceID")
-    void updateVisitedPlace(int vPlaceID,
-                       int hID,
-                       String vpName,
-                       String vpDate,
-                       String vpLoc,
-                       String vpTravellers,
-                       String vpNotes,
-                       String vpImagePath,
-                       String vpImageDate,
-                       String vpImageTag);
+    @Update()
+    void updateVisitedPlace(VisitedPlace... vPlace);
 
 }
