@@ -55,7 +55,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         if (id == R.id.action_sort_name) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Select the order for sorting the Image Name...");
+            pictureDialog.setTitle("Select the order for sorting the Images Name...");
             String[] pictureDialogItems = {
                     "Ascending",
                     "Descending"};
@@ -91,7 +91,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         } else if (id == R.id.action_sort_tag) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Select the order for sorting the Image Tag...");
+            pictureDialog.setTitle("Select the order for sorting the Images Tag...");
             String[] pictureDialogItems = {
                     "Ascending",
                     "Descending"};

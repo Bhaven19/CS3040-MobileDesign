@@ -12,9 +12,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
-@Database(entities = {Holiday.class, VisitedPlace.class}, version = 14, exportSchema = false)
+@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 15, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -59,6 +60,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
             populateHolidays();
             populateVisitedPlaces();
+            populateImages();
 
             return null;
         }
@@ -103,6 +105,43 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                 for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
                     VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imagePath, imageDate, imageTag);
                     mHolidayDao.insertVisitedPlace(visitedPlace);
+                }
+            }
+        }
+
+        public void populateImages(){
+            int[] holidayID = new int[5];
+            holidayID [0] = mHolidayDao.getLatestHoliday().get_id();
+            holidayID [1] = 0;
+            holidayID [2] = mHolidayDao.getLatestHoliday().get_id();
+            holidayID [3] = 0;
+            holidayID [4] = mHolidayDao.getLatestHoliday().get_id();
+
+            int[] vPlaceID = new int[5];
+            vPlaceID [0] = 0;
+            vPlaceID [1] = mHolidayDao.getLatestVPlace().get_id();
+            vPlaceID [2] = 0;
+            vPlaceID [3] = mHolidayDao.getLatestVPlace().get_id();
+            vPlaceID [4] = 0;
+
+            String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
+            String imageDate = "23/01/2020";
+            String imageTag = "summer";
+
+            String[] type = new String[5];
+            type[0] = "holiday";
+            type[1] = "vplace";
+            type[2] = "holiday";
+            type[3] = "vplace";
+            type[4] = "holiday";
+
+            if (mHolidayDao.isImagesEmpty() == 0){
+
+                mHolidayDao.deleteAllImages();
+
+                for (int i = 0; i <= 9; i++) {
+                    Images newImages = new Images(holidayID[i], vPlaceID[i], imagePath, imageDate, imageTag, type[i]);
+                    mHolidayDao.insertImage(newImages);
                 }
             }
         }

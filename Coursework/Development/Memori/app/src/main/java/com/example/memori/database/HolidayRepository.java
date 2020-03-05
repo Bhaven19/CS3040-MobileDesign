@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.dao.HolidayDAO;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
@@ -17,20 +18,14 @@ public class HolidayRepository {
 
     private LiveData<List<Holiday>> mAllHoliday;
     private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
-    private Holiday mChosenHoliday;
-
-    private static Holiday mLatestHoliday;
-    public static Holiday currentEditHoliday;
-    public static VisitedPlace currentEditVisitedPlace;
-
-    public static int holidayID;
-    public static int vPlaceID;
+    private LiveData<List<Images>> mAllImages;
 
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();
         mAllHoliday = mHolidayDAO.getAllHolidays();
         mAllVisitedPlaces = mHolidayDAO.getAllVisitedPlaces();
+        mAllImages = mHolidayDAO.getAllImages();
     }
 
     //----------------------------------
@@ -41,16 +36,14 @@ public class HolidayRepository {
     public LiveData<List<VisitedPlace>> getAllVisitedPlaces() {
         return mAllVisitedPlaces;
     }
-    public Holiday getHoliday(int choice){ return mHolidayDAO.getHoliday(choice); }
+    public LiveData<List<Images>> getAllImages() {
+        return mAllImages;
+    }
 
     //----------------------------------
 
     public void insertHoliday (Holiday impHoliday) {
         new insertHolidayAsyncTask(mHolidayDAO).execute(impHoliday);
-    }
-
-    public void insertVisitedPlace (VisitedPlace visitedPlace) {
-        new insertVisitedPlaceAsyncTask(mHolidayDAO).execute(visitedPlace);
     }
 
     private static class insertHolidayAsyncTask extends AsyncTask<Holiday, Void, Void> {
@@ -67,6 +60,10 @@ public class HolidayRepository {
         }
     }
 
+    public void insertVisitedPlace (VisitedPlace visitedPlace) {
+        new insertVisitedPlaceAsyncTask(mHolidayDAO).execute(visitedPlace);
+    }
+
     private static class insertVisitedPlaceAsyncTask extends AsyncTask<VisitedPlace, Void, Void> {
         private HolidayDAO mAsyncTaskDao;
 
@@ -77,6 +74,24 @@ public class HolidayRepository {
         @Override
         protected Void doInBackground(final VisitedPlace... params) {
             mAsyncTaskDao.insertVisitedPlace(params[0]);
+            return null;
+        }
+    }
+
+    public void insertImage (Images impImages) {
+        new insertImageAsyncTask(mHolidayDAO).execute(impImages);
+    }
+
+    private static class insertImageAsyncTask extends AsyncTask<Images, Void, Void> {
+        private HolidayDAO mAsyncTaskDao;
+
+        insertImageAsyncTask(HolidayDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Images... params) {
+            mAsyncTaskDao.insertImage(params[0]);
             return null;
         }
     }
@@ -113,6 +128,24 @@ public class HolidayRepository {
         @Override
         protected Void doInBackground(final VisitedPlace... visitedPlaces) {
             mDao.updateVisitedPlace(visitedPlaces[0]);
+
+            return null;
+        }
+    }
+
+    public void updateImage (Images impImages){
+        new updateImageAsyncTask(mHolidayDAO).execute(impImages);
+
+    }
+
+    private static class updateImageAsyncTask extends AsyncTask<Images, Void, Void> {
+        private final HolidayDAO mDao;
+
+        updateImageAsyncTask(HolidayDAO dao) {mDao = dao;}
+
+        @Override
+        protected Void doInBackground(final Images... images) {
+            mDao.updateImage(images[0]);
 
             return null;
         }

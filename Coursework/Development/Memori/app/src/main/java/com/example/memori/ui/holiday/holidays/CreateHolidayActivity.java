@@ -137,8 +137,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -166,8 +166,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -263,7 +263,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                     bmpHolidayImage = bitmap;
 
-                    Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateHolidayActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -277,7 +277,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
             bmpHolidayImage = thumbnail;
 
-            Toast.makeText(CreateHolidayActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateHolidayActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }

@@ -49,7 +49,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        Log.d("ImageFind", "Image path, impHoliday.getImagePath(): " + impHoliday.getImagePath());
+        Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impHoliday.getImagePath());
         String pathName = impHoliday.getImagePath();
 
         if (pathName == null) {

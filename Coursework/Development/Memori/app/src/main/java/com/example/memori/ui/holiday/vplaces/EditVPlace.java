@@ -137,8 +137,8 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -166,8 +166,8 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -238,7 +238,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
                     bmpHolidayImage = bitmap;
 
-                    Toast.makeText(EditVPlace.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditVPlace.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -252,7 +252,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
             bmpHolidayImage = thumbnail;
 
-            Toast.makeText(EditVPlace.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditVPlace.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }

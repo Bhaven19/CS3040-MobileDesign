@@ -48,7 +48,7 @@ public class ViewVPlace extends AppCompatActivity {
         viewVPlaceCompanions.setText(impVisitedPlace.getTravellers());
 
 
-        Log.d("ImageFind", "Image path, impVisitedPlace.getImagePath(): " + impVisitedPlace.getImagePath());
+        Log.d("ImageFind", "Images path, impVisitedPlace.getImagePath(): " + impVisitedPlace.getImagePath());
         String pathName = impVisitedPlace.getImagePath();
 
         if (pathName == null) {

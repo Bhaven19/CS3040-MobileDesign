@@ -130,8 +130,8 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -159,8 +159,8 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
-                            "Select Image from gallery",
-                            "Take new Image with camera"};
+                            "Select Images from gallery",
+                            "Take new Images with camera"};
                     pictureDialog.setItems(pictureDialogItems,
                             (dialog, which) -> {
                                 switch (which) {
@@ -231,7 +231,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
                     bmpHolidayImage = bitmap;
 
-                    Toast.makeText(CreateVPlaceActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateVPlaceActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -245,7 +245,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
             bmpHolidayImage = thumbnail;
 
-            Toast.makeText(CreateVPlaceActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateVPlaceActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }
