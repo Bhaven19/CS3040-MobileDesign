@@ -15,7 +15,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
-@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 15, exportSchema = false)
+@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 16, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -58,9 +58,10 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
 
+            populateImages();
             populateHolidays();
             populateVisitedPlaces();
-            populateImages();
+
 
             return null;
         }
@@ -72,15 +73,15 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String [] dates = {"02/01/2020", "10/02/2020"};
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
-            String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
-            String imageTag = "summer";
+
+            int imageID = mHolidayDao.getLatestImage().get_id();
 
             if (mHolidayDao.isHolidayEmpty() == 0) {
 
                 mHolidayDao.deleteAllHolidays();
 
                 for (int i = 0; i <= holidayNames.length - 1; i++) {
-                    Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imagePath, imageTag);
+                    Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imageID);
                     mHolidayDao.insertHoliday(holiday);
                 }
             }
@@ -94,53 +95,31 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String location = "Birmingham";
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
-            String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
-            String imageDate = "23/01/2020";
-            String imageTag = "summer";
+
+            int imageID = mHolidayDao.getLatestImage().get_id() - 1;
 
             if (mHolidayDao.isVPlaceEmpty() == 0){
 
                 mHolidayDao.deleteAllVisitedPlaces();
 
                 for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
-                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imagePath, imageDate, imageTag);
+                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imageID);
                     mHolidayDao.insertVisitedPlace(visitedPlace);
                 }
             }
         }
 
         public void populateImages(){
-            int[] holidayID = new int[5];
-            holidayID [0] = mHolidayDao.getLatestHoliday().get_id();
-            holidayID [1] = 0;
-            holidayID [2] = mHolidayDao.getLatestHoliday().get_id();
-            holidayID [3] = 0;
-            holidayID [4] = mHolidayDao.getLatestHoliday().get_id();
-
-            int[] vPlaceID = new int[5];
-            vPlaceID [0] = 0;
-            vPlaceID [1] = mHolidayDao.getLatestVPlace().get_id();
-            vPlaceID [2] = 0;
-            vPlaceID [3] = mHolidayDao.getLatestVPlace().get_id();
-            vPlaceID [4] = 0;
-
             String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
             String imageDate = "23/01/2020";
             String imageTag = "summer";
-
-            String[] type = new String[5];
-            type[0] = "holiday";
-            type[1] = "vplace";
-            type[2] = "holiday";
-            type[3] = "vplace";
-            type[4] = "holiday";
 
             if (mHolidayDao.isImagesEmpty() == 0){
 
                 mHolidayDao.deleteAllImages();
 
                 for (int i = 0; i <= 9; i++) {
-                    Images newImages = new Images(holidayID[i], vPlaceID[i], imagePath, imageDate, imageTag, type[i]);
+                    Images newImages = new Images(imagePath, imageDate, imageTag);
                     mHolidayDao.insertImage(newImages);
                 }
             }

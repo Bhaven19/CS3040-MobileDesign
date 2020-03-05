@@ -36,25 +36,17 @@ public class VisitedPlace implements Serializable {
     @ColumnInfo(name = "NOTES")
     private String notes;
 
-    @ColumnInfo(name = "IMAGE_PATH")
-    private String imagePath;
+    @ColumnInfo(name = "IMAGE_ID")
+    private int imageID;
 
-    @ColumnInfo(name = "IMAGE_DATE")
-    private String imageDate;
-
-    @ColumnInfo(name = "IMAGE_TAG")
-    private String imageTag;
-
-    public VisitedPlace(@NonNull int holidayID, @NonNull String name, @NonNull String date, String location, String travellers, String notes, String imagePath, String imageDate, String imageTag) {
+    public VisitedPlace(@NonNull int holidayID, @NonNull String name, @NonNull String date, String location, String travellers, String notes, int imageID) {
         this.holidayID = holidayID;
         this.name = name;
         this.date = date;
         this.location = location;
         this.travellers = travellers;
         this.notes = notes;
-        this.imagePath = imagePath;
-        this.imageDate = imageDate;
-        this.imageTag = imageTag;
+        this.imageID = imageID;
 
     }
 
@@ -78,22 +70,8 @@ public class VisitedPlace implements Serializable {
 
     public String getNotes(){ return notes; }
 
-    public String getImagePath(){ return imagePath; }
-
-    public String getImageDate(){ return imageDate; }
-
-    public String getImageTag(){ return imageTag; }
-
     public void setDate(@NonNull String date) {
         this.date = date;
-    }
-
-    public void setImageDate(String imageDate) {
-        this.imageDate = imageDate;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public void setLocation(String location) {
@@ -116,7 +94,11 @@ public class VisitedPlace implements Serializable {
         this.travellers = travellers;
     }
 
-    public void setImageTag(String imageTag) {
-        this.imageTag = imageTag;
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 }

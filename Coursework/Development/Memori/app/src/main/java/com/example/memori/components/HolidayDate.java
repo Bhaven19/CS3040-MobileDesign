@@ -15,6 +15,8 @@ public class HolidayDate {
 
     }
 
+    public HolidayDate(){};
+
     public HolidayDate toObject(String stringDate){
         int date;
         int month;
@@ -76,6 +78,10 @@ public class HolidayDate {
             return true;
         }
 
+    }
+
+    public static String getCurrentDate(){
+        return Calendar.DAY_OF_MONTH + "/" + Calendar.MONTH + "/" + Calendar.YEAR;
     }
 
 }

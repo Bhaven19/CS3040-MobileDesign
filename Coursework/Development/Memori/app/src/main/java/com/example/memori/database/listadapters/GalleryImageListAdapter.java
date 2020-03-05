@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
-import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageListAdapter.ViewHolder> {
 
     private ArrayList<String> allImages;
-    private List<Holiday> mAllHolidays;
+    private List<Images> mAllImages;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private int imageCount = 0;
@@ -44,12 +44,10 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
         imageCount++;
         Log.d("GalleryImages", "GalleryImageListAdapter: imageCount: " + imageCount);
 
-        if (mAllHolidays != null) {
+        if (mAllImages != null) {
             String pathName = allImages.get(position);
 
-            if (pathName == null) {
-
-            } else {
+            if (pathName != null) {
                 File imageFile = new File(pathName);
 
                 if (imageFile.exists()){
@@ -111,15 +109,15 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
 
     @Override
     public int getItemCount() {
-        if (mAllHolidays != null)
-            return mAllHolidays.size();
+        if (mAllImages != null)
+            return mAllImages.size();
         else return 0;
     }
 
-    public void setHolidays(List<Holiday> holidays){
-        mAllHolidays = holidays;
+    public void setHolidays(List<Images> images){
+        mAllImages = images;
         notifyDataSetChanged();
-        listToArrayList(mAllHolidays);
+        listToArrayList(mAllImages);
     }
 
     // parent activity will implement this method to respond to click events
@@ -158,13 +156,11 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
         return allImages.get(id);
     }
 
-
-
-    public void listToArrayList(List<Holiday> mData){
+    public void listToArrayList(List<Images> mData){
         allImages = new ArrayList<>();
 
-        for (Holiday currentHoliday : mData){
-            allImages.add(currentHoliday.getImagePath());
+        for (Images currentImage : mData){
+            allImages.add(currentImage.getPath());
         }
 
     }

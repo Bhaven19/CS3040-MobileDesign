@@ -1,0 +1,15 @@
+images entities
+	path
+	tag
+	date
+
+visited place entities
+	holidayid	int
+	name		string
+	date		string
+	location	string
+	travellers	string
+	notes		string
+	imageid		int
+
+need to set up (set values function) within the editVPlace method

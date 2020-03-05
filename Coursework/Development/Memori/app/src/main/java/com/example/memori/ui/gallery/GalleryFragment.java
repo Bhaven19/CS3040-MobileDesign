@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
-import com.example.memori.database.listadapters.GalleryImageListAdapter;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
+import com.example.memori.database.entities.VisitedPlace;
+import com.example.memori.database.listadapters.GalleryImageListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
@@ -39,6 +42,12 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     private static final int SORT_OPTIONS_DATE_NEW_TO_OLD = 6;
     private static final int SORT_OPTIONS_TAG_A_TO_Z = 7;
     private static final int SORT_OPTIONS_TAG_Z_TO_A = 8;
+
+    private List<Images> mAllImages;
+    private List<Holiday> mAllHolidays;
+    private List<VisitedPlace> mAllVPlaces;
+
+    private HashMap<String, Integer> allImageHashMap;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -149,16 +158,28 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
 
-        galleryViewModel.getAllHolidays().observe(this, holidays -> {
+        galleryViewModel.getAllImages().observe(this, images -> {
             // Update the cached copy of the words in the adapter.
-
             Log.d("SortingGallery", "GalleryFragment: Updating Holidays");
 
-            holidays = sortBy(sortOption, holidays);
+            mAllImages = images;
 
-            galleryImageListAdapter.setHolidays(holidays);
+            images = sortBy(sortOption, images);
+
+            galleryImageListAdapter.setHolidays(images);
 
         });
+
+        galleryViewModel.getAllHolidays().observe(this, holidays -> {
+            mAllHolidays = holidays;
+
+        });
+
+        galleryViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+            mAllVPlaces = vplaces;
+
+        });
+
     }
 
     private void createToolbar(View view){
@@ -172,76 +193,72 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
-    private List<Holiday> sortBy(int option, List<Holiday> mHolidays){
+    private List<Images> sortBy(int option, List<Images> mImages){
         Log.d("SortingGallery", "GalleryFragment: Sorting");
 
-        ArrayList<Holiday> holidays = new ArrayList<>();
-        ArrayList<String> hSortField = new ArrayList<>();
+        ArrayList<Images> images = new ArrayList<>();
+        ArrayList<String> imageSortField = new ArrayList<>();
 
         switch (option) {
             case SORT_OPTIONS_NAME_A_TO_Z:
                 Log.d("SortingGallery", "GalleryFragment: Sorting Name ASC");
 
-                holidays.clear();
-                hSortField.clear();
+                images.clear();
+                imageSortField.clear();
+                accessAllImagesNames();
 
-                for (Holiday currentHoliday : mHolidays){
-                    hSortField.add(currentHoliday.getName());
+                for (HashMap.Entry<String, Integer> currentPair : allImageHashMap.entrySet()){
+                    imageSortField.add(currentPair.getKey());
                 }
 
-                Collections.reverse(hSortField);
+                Collections.reverse(imageSortField);
 
-                for (String currentHolidayName : hSortField){
-                    for (Holiday currentHoliday : mHolidays){
-                        if (currentHolidayName == currentHoliday.getName()){
-                            holidays.add(currentHoliday);
+                for (String currentHolidayName : imageSortField){
+                    Images currentImage = getImage(allImageHashMap.get(currentHolidayName));
 
-                        }
+                    images.add(currentImage);
 
-                    }
                 }
 
-                return holidays;
+                return images;
 
             case SORT_OPTIONS_NAME_Z_TO_A:
                 Log.d("SortingGallery", "GalleryFragment: Sorting Name DESC");
 
-                holidays.clear();
-                hSortField.clear();
+                images.clear();
+                imageSortField.clear();
+                accessAllImagesNames();
 
-                for (Holiday currentHoliday : mHolidays){
-                    hSortField.add(currentHoliday.getName());
+                for (HashMap.Entry<String, Integer> currentPair : allImageHashMap.entrySet()){
+                    imageSortField.add(currentPair.getKey());
                 }
 
-                Collections.sort(hSortField);
+                Collections.sort(imageSortField);
 
-                for (String currentHolidayName : hSortField){
-                    for (Holiday currentHoliday : mHolidays){
-                        if (currentHolidayName == currentHoliday.getName()){
-                            holidays.add(currentHoliday);
+                for (String currentHolidayName : imageSortField){
+                    Images currentImage = getImage(allImageHashMap.get(currentHolidayName));
 
-                        }
+                    images.add(currentImage);
 
-                    }
                 }
 
-                return holidays;
+                return images;
 //            case SORT_OPTIONS_LOCATION_A_TO_Z:
 //                Log.d("SortingGallery", "GalleryFragment: Sorting Location ASC");
 //
 //                holiday.clear();
 //                hSortField.clear();
 //
-//                for (Holiday currentHoliday : mHolidays){
-//                    hSortField.add(currentHoliday.getName());
+//                for (Images currentImage : mImages){
+//                    hSortField.add(currentImage.getName());
 //                }
 //
 //                Collections.reverse(hSortField);
 //
 //                for (String currentHolidayName : hSortField){
-//                    for (Holiday currentHoliday : mHolidays){
-//                        if (currentHolidayName == currentHoliday.getName()){
-//                            holiday.add(currentHoliday);
+//                    for (Images currentImage : mImages){
+//                        if (currentHolidayName == currentImage.getName()){
+//                            holiday.add(currentImage);
 //
 //                        }
 //
@@ -252,16 +269,16 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //            case SORT_OPTIONS_LOCATION_Z_TO_A:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
-//                for (Holiday currentHoliday : mHolidays){
-//                    hNames.add(currentHoliday.getName());
+//                for (Images currentImage : mImages){
+//                    hNames.add(currentImage.getName());
 //                }
 //
 //                Collections.sort(hNames);
 //
 //                for (String currentHolidayName : hNames){
-//                    for (Holiday currentHoliday : mHolidays){
-//                        if (currentHolidayName == currentHoliday.getName()){
-//                            holiday.add(currentHoliday);
+//                    for (Images currentImage : mImages){
+//                        if (currentHolidayName == currentImage.getName()){
+//                            holiday.add(currentImage);
 //
 //                        }
 //
@@ -273,16 +290,16 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //            case SORT_OPTIONS_NAME_A_TO_Z:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
-//                for (Holiday currentHoliday : mHolidays){
-//                    hNames.add(currentHoliday.getName());
+//                for (Images currentImage : mImages){
+//                    hNames.add(currentImage.getName());
 //                }
 //
 //                Collections.sort(hNames);
 //
 //                for (String currentHolidayName : hNames){
-//                    for (Holiday currentHoliday : mHolidays){
-//                        if (currentHolidayName == currentHoliday.getName()){
-//                            holiday.add(currentHoliday);
+//                    for (Images currentImage : mImages){
+//                        if (currentHolidayName == currentImage.getName()){
+//                            holiday.add(currentImage);
 //
 //                        }
 //
@@ -294,16 +311,16 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 //            case SORT_OPTIONS_NAME_Z_TO_A:
 //                ArrayList<String> hNames = new ArrayList<>();
 //
-//                for (Holiday currentHoliday : mHolidays){
-//                    hNames.add(currentHoliday.getName());
+//                for (Images currentImage : mImages){
+//                    hNames.add(currentImage.getName());
 //                }
 //
 //                Collections.sort(hNames);
 //
 //                for (String currentHolidayName : hNames){
-//                    for (Holiday currentHoliday : mHolidays){
-//                        if (currentHolidayName == currentHoliday.getName()){
-//                            holiday.add(currentHoliday);
+//                    for (Images currentImage : mImages){
+//                        if (currentHolidayName == currentImage.getName()){
+//                            holiday.add(currentImage);
 //
 //                        }
 //
@@ -315,38 +332,37 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             case SORT_OPTIONS_TAG_A_TO_Z:
                 ArrayList<String> hAZTagsNames = new ArrayList<>();
 
-                for (Holiday currentHoliday : mHolidays){
-                    hAZTagsNames.add(currentHoliday.getImageTag());
+                for (Images currentImage : mImages){
+                    hAZTagsNames.add(currentImage.getTag());
                 }
 
                 Collections.reverse(hAZTagsNames);
 
-                for (String currentHolidayTag : hAZTagsNames){
-                    for (Holiday currentHoliday : mHolidays){
-                        if (currentHolidayTag == currentHoliday.getImageTag()){
-                            holidays.add(currentHoliday);
+                for (String currentHolidayTag : hAZTagsNames) {
+                    for (Images currentImage : mImages) {
+                        if (currentHolidayTag == currentImage.getTag()) {
+                            images.add(currentImage);
 
                         }
 
                     }
                 }
 
-
-                return holidays;
+                return images;
 
             case SORT_OPTIONS_TAG_Z_TO_A:
                 ArrayList<String> hZATagsNames = new ArrayList<>();
 
-                for (Holiday currentHoliday : mHolidays){
-                    hZATagsNames.add(currentHoliday.getImageTag());
+                for (Images currentImage : mImages){
+                    hZATagsNames.add(currentImage.getTag());
                 }
 
                 Collections.sort(hZATagsNames);
 
                 for (String currentHolidayTag : hZATagsNames){
-                    for (Holiday currentHoliday : mHolidays){
-                        if (currentHolidayTag == currentHoliday.getImageTag()){
-                            holidays.add(currentHoliday);
+                    for (Images currentImage : mImages){
+                        if (currentHolidayTag == currentImage.getTag()){
+                            images.add(currentImage);
 
                         }
 
@@ -354,16 +370,42 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 }
 
 
-                return holidays;
+                return images;
         }
 
-        return mHolidays;
+        return mImages;
 
     }
 
     private void displayToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void accessAllImagesNames(){
+        allImageHashMap = new HashMap<>();
+
+        for (Holiday currentHoliday : mAllHolidays){
+            allImageHashMap.put(currentHoliday.getName(), currentHoliday.getImageID());
+        }
+
+        for (VisitedPlace currentVPlace : mAllVPlaces){
+            allImageHashMap.put(currentVPlace.getName(), currentVPlace.getImageID());
+        }
+
+    }
+
+    private Images getImage(int imageID){
+        Images returnImg = null;
+
+        for (Images currentImage : mAllImages) {
+            if (imageID == currentImage.get_id()) {
+                returnImg = currentImage;
+
+            }
+        }
+
+        return returnImg;
     }
 
 }

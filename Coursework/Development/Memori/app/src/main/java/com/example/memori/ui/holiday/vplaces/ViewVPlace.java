@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
+import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.io.File;
 public class ViewVPlace extends AppCompatActivity {
 
     private VisitedPlace impVisitedPlace;
+    private Images impImage;
 
     private TextView viewVPlaceName, viewVPlaceDate, viewVPlaceNotes, viewVPlaceCompanions, viewNoImage;
     private ImageView viewHolidayImage;
@@ -31,6 +33,7 @@ public class ViewVPlace extends AppCompatActivity {
         Intent obtainIntent = getIntent();
 
         impVisitedPlace = (VisitedPlace) obtainIntent.getSerializableExtra("chosenVisitedPlace");
+        impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
 
         viewVPlaceName = findViewById(R.id.text_VPlaceName);
         viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
@@ -48,8 +51,8 @@ public class ViewVPlace extends AppCompatActivity {
         viewVPlaceCompanions.setText(impVisitedPlace.getTravellers());
 
 
-        Log.d("ImageFind", "Images path, impVisitedPlace.getImagePath(): " + impVisitedPlace.getImagePath());
-        String pathName = impVisitedPlace.getImagePath();
+        Log.d("ImageFind", "Images path, impVisitedPlace.getImagePath(): " + impImage.getPath());
+        String pathName = impImage.getPath();
 
         if (pathName == null) {
             Log.d("ImageFind", "ViewVPlace, NO IMAGE SAVED");

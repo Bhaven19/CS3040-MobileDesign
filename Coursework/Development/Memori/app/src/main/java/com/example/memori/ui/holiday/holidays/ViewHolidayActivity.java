@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 
 import java.io.File;
 
@@ -22,6 +23,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
     private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
     private ImageView viewHolidayImage;
+    private Images impImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
         Intent obtainIntent = getIntent();
         impHoliday = (Holiday) obtainIntent.getSerializableExtra("chosenHoliday");
+        impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
 
         viewHolidayName = findViewById(R.id.text_VPlaceName);
         viewHolidayStartingLoc = findViewById(R.id.label_VPlaceLoc);
@@ -49,8 +52,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impHoliday.getImagePath());
-        String pathName = impHoliday.getImagePath();
+        Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impImage.getPath());
+        String pathName = impImage.getPath();
 
         if (pathName == null) {
             Log.d("ImageFind", "ViewHolidayActivity, NO IMAGE SAVED");

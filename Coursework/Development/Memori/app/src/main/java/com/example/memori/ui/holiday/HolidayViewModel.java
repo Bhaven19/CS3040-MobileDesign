@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.memori.database.HolidayRepository;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
 import java.util.List;
@@ -17,16 +18,19 @@ public class HolidayViewModel extends AndroidViewModel {
     private HolidayRepository mRepository;
     private LiveData<List<Holiday>> mAllHolidays;
     private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
+    private LiveData<List<Images>> mAllImages;
 
     public HolidayViewModel(Application application) {
         super(application);
         mRepository = new HolidayRepository(application);
         mAllHolidays = mRepository.getAllHolidays();
         mAllVisitedPlaces = mRepository.getAllVisitedPlaces();
+        mAllImages = mRepository.getAllImages();
     }
 
     LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
     LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mAllVisitedPlaces; }
+    LiveData<List<Images>> getAllImages() { return mAllImages; }
 
     public String holidayNamesToString(){
         String list = "";
@@ -54,6 +58,9 @@ public class HolidayViewModel extends AndroidViewModel {
         Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getDate: " + impVPlace.getDate());
         Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getHolidayID: " + impVPlace.getHolidayID());
     }
+
+    public void insertImage(Images impImage) { mRepository.insertImage(impImage); }
+    public void updateImage(Images impImage) { mRepository.insertImage(impImage); }
 
     //public void deleteAllHolidays() { mRepository.insertHoliday(mRepository.deleteAllHolidays()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }

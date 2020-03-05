@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
+import com.example.memori.database.entities.Images;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,11 +47,11 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
     private int GALLERY = 1, CAMERA = 2;
     private static final String IMAGE_DIRECTORY = "/memori/";
     private Boolean pictureSaved = false;
-    private String mImagePath;
+    private String mImagePath, mImageDate, mImageTag;
     private Bitmap bmpHolidayImage;
 
     private ArrayList<String> allHolidays;
-    private String chosenHoliday = "", imageDate = "";
+    private String chosenHoliday = "";
 
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
 
@@ -107,18 +108,17 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                         vPlaceDate = date.toString();
                     }
 
-                    String vPlaceImagePath = mImagePath;
-                    String vPlaceImageDate = imageDate;
-
                     saveVPlaceIntent.putExtra("vPlaceHoliday", vPlaceHoliday);
                     saveVPlaceIntent.putExtra("vPlaceName", vPlaceName);
                     saveVPlaceIntent.putExtra("vPlaceDate", vPlaceDate);
                     saveVPlaceIntent.putExtra("vPlaceLocation", vPlaceLocation);
                     saveVPlaceIntent.putExtra("vPlaceCompanions", vPlaceCompanions);
                     saveVPlaceIntent.putExtra("vPlaceNotes", vPlaceNotes);
-                    saveVPlaceIntent.putExtra("vImagePath", vPlaceImagePath);
-                    saveVPlaceIntent.putExtra("vPlaceImageDate", vPlaceImagePath);
-                    saveVPlaceIntent.putExtra("vImageTag", vPlaceImagePath);
+
+                    mImageTag = "";
+                    Images newImage = new Images(mImagePath, mImageDate, mImageTag);
+
+                    saveVPlaceIntent.putExtra("vImage", newImage);
 
                     setResult(NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }
@@ -269,10 +269,9 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
-            mImagePath = f.getAbsolutePath();
 
-            HolidayDate currentImageDate = new HolidayDate(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR);
-            imageDate = currentImageDate.toString();
+            mImagePath = f.getAbsolutePath();
+            mImageDate = HolidayDate.getCurrentDate();
 
             return f.getAbsolutePath();
         } catch (IOException e1) {

@@ -20,6 +20,8 @@ public class HolidayRepository {
     private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
     private LiveData<List<Images>> mAllImages;
 
+    private static int impID;
+
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();

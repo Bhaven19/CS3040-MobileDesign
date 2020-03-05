@@ -26,6 +26,7 @@ import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
 import com.example.memori.database.HolidayRepository;
 import com.example.memori.database.entities.Holiday;
+import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
 import java.io.ByteArrayOutputStream;
@@ -64,6 +65,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
     public static final int SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 6;
 
     private VisitedPlace mVisitedPlace;
+    private Images vPlaceImage;
 
     private Boolean setSpinner = false;
 
@@ -73,8 +75,10 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vplace);
 
+        mVisitedPlace = (VisitedPlace) getIntent().getSerializableExtra("chosenVisitedPlace");
+        vPlaceImage = (Images) getIntent().getSerializableExtra("vPlaceImage");
         chosenHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
-        allHolidays = getIntent().getStringArrayListExtra("holidayList");
+        allHolidays = getIntent().getStringArrayListExtra("holidayNameList");
 
         textViewVPlaceName = findViewById(R.id.edit_vPlaceName);
         textViewVPlaceDate = findViewById(R.id.edit_VPlaceDate);
@@ -116,16 +120,18 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                     mVisitedPlace.setLocation(textViewVPlaceLoc.getText().toString());
                     mVisitedPlace.setTravellers(textViewVPlaceTravellers.getText().toString());
                     mVisitedPlace.setNotes(textViewVPlaceNotes.getText().toString());
-                    mVisitedPlace.setImagePath(mImagePath);
-                    mVisitedPlace.setImageDate(mImageDate);
-                    mVisitedPlace.setImageTag(mImageTag);
 
                     if (date != null){
                         mVisitedPlace.setDate(date.toString());
                     }
 
-                    saveVPlaceIntent.putExtra("vPlaceHoliday", vPlaceHoliday);
+                    vPlaceImage.setPath(mImagePath);
+                    vPlaceImage.setDate(mImageDate);
+                    vPlaceImage.setTag(mImageTag);
+
+                    saveVPlaceIntent.putExtra("editedVPlaceHoliday", vPlaceHoliday);
                     saveVPlaceIntent.putExtra("editedVPlace", mVisitedPlace);
+                    saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
 
                     setResult(SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }
@@ -332,9 +338,6 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
     public void setValues(){
         adapterVisitedPlaces = new HashMap<>();
-
-        mVisitedPlace = (VisitedPlace) getIntent().getSerializableExtra("chosenVisitedPlace");
-
         setSpinner = true;
 
         textViewVPlaceName.setText(isNull(mVisitedPlace.getName()));
@@ -343,15 +346,14 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
         textViewVPlaceTravellers.setText(isNull(mVisitedPlace.getTravellers()));
         textViewVPlaceNotes.setText(isNull(mVisitedPlace.getNotes()));
 
-        if (mVisitedPlace.getImagePath() != null){
+        if (vPlaceImage.getPath() != null){
             pictureSaved = true;
-            mImagePath = mVisitedPlace.getImagePath();
-            mImageDate = mVisitedPlace.getImageDate();
-            mImageTag = mVisitedPlace.getImageTag();
+            mImagePath = vPlaceImage.getPath();
+            mImageDate = vPlaceImage.getDate();
+            mImageTag = vPlaceImage.getTag();
         }
 
-        Log.d("VPlaceStorage", "EditVPlace: ON-ENTER- vPlaceName: " + textViewVPlaceName.getText().toString());
-        Log.d("VPlaceStorage", "EditVPlace: ON-ENTER- textViewVPlaceDate: " + textViewVPlaceDate.getText().toString());
+
     }
 
     public String isNull(String value) {

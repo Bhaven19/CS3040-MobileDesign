@@ -37,13 +37,10 @@ public class Holiday implements Serializable {
     @ColumnInfo(name = "NOTES")
     private String notes;
 
-    @ColumnInfo(name = "IMAGE_PATH")
-    private String imagePath;
+    @ColumnInfo(name = "IMAGE_ID")
+    private int imageID;
 
-    @ColumnInfo(name = "IMAGE_TAG")
-    private String imageTag;
-
-    public Holiday(@NonNull String name, String startingLoc, String destination, String startDate, String endDate, String travellers, String notes, String imagePath, String imageTag) {
+    public Holiday(@NonNull String name, String startingLoc, String destination, String startDate, String endDate, String travellers, String notes, int imageID) {
         this.name = name;
         this.startingLoc = startingLoc;
         this.destination = destination;
@@ -51,8 +48,7 @@ public class Holiday implements Serializable {
         this.endDate = endDate;
         this.travellers = travellers;
         this.notes = notes;
-        this.imagePath = imagePath;
-        this.imageTag = imageTag;
+        this.imageID = imageID;
 
     }
 
@@ -86,10 +82,6 @@ public class Holiday implements Serializable {
 
     public String getEndDate(){ return  endDate; }
 
-    public String getImagePath(){ return imagePath; }
-
-    public String getImageTag(){ return imageTag; }
-
     public void setName(@NonNull String name) {
         this.name = name;
     }
@@ -118,11 +110,11 @@ public class Holiday implements Serializable {
         this.notes = notes;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public int getImageID() {
+        return imageID;
     }
 
-    public void setImageTag(String imageTag) {
-        this.imageTag = imageTag;
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 }

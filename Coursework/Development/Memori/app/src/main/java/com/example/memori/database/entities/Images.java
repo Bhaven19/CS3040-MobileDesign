@@ -15,12 +15,6 @@ public class Images implements Serializable {
     @ColumnInfo(name = "ID")
     private int _id;
 
-    @ColumnInfo(name = "HOLIDAY_ID")
-    private int holidayID;
-
-    @ColumnInfo(name = "VPLACE_ID")
-    private int vPlaceID;
-
     @ColumnInfo(name = "PATH")
     private String path;
 
@@ -30,16 +24,10 @@ public class Images implements Serializable {
     @ColumnInfo(name = "DATE")
     private String date;
 
-    @ColumnInfo(name = "TYPE")
-    private String type;
-
-    public Images(int holidayID, int vPlaceID, String path, String tag, String date, @NonNull String type) {
-        this.holidayID = holidayID;
-        this.vPlaceID = vPlaceID;
+    public Images(String path, String tag, String date) {
         this.path = path;
         this.tag = tag;
         this.date = date;
-        this.type = type;
     }
 
     public void set_id(int mID){
@@ -48,22 +36,6 @@ public class Images implements Serializable {
 
     public int get_id(){
         return _id;
-    }
-
-    public int getHolidayID() {
-        return holidayID;
-    }
-
-    public void setHolidayID(int holidayID) {
-        this.holidayID = holidayID;
-    }
-
-    public int getVPlaceID() {
-        return vPlaceID;
-    }
-
-    public void setVPlaceID(int vPlaceID) {
-        this.vPlaceID = vPlaceID;
     }
 
     public String getPath() {
@@ -90,11 +62,4 @@ public class Images implements Serializable {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }
