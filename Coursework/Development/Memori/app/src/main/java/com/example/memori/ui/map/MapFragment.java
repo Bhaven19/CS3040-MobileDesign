@@ -78,7 +78,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        setMarker(50, 50, "Test");
+        setMarker(50, 50, "PresetLocation");
     }
 
     public void getCurrentLocation(){
@@ -111,6 +111,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng location = new LatLng(impLat, impLon);
         mMap.addMarker(new MarkerOptions().position(location).title(impName));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+
     }
 
     public void requestPermissions(){
@@ -129,5 +131,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         // At least one permission is denied
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMap = null;
     }
 }

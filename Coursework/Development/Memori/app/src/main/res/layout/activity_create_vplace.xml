@@ -128,17 +128,6 @@
             app:layout_constraintStart_toStartOf="@+id/edit_VPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
 
-        <Button
-            android:id="@+id/btn_searchVPlaceLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/btn_Search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceLoc" />
-
         <TextView
             android:id="@+id/label_Companions"
             android:layout_width="wrap_content"
@@ -146,7 +135,7 @@
             android:layout_marginTop="16dp"
             android:text="Who did you visit the place with"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceLoc"
-            app:layout_constraintTop_toBottomOf="@+id/btn_searchVPlaceLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_findPlace" />
 
         <EditText
             android:id="@+id/edit_vPlaceCompanions"
@@ -207,6 +196,15 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_saveVPlaceImage" />
+
+        <Button
+            android:id="@+id/btn_findPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find Place"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceLoc"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceLoc"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceLoc" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

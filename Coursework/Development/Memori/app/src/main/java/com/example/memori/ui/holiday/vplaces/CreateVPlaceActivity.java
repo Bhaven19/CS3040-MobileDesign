@@ -38,7 +38,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
     private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceLoc, textViewVPlaceTravellers, textViewVPlaceNotes;
     private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
-    private Button mAddImage, mSaveVPlace, btnDate;
+    private Button mFindPlace, mAddImage, mSaveVPlace, btnDate;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -68,7 +68,11 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         textViewVPlaceName = findViewById(R.id.edit_vPlaceName);
         textViewVPlaceDate = findViewById(R.id.edit_VPlaceDate);
+
         textViewVPlaceLoc = findViewById(R.id.edit_vPlaceLoc);
+        mFindPlace = findViewById(R.id.btn_findPlace);
+        mFindPlace.setOnClickListener(this);
+
         textViewVPlaceTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewVPlaceNotes = findViewById(R.id.edit_vPlaceNotes);
 
@@ -200,6 +204,12 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                             }
                         }, mYear, mMonth, mDay);
                 startDatePickerDialog.show();
+                break;
+            case R.id.btn_findPlace:
+//                PlaceOptions placeOptions = null;
+//
+//                Intent intent = new PlaceAutocomplete.IntentBuilder().accessToken(MAPBOX_ACCESS_TOKEN).placeOptions(placeOptions).build(this);
+//                startActivity(intent);
                 break;
         }
     }
