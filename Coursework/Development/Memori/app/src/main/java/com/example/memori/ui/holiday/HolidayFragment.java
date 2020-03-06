@@ -109,13 +109,38 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == NEW_HOLIDAY_ACTIVITY_REQUEST_CODE){
-            Holiday holiday =  (Holiday) data.getSerializableExtra("newHoliday");
             Images image =  (Images) data.getSerializableExtra("newImage");
 
-            Log.d("HolidayList", "HolidayFragment, imagePath: " + data.getStringExtra("holidayImagePath"));
-
-            mHolidayViewModel.insert(holiday);
             mHolidayViewModel.insertImage(image);
+
+            HolidayViewModel newHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+            int imageID = newHolidayViewModel.getLatestImage().get_id() + 1;
+
+            if (image !=null) {
+                Holiday holiday = new Holiday(data.getStringExtra("hName"),
+                        data.getStringExtra("hStartingLoc"),
+                        data.getStringExtra("hDestination"),
+                        data.getStringExtra("hStartDate"),
+                        data.getStringExtra("hEndDate"),
+                        data.getStringExtra("hCompanions"),
+                        data.getStringExtra("hNotes"),
+                        imageID);
+
+                mHolidayViewModel.insert(holiday);
+
+            } else {
+                Holiday holiday = new Holiday(data.getStringExtra("hName"),
+                        data.getStringExtra("hStartingLoc"),
+                        data.getStringExtra("hDestination"),
+                        data.getStringExtra("hStartDate"),
+                        data.getStringExtra("hEndDate"),
+                        data.getStringExtra("hCompanions"),
+                        data.getStringExtra("hNotes"),
+                        0);
+
+                mHolidayViewModel.insert(holiday);
+
+            }
 
             Log.d("HolidayList", "Holiday Saved");
 
@@ -131,17 +156,34 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         } else if (resultCode == NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
             Images image = (Images) data.getSerializableExtra("vImage");
-
-            VisitedPlace visitedPlace = new VisitedPlace( getHoliday( getHolidayID( data.getStringExtra("vPlaceHoliday") ) ).get_id(),
-                    data.getStringExtra("vPlaceName"),
-                    data.getStringExtra("vPlaceDate"),
-                    data.getStringExtra("vPlaceLocation"),
-                    data.getStringExtra("vPlaceCompanions"),
-                    data.getStringExtra("vPlaceNotes"),
-                    image.get_id());
-
-            mHolidayViewModel.insertVisitedPlace(visitedPlace);
             mHolidayViewModel.insertImage(image);
+
+            HolidayViewModel newHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+            int imageID = newHolidayViewModel.getLatestImage().get_id() + 1;
+
+            if (image !=null) {
+                VisitedPlace visitedPlace = new VisitedPlace(getHoliday(getHolidayID(data.getStringExtra("vPlaceHolidayName"))).get_id(),
+                        data.getStringExtra("vPlaceName"),
+                        data.getStringExtra("vPlaceDate"),
+                        data.getStringExtra("vPlaceLocation"),
+                        data.getStringExtra("vPlaceCompanions"),
+                        data.getStringExtra("vPlaceNotes"),
+                        imageID);
+
+                mHolidayViewModel.insertVisitedPlace(visitedPlace);
+
+            } else {
+                VisitedPlace visitedPlace = new VisitedPlace(getHoliday(getHolidayID(data.getStringExtra("vPlaceHolidayName"))).get_id(),
+                        data.getStringExtra("vPlaceName"),
+                        data.getStringExtra("vPlaceDate"),
+                        data.getStringExtra("vPlaceLocation"),
+                        data.getStringExtra("vPlaceCompanions"),
+                        data.getStringExtra("vPlaceNotes"),
+                        0);
+
+                mHolidayViewModel.insertVisitedPlace(visitedPlace);
+
+            }
 
             Log.d("VisitedPlaceStorage", "HolidayFragment: visitedPlace Stored");
 
@@ -260,6 +302,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
                         viewIntent.putExtra("chosenHoliday", myHoliday);
+
+                        Log.d("FindImage", "myHoliday.getImageID(): "+ myHoliday.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myHoliday.getImageID()));
 
                         startActivity(viewIntent);
@@ -293,9 +337,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             });
 
-
-
-
         } else if (currentActive == VPLACE_ACTIVE) {
             RecyclerView recyclerView = getView().findViewById(R.id.recyclerview_vPlaces);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -328,6 +369,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
                         viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+
+                        Log.d("FindImage", "myHoliday.getImageID(): "+ myVisitedPlace.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
 
                         startActivity(viewIntent);
@@ -474,10 +517,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         });
     }
 
-    public void updateAdapterViews(){
-
-    }
-
     //----------------HOLIDAY FUNCTIONS
 
     public ArrayList getAllHolidayNames(){
@@ -575,9 +614,9 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         return chosenVPlace;
     }
 
-    //----------------HOLIDAY FUNCTIONS
+    //----------------IMAGE FUNCTIONS
 
-    public ArrayList getAllImagess(){
+    public ArrayList getAllImageIDs(){
         ArrayList<Integer> imageIDs = new ArrayList<>();
 
         for (Images currentImage : allImages) {
@@ -585,19 +624,36 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             imageIDs.add(currentImage.get_id());
         }
+
         return imageIDs;
+    }
+
+    public Images getLatestImage(){
+        ArrayList<Integer> imageIDs = getAllImageIDs();
+        int biggestImageID = 0;
+
+        for (Integer currentImageID : imageIDs){
+            if (currentImageID > biggestImageID){
+                biggestImageID = currentImageID;
+            }
+        }
+
+        return getImage(biggestImageID);
     }
 
     public Images getImage(int id){
         Images chosenImage = null;
 
-        for (Images currentImage : allImages) {
+        Log.d("FindImage", "allImages.size:" + allImages.size());
+        for (int i = 0; i < allImages.size(); i++) {
+            Images currentImage = allImages.get(i);
+
             if (currentImage.get_id() == id){
                 chosenImage = currentImage;
 
-                Log.d("SpinnerHoliday", "HolidayFound");
+                Log.d("FindImage", "ImageFound");
             } else {
-                Log.d("SpinnerHoliday", "HolidayNotFound");
+                Log.d("FindImage", "ImageNotFound");
 
             }
         }

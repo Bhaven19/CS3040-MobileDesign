@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -51,7 +52,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
     private Bitmap bmpHolidayImage;
 
     private ArrayList<String> allHolidays;
-    private String chosenHoliday = "";
+    private String chosenHolidayName = "";
 
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
 
@@ -90,14 +91,14 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
             case R.id.btn_saveVPlace:
                 Intent saveVPlaceIntent = new Intent();
 
-                if (chosenHoliday == null || TextUtils.isEmpty(textViewVPlaceName.getText()) || TextUtils.isEmpty(textViewVPlaceDate.getText()) ) {
+                if (chosenHolidayName == null || TextUtils.isEmpty(textViewVPlaceName.getText()) || TextUtils.isEmpty(textViewVPlaceDate.getText()) ) {
 
                     setResult(0, saveVPlaceIntent);
 
                     Toast.makeText(getApplicationContext(), "Fields are empty, nothing was saved", Toast.LENGTH_LONG).show();
 
                 } else {
-                    String vPlaceHoliday = chosenHoliday;
+                    String vPlaceHoliday = chosenHolidayName;
                     String vPlaceName = textViewVPlaceName.getText().toString();
                     String vPlaceDate = "";
                     String vPlaceLocation = textViewVPlaceLoc.getText().toString();
@@ -108,7 +109,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                         vPlaceDate = date.toString();
                     }
 
-                    saveVPlaceIntent.putExtra("vPlaceHoliday", vPlaceHoliday);
+                    saveVPlaceIntent.putExtra("vPlaceHolidayName", vPlaceHoliday);
                     saveVPlaceIntent.putExtra("vPlaceName", vPlaceName);
                     saveVPlaceIntent.putExtra("vPlaceDate", vPlaceDate);
                     saveVPlaceIntent.putExtra("vPlaceLocation", vPlaceLocation);
@@ -293,6 +294,18 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
         for (String currentHolidayName : allHolidays){
             adapter.add(currentHolidayName);
         }
+
+        spinnerChooseHoliday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenHolidayName = (String) spinnerChooseHoliday.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
