@@ -23,42 +23,14 @@
             tools:text="placeholder text" />
 
         <TextView
-            android:id="@+id/textView_hStartLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hName"
-            tools:text="placeholder text" />
-
-        <TextView
-            android:id="@+id/textView_ToLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="To"
-            app:layout_constraintStart_toEndOf="@+id/textView_hStartLoc"
-            app:layout_constraintTop_toTopOf="@+id/textView_hStartLoc"/>
-
-        <TextView
-            android:id="@+id/textView_hEndLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/textView_ToLbl"
-            app:layout_constraintTop_toTopOf="@+id/textView_hStartLoc"
-            tools:text="placeholder text" />
-
-        <TextView
             android:id="@+id/textView_hStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView_hStartLoc"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hStartLoc"
+            app:layout_constraintStart_toStartOf="@+id/textView_hName"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hName"
             tools:text="placeholder text" />
 
         <TextView
@@ -67,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="To"
-            app:layout_constraintStart_toEndOf="@+id/textView_hStartLoc"
+            app:layout_constraintStart_toEndOf="@+id/textView_hStartDate"
             app:layout_constraintTop_toTopOf="@+id/textView_hStartDate" />
 
         <TextView
@@ -75,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/textView_ToLbl"
+            app:layout_constraintStart_toEndOf="@+id/textView_ToLbl2"
             app:layout_constraintTop_toTopOf="@+id/textView_hStartDate"
             tools:text="placeholder text" />
 

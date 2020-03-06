@@ -33,7 +33,7 @@ import java.util.Calendar;
 
 public class EditHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText textViewHolidayName, textViewStartingLoc, textViewDestination, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
+    private EditText textViewHolidayName, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
     private ImageView imageViewHolidayImage;
     private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate;
 
@@ -58,8 +58,6 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
         editedImage = (Images) getIntent().getSerializableExtra("chosenHolidayImage");
 
         textViewHolidayName = findViewById(R.id.edit_vPlaceName);
-        textViewStartingLoc = findViewById(R.id.edit_vPlaceLoc);
-        textViewDestination = findViewById(R.id.edit_EndLoc);
 
         textViewStartDate = findViewById(R.id.edit_StartDate);
         textViewEndDate = findViewById(R.id.edit_EndDate);
@@ -103,8 +101,6 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
 
                 } else {
                     String hName = textViewHolidayName.getText().toString();
-                    String hStartingLoc = textViewStartingLoc.getText().toString();
-                    String hDestination = textViewDestination.getText().toString();
 
                     String hStartDate = "";
                     String hEndDate = "";
@@ -125,8 +121,6 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
                     editedImage.setTag(mImageTag);
 
                     editedHoliday.setName(hName);
-                    editedHoliday.setStartingLoc(hStartingLoc);
-                    editedHoliday.setDestination(hDestination);
                     editedHoliday.setStartDate(hStartDate);
                     editedHoliday.setEndDate(hEndDate);
                     editedHoliday.setTravellers(hCompanions);
@@ -243,8 +237,6 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
 
     public void setValues(){
         textViewHolidayName.setText(editedHoliday.getName());
-        textViewStartingLoc.setText(editedHoliday.getStartingLoc());
-        textViewDestination.setText(editedHoliday.getDestination());
         textViewStartDate.setText(editedHoliday.getStartDate());
         textViewEndDate.setText(editedHoliday.getEndDate());
         textViewTravellers.setText(editedHoliday.getTravellers());

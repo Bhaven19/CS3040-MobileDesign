@@ -44,16 +44,12 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
         if (mHolidays != null) {
             Holiday current = mHolidays.get(position);
             holder.holidayName.setText(current.getName());
-            holder.holidayStartLoc.setText(current.getStartingLoc());
-            holder.holidayEndLoc.setText(current.getDestination());
             holder.holidayStartDate.setText(current.getStartDate());
             holder.holidayEndDate.setText(current.getEndDate());
             //holder.holidayImage.setImageBitmap(null);
         } else {
             // Covers the case of data not being ready yet.
             holder.holidayName.setText("Not Ready");
-            holder.holidayStartLoc.setText("Not Ready");
-            holder.holidayEndLoc.setText("Not Ready");
             holder.holidayStartDate.setText("Not Ready");
             holder.holidayEndDate.setText("Not Ready");
             //holder.holidayImage.setImageBitmap(null);
@@ -85,14 +81,12 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
     }
 
     class HolidayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView holidayName, holidayStartLoc, holidayEndLoc, holidayStartDate, holidayEndDate;
+        private final TextView holidayName, holidayStartDate, holidayEndDate;
         //private final ImageView holidayImage;
 
         private HolidayViewHolder(View itemView) {
             super(itemView);
             holidayName = itemView.findViewById(R.id.textView_hName);
-            holidayStartLoc = itemView.findViewById(R.id.textView_hStartLoc);
-            holidayEndLoc = itemView.findViewById(R.id.textView_hEndLoc);
             holidayStartDate = itemView.findViewById(R.id.textView_hStartDate);
             holidayEndDate = itemView.findViewById(R.id.textView_hEndDate);
 

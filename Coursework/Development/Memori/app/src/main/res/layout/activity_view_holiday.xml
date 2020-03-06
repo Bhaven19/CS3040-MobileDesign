@@ -18,7 +18,7 @@
             android:layout_marginTop="16dp"
             android:text="Dates"
             app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceName" />
 
         <TextView
             android:id="@+id/label_VPlaceNotes"
@@ -39,17 +39,6 @@
             app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
 
         <TextView
-            android:id="@+id/text_VPlaceLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:text="ending loc"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@+id/label_HolidayLocation"
-            app:layout_constraintTop_toTopOf="@+id/label_VPlaceLoc" />
-
-        <TextView
             android:id="@+id/label_HolidayEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,16 +49,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_VPlaceDate" />
 
         <TextView
-            android:id="@+id/label_VPlaceLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="starting loc"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceName" />
-
-        <TextView
             android:id="@+id/text_VPlaceDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,18 +57,6 @@
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_VPlaceDate" />
-
-        <TextView
-            android:id="@+id/label_HolidayLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:text="to"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/label_VPlaceLoc"
-            app:layout_constraintStart_toEndOf="@+id/label_VPlaceLoc"
-            app:layout_constraintTop_toTopOf="@+id/label_VPlaceLoc" />
 
         <TextView
             android:id="@+id/label_HolidayLocation2"
@@ -172,7 +139,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:text="Your Holiday"
             android:textSize="20sp"

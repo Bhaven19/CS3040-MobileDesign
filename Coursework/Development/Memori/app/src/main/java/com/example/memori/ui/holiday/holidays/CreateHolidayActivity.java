@@ -32,7 +32,7 @@ import java.util.Calendar;
 
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText textViewHolidayName, textViewStartingLoc, textViewDestination, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
+    private EditText textViewHolidayName, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
     private ImageView imageViewHolidayImage;
     private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate;
 
@@ -53,8 +53,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_create_holiday);
 
         textViewHolidayName = findViewById(R.id.edit_vPlaceName);
-        textViewStartingLoc = findViewById(R.id.edit_vPlaceLoc);
-        textViewDestination = findViewById(R.id.edit_EndLoc);
 
         textViewStartDate = findViewById(R.id.edit_StartDate);
         textViewEndDate = findViewById(R.id.edit_EndDate);
@@ -96,8 +94,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                 } else {
                     String hName = textViewHolidayName.getText().toString();
-                    String hStartingLoc = textViewStartingLoc.getText().toString();
-                    String hDestination = textViewDestination.getText().toString();
 
                     String hStartDate = "";
                     String hEndDate = "";
@@ -117,8 +113,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     saveHolidayIntent.putExtra("newImage", newImage);
 
                     saveHolidayIntent.putExtra("hName", hName);
-                    saveHolidayIntent.putExtra("hStartingLoc", hStartingLoc);
-                    saveHolidayIntent.putExtra("hDestination", hDestination);
                     saveHolidayIntent.putExtra("hStartDate", hStartDate);
                     saveHolidayIntent.putExtra("hEndDate", hEndDate);
                     saveHolidayIntent.putExtra("hCompanions", hCompanions);

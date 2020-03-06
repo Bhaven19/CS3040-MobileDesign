@@ -118,8 +118,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             if (image !=null) {
                 Holiday holiday = new Holiday(data.getStringExtra("hName"),
-                        data.getStringExtra("hStartingLoc"),
-                        data.getStringExtra("hDestination"),
                         data.getStringExtra("hStartDate"),
                         data.getStringExtra("hEndDate"),
                         data.getStringExtra("hCompanions"),
@@ -130,8 +128,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             } else {
                 Holiday holiday = new Holiday(data.getStringExtra("hName"),
-                        data.getStringExtra("hStartingLoc"),
-                        data.getStringExtra("hDestination"),
                         data.getStringExtra("hStartDate"),
                         data.getStringExtra("hEndDate"),
                         data.getStringExtra("hCompanions"),

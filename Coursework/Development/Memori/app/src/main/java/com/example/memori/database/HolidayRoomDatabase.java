@@ -15,7 +15,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
-@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 17, exportSchema = false)
+@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 18, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -51,6 +51,8 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mHolidayDao;
 
+        private final boolean populate = false;
+
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
         }
@@ -62,27 +64,27 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             populateHolidays();
             populateVisitedPlaces();
 
-
             return null;
         }
 
         public void populateHolidays(){
             String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
-            String startingLoc = "Birmingham";
-            String destination = "Paris";
             String [] dates = {"02/01/2020", "10/02/2020"};
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
 
             int imageID = mHolidayDao.getLatestImage().get_id();
+            int j = 0;
 
-            if (mHolidayDao.isHolidayEmpty() == 0) {
+            if (populate || mHolidayDao.isHolidayEmpty() == 0) {
 
                 mHolidayDao.deleteAllHolidays();
 
                 for (int i = 0; i <= holidayNames.length - 1; i++) {
-                    Holiday holiday = new Holiday(holidayNames[i], startingLoc, destination, dates[0], dates[1], travellerNames, travelNotes, imageID);
+                    Holiday holiday = new Holiday(holidayNames[i], dates[0], dates[1], travellerNames, travelNotes, imageID - j);
                     mHolidayDao.insertHoliday(holiday);
+
+                    j++;
                 }
             }
         }
@@ -96,15 +98,18 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
 
-            int imageID = mHolidayDao.getLatestImage().get_id() - 1;
+            int imageID = mHolidayDao.getLatestImage().get_id();
+            int j = 5;
 
-            if (mHolidayDao.isVPlaceEmpty() == 0){
+            if (populate || mHolidayDao.isVPlaceEmpty() == 0){
 
                 mHolidayDao.deleteAllVisitedPlaces();
 
                 for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
-                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imageID);
+                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imageID - j);
                     mHolidayDao.insertVisitedPlace(visitedPlace);
+
+                    j++;
                 }
             }
         }
@@ -114,11 +119,11 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String imageDate = "23/01/2020";
             String imageTag = "summer";
 
-            if (mHolidayDao.isImagesEmpty() == 0){
+            if (populate || mHolidayDao.isImagesEmpty() == 0){
 
                 mHolidayDao.deleteAllImages();
 
-                for (int i = 0; i <= 9; i++) {
+                for (int i = 0; i < 9; i++) {
                     Images newImages = new Images(imagePath, imageDate, imageTag);
                     mHolidayDao.insertImage(newImages);
                 }

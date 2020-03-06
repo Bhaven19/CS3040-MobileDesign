@@ -40,8 +40,6 @@ public class ViewHolidayActivity extends AppCompatActivity {
         }
 
         viewHolidayName = findViewById(R.id.text_VPlaceName);
-        viewHolidayStartingLoc = findViewById(R.id.label_VPlaceLoc);
-        viewHolidayDestination = findViewById(R.id.text_VPlaceLocation);
         viewHolidayStartDate = findViewById(R.id.text_VPlaceDate);
         viewHolidayEndDate = findViewById(R.id.label_HolidayEndDate);
         viewHolidayCompanions = findViewById(R.id.text_VPlaceCompanions);
@@ -50,8 +48,6 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewNoImage = findViewById(R.id.label_noImage);
 
         viewHolidayNotes.setText(impHoliday.getNotes());
-        viewHolidayStartingLoc.setText(impHoliday.getStartingLoc());
-        viewHolidayDestination.setText(impHoliday.getDestination());
         viewHolidayStartDate.setText(impHoliday.getStartDate());
         viewHolidayEndDate.setText(impHoliday.getEndDate());
         viewHolidayCompanions.setText(impHoliday.getTravellers());

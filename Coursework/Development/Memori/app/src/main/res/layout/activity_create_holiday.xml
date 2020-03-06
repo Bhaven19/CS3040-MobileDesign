@@ -35,24 +35,6 @@
             app:layout_constraintTop_toBottomOf="@+id/label_createholidays" />
 
         <TextView
-            android:id="@+id/label_vPlaceLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_startLoc"
-            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
-
-        <TextView
-            android:id="@+id/label_endLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_destLoc"
-            app:layout_constraintStart_toStartOf="@+id/label_createholidays"
-            app:layout_constraintTop_toBottomOf="@+id/btn_searchVPlaceLoc" />
-
-        <TextView
             android:id="@+id/label_Companions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +59,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/lbl_startdate"
             app:layout_constraintStart_toStartOf="@+id/label_createholidays"
-            app:layout_constraintTop_toBottomOf="@+id/btn_searchEndLoc" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
 
         <TextView
             android:id="@+id/label_startDate2"
@@ -112,7 +94,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="e.g. John's 30th "
@@ -120,34 +101,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceName" />
-
-        <EditText
-            android:id="@+id/edit_vPlaceLoc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:ems="10"
-            android:hint="e.g. Birmingham, London"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
-
-        <EditText
-            android:id="@+id/edit_EndLoc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:ems="10"
-            android:hint="e.g. Barcelona, Paris"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/label_endLoc" />
 
         <EditText
             android:id="@+id/edit_vPlaceCompanions"
@@ -162,24 +115,6 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_Companions" />
-
-        <Button
-            android:id="@+id/btn_searchVPlaceLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_Search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceLoc" />
-
-        <Button
-            android:id="@+id/btn_searchEndLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_EndLoc" />
 
         <EditText
             android:id="@+id/edit_StartDate"
