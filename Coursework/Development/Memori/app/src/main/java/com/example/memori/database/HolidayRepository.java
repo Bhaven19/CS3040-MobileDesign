@@ -2,6 +2,7 @@ package com.example.memori.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -129,6 +130,10 @@ public class HolidayRepository {
 
         @Override
         protected Void doInBackground(final VisitedPlace... visitedPlaces) {
+            Log.d("EditVPlaceSave", "-------------------------------------------");
+            Log.d("EditVPlaceSave", "HolidayRepo: Updating VPlace: " + visitedPlaces[0].get_id());
+            Log.d("EditVPlaceSave", "HolidayRepo: impVisitedPlace.getHolidayID: " + visitedPlaces[0].getHolidayID());
+
             mDao.updateVisitedPlace(visitedPlaces[0]);
 
             return null;
@@ -147,6 +152,9 @@ public class HolidayRepository {
 
         @Override
         protected Void doInBackground(final Images... images) {
+            Log.d("EditVPlaceSave", "-------------------------------------------");
+            Log.d("EditVPlaceSave", "HolidayRepo: Updating Image: " + images[0]);
+
             mDao.updateImage(images[0]);
 
             return null;

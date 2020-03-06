@@ -129,9 +129,14 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                     vPlaceImage.setDate(mImageDate);
                     vPlaceImage.setTag(mImageTag);
 
-                    saveVPlaceIntent.putExtra("editedVPlaceHoliday", vPlaceHoliday);
+                    saveVPlaceIntent.putExtra("editedVPlaceHolidayName", vPlaceHoliday);
                     saveVPlaceIntent.putExtra("editedVPlace", mVisitedPlace);
                     saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
+
+                    Log.d("EditVPlaceSave", "EditVPlace- vPlaceHolidayName: " + vPlaceHoliday);
+                    Log.d("EditVPlaceSave", "EditVPlace- mVisitedPlace: " + mVisitedPlace);
+                    Log.d("EditVPlaceSave", "EditVPlace- vPlaceImage: " + vPlaceImage);
+
 
                     setResult(SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }

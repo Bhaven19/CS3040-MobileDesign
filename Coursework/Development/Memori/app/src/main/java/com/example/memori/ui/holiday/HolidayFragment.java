@@ -147,10 +147,13 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         } else if (resultCode == SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
             VisitedPlace visitedPlace = (VisitedPlace) data.getSerializableExtra("editedVPlace");
-            visitedPlace.setHolidayID(getHolidayID(data.getStringExtra("editedVPlaceHoliday")));
+            visitedPlace.setHolidayID(getHolidayID(data.getStringExtra("editedVPlaceHolidayName")));
 
             Images newImage = (Images)  data.getSerializableExtra("editedVPlaceImage");
 
+            Log.d("EditVPlaceSave", "HolidayFragment- vPlaceHolidayName: " + data.getStringExtra("editedVPlaceHolidayName"));
+            Log.d("EditVPlaceSave", "HolidayFragment- vPlaceHoliday: " + visitedPlace);
+            Log.d("EditVPlaceSave", "HolidayFragment- vPlaceImage: " + newImage);
 
             mHolidayViewModel.updateVisitedPlace(visitedPlace);
             mHolidayViewModel.updateImage(newImage);
@@ -266,9 +269,31 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             });
 
-            retrieveTables();
-            recyclerView.setAdapter(holidayListAdapter);
-            holidayListAdapter.setWords(allHolidays);
+            mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
+            mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+                // Update the cached copy of the words in the adapter.
+                allHolidays = holidays;
+
+                recyclerView.setAdapter(holidayListAdapter);
+
+                holidayListAdapter.setWords(holidays);
+
+            });
+
+            mHolidayViewModel.getAllImages().observe(this, images -> {
+                // Update the cached copy of the words in the adapter.
+                allImages = images;
+
+            });
+
+            mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+                // Update the cached copy of the words in the adapter.
+                allVPlaces = vplaces;
+
+            });
+
+
 
 
         } else if (currentActive == VPLACE_ACTIVE) {
@@ -312,9 +337,29 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             });
 
-            retrieveTables();
-            recyclerView.setAdapter(vPlaceListAdapter);
-            vPlaceListAdapter.setVPlaces(allVPlaces);
+            mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
+            mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+                // Update the cached copy of the words in the adapter.
+                allHolidays = holidays;
+
+            });
+
+            mHolidayViewModel.getAllImages().observe(this, images -> {
+                // Update the cached copy of the words in the adapter.
+                allImages = images;
+
+            });
+
+            mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+                // Update the cached copy of the words in the adapter.
+                allVPlaces = vplaces;
+
+                recyclerView.setAdapter(vPlaceListAdapter);
+                vPlaceListAdapter.setVPlaces(vplaces);
+
+            });
+
 
         }
 
@@ -427,6 +472,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             allVPlaces = vplaces;
 
         });
+    }
+
+    public void updateAdapterViews(){
+
     }
 
     //----------------HOLIDAY FUNCTIONS

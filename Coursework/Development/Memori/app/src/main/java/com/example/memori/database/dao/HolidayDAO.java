@@ -56,6 +56,6 @@ public interface HolidayDAO {
     @Update()
     void updateVisitedPlace(VisitedPlace... vPlace);
     @Update()
-    void updateImage(Images... images);
+    void updateImage(Images... image);
 
 }

@@ -50,17 +50,23 @@ public class HolidayViewModel extends AndroidViewModel {
 
     public void insertVisitedPlace(VisitedPlace impVPlace) { mRepository.insertVisitedPlace(impVPlace); }
     public void updateVisitedPlace(VisitedPlace impVPlace) {
+        Log.d("EditVPlaceSave", "-------------------------------------------");
+        Log.d("EditVPlaceSave", "HolidayViewModel: Updating VPlace: " + impVPlace.get_id());
+        Log.d("EditVPlaceSave", "HolidayViewModel: impVisitedPlace.getName: " + impVPlace.getName());
+        Log.d("EditVPlaceSave", "HolidayViewModel: impVisitedPlace.getDate: " + impVPlace.getDate());
+        Log.d("EditVPlaceSave", "HolidayViewModel: impVisitedPlace.getHolidayID: " + impVPlace.getHolidayID());
+
         mRepository.updateVisitedPlace(impVPlace);
 
-        Log.d("VPlaceStorage", "-------------------------------------------");
-        Log.d("VPlaceStorage", "HolidayViewModel: Updating VPlace: " + impVPlace.get_id());
-        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getName: " + impVPlace.getName());
-        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getDate: " + impVPlace.getDate());
-        Log.d("VPlaceStorage", "HolidayViewModel: impVisitedPlace.getHolidayID: " + impVPlace.getHolidayID());
     }
 
     public void insertImage(Images impImage) { mRepository.insertImage(impImage); }
-    public void updateImage(Images impImage) { mRepository.insertImage(impImage); }
+    public void updateImage(Images impImage) {
+        Log.d("EditVPlaceSave", "HolidayViewModel- impImage: " + impImage);
+
+        mRepository.updateImage(impImage);
+
+    }
 
     //public void deleteAllHolidays() { mRepository.insertHoliday(mRepository.deleteAllHolidays()); }
     //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
