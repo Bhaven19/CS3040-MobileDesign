@@ -33,7 +33,12 @@ public class ViewVPlace extends AppCompatActivity {
         Intent obtainIntent = getIntent();
 
         impVisitedPlace = (VisitedPlace) obtainIntent.getSerializableExtra("chosenVisitedPlace");
-        impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
+        if (obtainIntent.getSerializableExtra("chosenImage") != null){
+            impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
+        } else {
+            impImage = null;
+        }
+
 
         viewVPlaceName = findViewById(R.id.text_VPlaceName);
         viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
@@ -50,14 +55,10 @@ public class ViewVPlace extends AppCompatActivity {
         viewVPlaceNotes.setText(impVisitedPlace.getNotes());
         viewVPlaceCompanions.setText(impVisitedPlace.getTravellers());
 
+        if (impImage != null) {
+            Log.d("ImageFind", "Images path, impVisitedPlace.getImagePath(): " + impImage.getPath());
+            String pathName = impImage.getPath();
 
-        Log.d("ImageFind", "Images path, impVisitedPlace.getImagePath(): " + impImage.getPath());
-        String pathName = impImage.getPath();
-
-        if (pathName == null) {
-            Log.d("ImageFind", "ViewVPlace, NO IMAGE SAVED");
-
-        } else {
             File imageFile = new File(pathName);
 
             if (imageFile.exists()){
@@ -74,6 +75,10 @@ public class ViewVPlace extends AppCompatActivity {
                 Log.d("ImageFind", "ViewVPlace, IMAGE NOT FOUND");
 
             }
+        } else {
+
+            Log.d("ImageFind", "ViewVPlace, NO IMAGE SAVED");
+
         }
 
 

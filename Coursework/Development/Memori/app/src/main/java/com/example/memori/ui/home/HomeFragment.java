@@ -40,6 +40,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         homeViewModel.getAllHolidays().observe(this, holidays -> {
             // Update the cached copy of the words in the adapter.
 
+            while (holidays.size() == 0){
+
+            }
+
             latestHoliday = holidays.get(holidays.size() - 1);
 
             Log.d("HomeFunctions", "HomeFragment: latestHoliday.getName()" + latestHoliday.getName());

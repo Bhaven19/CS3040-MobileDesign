@@ -15,6 +15,7 @@ public class Images implements Serializable {
     @ColumnInfo(name = "ID")
     private int _id;
 
+    @NonNull
     @ColumnInfo(name = "PATH")
     private String path;
 
@@ -24,10 +25,10 @@ public class Images implements Serializable {
     @ColumnInfo(name = "DATE")
     private String date;
 
-    public Images(String path, String tag, String date) {
+    public Images(@NonNull String path, String date, String tag) {
         this.path = path;
-        this.tag = tag;
         this.date = date;
+        this.tag = tag;
     }
 
     public void set_id(int mID){

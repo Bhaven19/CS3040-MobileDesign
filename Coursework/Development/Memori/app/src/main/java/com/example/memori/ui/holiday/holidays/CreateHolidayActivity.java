@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
-import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 
 import java.io.ByteArrayOutputStream;
@@ -106,12 +105,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                         hStartDate = startDate.toString();
                         hEndDate = endDate.toString();
 
-                    } else if (startDate == null){
-                        hStartDate = startDate.toString();
-
-                    } else if (endDate == null){
-                        hStartDate = startDate.toString();
-
                     }
 
                     String hCompanions = textViewTravellers.getText().toString();
@@ -121,10 +114,16 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     mImageTag = "";
 
                     Images newImage = new Images(mImagePath, mImageDate, mImageTag);
-                    Holiday newHoliday = new Holiday(hName, hStartingLoc, hDestination, hStartDate, hEndDate, hCompanions, hNotes, newImage.get_id());
-
-                    saveHolidayIntent.putExtra("newHoliday", newHoliday);
                     saveHolidayIntent.putExtra("newImage", newImage);
+
+                    saveHolidayIntent.putExtra("hName", hName);
+                    saveHolidayIntent.putExtra("hStartingLoc", hStartingLoc);
+                    saveHolidayIntent.putExtra("hDestination", hDestination);
+                    saveHolidayIntent.putExtra("hStartDate", hStartDate);
+                    saveHolidayIntent.putExtra("hEndDate", hEndDate);
+                    saveHolidayIntent.putExtra("hCompanions", hCompanions);
+                    saveHolidayIntent.putExtra("hNotes", hNotes);
+
 
                     setResult(1, saveHolidayIntent);
                 }

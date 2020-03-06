@@ -32,7 +32,12 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
         Intent obtainIntent = getIntent();
         impHoliday = (Holiday) obtainIntent.getSerializableExtra("chosenHoliday");
-        impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
+
+        if (obtainIntent.getSerializableExtra("chosenImage") != null){
+            impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
+        } else {
+            impImage = null;
+        }
 
         viewHolidayName = findViewById(R.id.text_VPlaceName);
         viewHolidayStartingLoc = findViewById(R.id.label_VPlaceLoc);
@@ -52,13 +57,10 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impImage.getPath());
-        String pathName = impImage.getPath();
+        if (impImage != null) {
+            Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impImage.getPath());
+            String pathName = impImage.getPath();
 
-        if (pathName == null) {
-            Log.d("ImageFind", "ViewHolidayActivity, NO IMAGE SAVED");
-
-        } else {
             File imageFile = new File(pathName);
 
             if (imageFile.exists()){
@@ -75,6 +77,9 @@ public class ViewHolidayActivity extends AppCompatActivity {
                 Log.d("ImageFind", "ViewHolidayActivity, IMAGE NOT FOUND");
 
             }
+        } else {
+            Log.d("ImageFind", "ViewHolidayActivity, NO IMAGE SAVED");
+
         }
 
 

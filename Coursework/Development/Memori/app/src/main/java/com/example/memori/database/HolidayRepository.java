@@ -21,8 +21,6 @@ public class HolidayRepository {
     private LiveData<List<VisitedPlace>> mAllVisitedPlaces;
     private LiveData<List<Images>> mAllImages;
 
-    private static int impID;
-
     public HolidayRepository(Application application) {
         HolidayRoomDatabase db = HolidayRoomDatabase.getDatabase(application);
         mHolidayDAO = db.holidayDAO();
@@ -33,15 +31,9 @@ public class HolidayRepository {
 
     //----------------------------------
 
-    public LiveData<List<Holiday>> getAllHolidays() {
-        return mAllHoliday;
-    }
-    public LiveData<List<VisitedPlace>> getAllVisitedPlaces() {
-        return mAllVisitedPlaces;
-    }
-    public LiveData<List<Images>> getAllImages() {
-        return mAllImages;
-    }
+    public LiveData<List<Holiday>> getAllHolidays() { return mAllHoliday; }
+    public LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mAllVisitedPlaces; }
+    public LiveData<List<Images>> getAllImages() { return mAllImages; }
 
     //----------------------------------
 
