@@ -2,7 +2,10 @@ package com.example.memori.components;
 
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class HolidayDate {
 
@@ -81,7 +84,9 @@ public class HolidayDate {
     }
 
     public static String getCurrentDate(){
-        return Calendar.DAY_OF_MONTH + "/" + Calendar.MONTH + "/" + Calendar.YEAR;
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
 }

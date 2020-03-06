@@ -42,7 +42,6 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         imageCount++;
-        Log.d("GalleryImages", "GalleryImageListAdapter: imageCount: " + imageCount);
 
         if (mAllImages != null) {
             String pathName = allImages.get(position);
@@ -114,10 +113,12 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
         else return 0;
     }
 
-    public void setHolidays(List<Images> images){
+    public void setImages(List<Images> images){
         mAllImages = images;
         notifyDataSetChanged();
         listToArrayList(mAllImages);
+
+
     }
 
     // parent activity will implement this method to respond to click events
@@ -159,7 +160,7 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
     public void listToArrayList(List<Images> mData){
         allImages = new ArrayList<>();
 
-        for (Images currentImage : mData){
+        for (Images currentImage : mData) {
             allImages.add(currentImage.getPath());
         }
 

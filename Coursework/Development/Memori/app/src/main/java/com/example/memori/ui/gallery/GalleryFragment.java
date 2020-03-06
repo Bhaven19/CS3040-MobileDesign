@@ -166,7 +166,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             images = sortBy(sortOption, images);
 
-            galleryImageListAdapter.setHolidays(images);
+            galleryImageListAdapter.setImages(images);
 
         });
 

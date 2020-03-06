@@ -15,23 +15,16 @@ import java.util.List;
 
 public class GalleryViewModel extends AndroidViewModel {
 
-    private final LiveData<List<Holiday>> mAllHolidays;
-    private final LiveData<List<VisitedPlace>> mAllVPlaces;
-    private final LiveData<List<Images>> mAllImages;
-
     private HolidayRepository mRepository;
 
     public GalleryViewModel(Application application) {
         super(application);
         mRepository = new HolidayRepository(application);
-        mAllImages = mRepository.getAllImages();
-        mAllHolidays = mRepository.getAllHolidays();
-        mAllVPlaces = mRepository.getAllVisitedPlaces();
     }
 
-    LiveData<List<Images>> getAllImages() { return mAllImages; }
-    LiveData<List<Holiday>> getAllHolidays() { return mAllHolidays; }
-    LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mAllVPlaces; }
+    LiveData<List<Images>> getAllImages() { return mRepository.getAllImages(); }
+    LiveData<List<Holiday>> getAllHolidays() { return mRepository.getAllHolidays(); }
+    LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mRepository.getAllVisitedPlaces(); }
 
     public ArrayList getAllImagePaths(){
         ArrayList<String> allImagePaths = new ArrayList<>();

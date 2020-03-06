@@ -11,8 +11,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:text="Your Photos"
         android:textAlignment="center"
-        android:text="Map"
         android:textColor="#AAAAAA"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,31 +30,25 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/text_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Your Photos"
-        android:textAlignment="center"
-        android:textColor="#AAAAAA"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_gallery" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gallery_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/darker_gray"
+        android:paddingBottom="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_gallery"
-        tools:listitem="@layout/recyclerview_images" />
+        app:layout_constraintTop_toBottomOf="@+id/label_gallery">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gallery_recyclerview"
+            End="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray"
+            tools:listitem="@layout/recyclerview_images" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
