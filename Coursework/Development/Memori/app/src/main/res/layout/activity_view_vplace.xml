@@ -73,6 +73,16 @@
             android:layout_marginTop="16dp"
             android:text="Travel Companions"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
+            app:layout_constraintTop_toBottomOf="@+id/label_LocAddress" />
+
+        <TextView
+            android:id="@+id/label_LocAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Address: "
+            app:layout_constraintEnd_toEndOf="@+id/map_holder"
+            app:layout_constraintStart_toStartOf="@+id/map_holder"
             app:layout_constraintTop_toBottomOf="@+id/map_holder" />
 
         <TextView
@@ -98,11 +108,10 @@
             android:id="@+id/map_holder"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="200dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayMap"

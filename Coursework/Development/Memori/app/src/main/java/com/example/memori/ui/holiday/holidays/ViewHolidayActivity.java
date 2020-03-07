@@ -14,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.memori.R;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
+import com.example.memori.database.entities.VisitedPlace;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class ViewHolidayActivity extends AppCompatActivity {
 
@@ -25,19 +27,16 @@ public class ViewHolidayActivity extends AppCompatActivity {
     private ImageView viewHolidayImage;
     private Images impImage;
 
+    private ArrayList<VisitedPlace> allVisitedPlaces = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_holiday);
 
         Intent obtainIntent = getIntent();
-        impHoliday = (Holiday) obtainIntent.getSerializableExtra("chosenHoliday");
 
-        if (obtainIntent.getSerializableExtra("chosenImage") != null){
-            impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
-        } else {
-            impImage = null;
-        }
+        getValuesFromIntent();
 
         viewHolidayName = findViewById(R.id.text_VPlaceName);
         viewHolidayStartDate = findViewById(R.id.text_VPlaceDate);
@@ -80,6 +79,29 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
 
         setResult(2, obtainIntent);
+
+    }
+
+    private void getValuesFromIntent(){
+        impHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
+
+        if (getIntent().getSerializableExtra("chosenImage") != null){
+            impImage = (Images) getIntent().getSerializableExtra("chosenImage");
+        } else {
+            impImage = null;
+        }
+
+        ArrayList<Integer> vPlaceArrayIDs = getIntent().getIntegerArrayListExtra("vPlaceArrayID");
+        Bundle allVisitedPlacesBundle = getIntent().getBundleExtra("bundle");
+
+        for (int i = 0; i < vPlaceArrayIDs.size(); i++) {
+            VisitedPlace visitedPlace = (VisitedPlace) allVisitedPlacesBundle.get("VPlaceObj" + vPlaceArrayIDs.get(i));
+
+            allVisitedPlaces.add(visitedPlace);
+        }
+
+
+
 
     }
 }

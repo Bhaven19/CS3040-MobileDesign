@@ -72,6 +72,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public int chosenHolidayID = -1;
     public int chosenVPlaceID = -1;
 
+    public ArrayList<Integer> vPlaceIDPerHoliday;
+
     //----------------EVERYTHING BELOW THIS LINE DOES NOT NEED REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
         View root = inflater.inflate(R.layout.fragment_holiday, container, false);
 
         retrieveTables();
+
+        vPlaceIDPerHoliday = new ArrayList<>();
 
         return root;
     }
@@ -302,6 +306,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         Log.d("FindImage", "myHoliday.getImageID(): "+ myHoliday.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myHoliday.getImageID()));
 
+                        viewIntent.putIntegerArrayListExtra("vPlaceArrayID", vPlaceIDPerHoliday);
+
+                        Bundle bundle = getAllVPlacesForHoliday(myHoliday);
+                        Log.d("PassingList", "(HolidayFragment) Putting Bundle within the Intent: " + bundle);
+                        viewIntent.putExtra("bundle", bundle);
+
                         startActivity(viewIntent);
 
                     }
@@ -402,6 +412,26 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         }
 
+
+    }
+
+    private Bundle getAllVPlacesForHoliday(Holiday myHoliday) {
+        Bundle allVPlacesBundle = new Bundle();
+
+        for (int i = 0; i < allVPlaces.size(); i++){
+            if (myHoliday.get_id() == allVPlaces.get(i).getHolidayID()){
+                VisitedPlace currentVPlace = allVPlaces.get(i);
+
+                allVPlacesBundle.putSerializable("VPlaceObj" + i, currentVPlace);
+
+                vPlaceIDPerHoliday.add(i);
+
+                Log.d("PassingList", "(HolidayFragment) Adding VPlace to Bundle Object: VPlaceObj" + i + ", " + currentVPlace.get_id());
+            }
+
+        }
+
+        return allVPlacesBundle;
 
     }
 

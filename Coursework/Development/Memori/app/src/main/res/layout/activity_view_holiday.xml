@@ -80,28 +80,28 @@
             app:layout_constraintTop_toBottomOf="@+id/text_VPlaceNotes" />
 
         <TextView
-            android:id="@+id/label_holidayMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Map"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/holidayImage" />
-
-        <TextView
             android:id="@+id/label_VPlacePeople"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="Travel Companions"
-            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceCompanions"
-            app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            app:layout_constraintStart_toStartOf="@+id/label_VPlaceImages"
+            app:layout_constraintTop_toBottomOf="@id/holidayImage" />
+
+        <TextView
+            android:id="@+id/label_VPlaces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Visited Places"
+            app:layout_constraintStart_toStartOf="@+id/label_VPlaceImages"
+            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceCompanions" />
 
         <TextView
             android:id="@+id/text_VPlaceNotes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="Holiday Notes"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,22 +116,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:text="Map"
-            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayMap" />
-
         <TextView
             android:id="@+id/text_VPlaceCompanions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Holiday Travel Companions"
-            app:layout_constraintEnd_toEndOf="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
+            app:layout_constraintStart_toStartOf="@+id/label_VPlacePeople"
             app:layout_constraintTop_toBottomOf="@+id/label_VPlacePeople" />
 
         <TextView
@@ -144,6 +135,25 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaces">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_holiday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                tools:listitem="@layout/recyclerview_vplaceitem" />
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

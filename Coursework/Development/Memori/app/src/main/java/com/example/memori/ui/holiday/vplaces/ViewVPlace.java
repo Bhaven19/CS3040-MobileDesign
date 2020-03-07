@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
@@ -39,7 +37,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
     private VisitedPlace impVisitedPlace;
     private Images impImage;
 
-    private TextView viewVPlaceName, viewVPlaceDate, viewVPlaceNotes, viewVPlaceCompanions, viewNoImage;
+    private TextView viewVPlaceName, viewVPlaceDate, viewVPlaceAddress, viewVPlaceNotes, viewVPlaceCompanions, viewNoImage;
     private ImageView viewHolidayImage;
 
     private FusedLocationProviderClient fusedLocationClient;
@@ -67,7 +65,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
         viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
         viewVPlaceNotes = findViewById(R.id.text_VPlaceNotes);
         viewVPlaceCompanions = findViewById(R.id.text_VPlaceCompanions);
-
+        viewVPlaceAddress = findViewById(R.id.label_LocAddress);
 
         viewHolidayImage = findViewById(R.id.holidayImage);
         viewNoImage = findViewById(R.id.label_noImage);
@@ -135,7 +133,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
         String placeId = placeID;
 
         // Specify the fields to return.s
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+        List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
 
         // Construct a request object, passing the place ID and fields array.
         FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
@@ -145,10 +143,8 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
             vPlaceLoc = response.getPlace();
             Log.d("VPlaceLocation", "ViewVPlace: Place found: " + vPlaceLoc.getName());
 
-//            double impLat = vPlaceLoc.getLatLng().latitude;
-//            double impLon = vPlaceLoc.getLatLng().longitude;
-            double impLat = 50;
-            double impLon = 50;
+            double impLat = vPlaceLoc.getLatLng().latitude;
+            double impLon = vPlaceLoc.getLatLng().longitude;
 
             Log.d("VPlaceLocation", "setMarker- Longitude: " + impLat);
             Log.d("VPlaceLocation", "setMarker- Latitude: " + impLon);
@@ -157,12 +153,10 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
             mMap.addMarker(new MarkerOptions().position(location).title(vPlaceLoc.getName()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("VPlaceLocation", "ViewVPlace: Place Not Found: " + vPlaceLoc.getId());
-            }
-        });
+            viewVPlaceAddress.setText("Address: " + vPlaceLoc.getAddress());
+
+        }).addOnFailureListener(e ->
+                Log.d("VPlaceLocation", "ViewVPlace: Place Not Found: " + vPlaceLoc.getId()));
 
 
     }

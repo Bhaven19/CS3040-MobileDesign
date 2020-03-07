@@ -105,7 +105,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -114,6 +114,9 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 // TODO: Get info about the selected place.
                 Log.d("PlacesAutoComplete", "Place: " + place.getName() + ", " + place.getId());
                 placeID = place.getId();
+
+                Log.d("PlacesAutoComplete", "CreateVPlace: getAddress: " + place.getAddress());
+                //Log.d("PlacesAutoComplete", "CreateVPlace: Lat, Long: " + place.getLatLng().latitude + ", " + place.getLatLng().longitude);
 
             }
 
