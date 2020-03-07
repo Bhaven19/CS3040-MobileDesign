@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void extractLatestHoliday(){
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
-        homeViewModel.getAllHolidays().observe(this, holidays -> {
+        homeViewModel.getAllHolidays().observe(getViewLifecycleOwner(), holidays -> {
             // Update the cached copy of the words in the adapter.
 
             while (holidays.size() == 0){

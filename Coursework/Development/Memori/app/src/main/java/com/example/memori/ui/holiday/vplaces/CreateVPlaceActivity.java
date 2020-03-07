@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,20 +26,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
 import com.example.memori.database.entities.Images;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CreateVPlaceActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceLoc, textViewVPlaceTravellers, textViewVPlaceNotes;
+    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceTravellers, textViewVPlaceNotes;
     private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
-    private Button mFindPlace, mAddImage, mSaveVPlace, btnDate;
+    private Button mAddImage, mSaveVPlace, btnDate;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -56,6 +64,8 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
 
+    private String placeID = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +78,6 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         textViewVPlaceName = findViewById(R.id.edit_vPlaceName);
         textViewVPlaceDate = findViewById(R.id.edit_VPlaceDate);
-
-        textViewVPlaceLoc = findViewById(R.id.edit_vPlaceLoc);
-        mFindPlace = findViewById(R.id.btn_findPlace);
-        mFindPlace.setOnClickListener(this);
-
         textViewVPlaceTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewVPlaceNotes = findViewById(R.id.edit_vPlaceNotes);
 
@@ -86,6 +91,38 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         btnDate = findViewById(R.id.btn_selectVPlaceDate);
         btnDate.setOnClickListener(this);
+
+        setupAutoComplete();
+    }
+
+    public void setupAutoComplete(){
+        // Initialize the AutocompleteSupportFragment.
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+        }
+
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.d("PlacesAutoComplete", "Place: " + place.getName() + ", " + place.getId());
+                placeID = place.getId();
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.d("PlacesAutoComplete", "An error occurred: " + status);
+            }
+        });
 
     }
 
@@ -105,7 +142,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     String vPlaceHoliday = chosenHolidayName;
                     String vPlaceName = textViewVPlaceName.getText().toString();
                     String vPlaceDate = "";
-                    String vPlaceLocation = textViewVPlaceLoc.getText().toString();
+                    String vPlaceLocation = placeID;
                     String vPlaceCompanions = textViewVPlaceTravellers.getText().toString();
                     String vPlaceNotes = textViewVPlaceNotes.getText().toString();
 
@@ -204,12 +241,6 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                             }
                         }, mYear, mMonth, mDay);
                 startDatePickerDialog.show();
-                break;
-            case R.id.btn_findPlace:
-//                PlaceOptions placeOptions = null;
-//
-//                Intent intent = new PlaceAutocomplete.IntentBuilder().accessToken(MAPBOX_ACCESS_TOKEN).placeOptions(placeOptions).build(this);
-//                startActivity(intent);
                 break;
         }
     }

@@ -311,7 +311,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
-            mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+            mHolidayViewModel.getAllHolidays().observe(getViewLifecycleOwner(), holidays -> {
                 // Update the cached copy of the words in the adapter.
                 allHolidays = holidays;
 
@@ -321,13 +321,13 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             });
 
-            mHolidayViewModel.getAllImages().observe(this, images -> {
+            mHolidayViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
                 // Update the cached copy of the words in the adapter.
                 allImages = images;
 
             });
 
-            mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+            mHolidayViewModel.getAllVisitedPlaces().observe(getViewLifecycleOwner(), vplaces -> {
                 // Update the cached copy of the words in the adapter.
                 allVPlaces = vplaces;
 
@@ -378,19 +378,19 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
-            mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+            mHolidayViewModel.getAllHolidays().observe(getViewLifecycleOwner(), holidays -> {
                 // Update the cached copy of the words in the adapter.
                 allHolidays = holidays;
 
             });
 
-            mHolidayViewModel.getAllImages().observe(this, images -> {
+            mHolidayViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
                 // Update the cached copy of the words in the adapter.
                 allImages = images;
 
             });
 
-            mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+            mHolidayViewModel.getAllVisitedPlaces().observe(getViewLifecycleOwner(), vplaces -> {
                 // Update the cached copy of the words in the adapter.
                 allVPlaces = vplaces;
 
@@ -494,19 +494,19 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public void retrieveTables(){
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
-        mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+        mHolidayViewModel.getAllHolidays().observe(getViewLifecycleOwner(), holidays -> {
             // Update the cached copy of the words in the adapter.
             allHolidays = holidays;
 
         });
 
-        mHolidayViewModel.getAllImages().observe(this, images -> {
+        mHolidayViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
             // Update the cached copy of the words in the adapter.
             allImages = images;
 
         });
 
-        mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+        mHolidayViewModel.getAllVisitedPlaces().observe(getViewLifecycleOwner(), vplaces -> {
             // Update the cached copy of the words in the adapter.
             allVPlaces = vplaces;
 

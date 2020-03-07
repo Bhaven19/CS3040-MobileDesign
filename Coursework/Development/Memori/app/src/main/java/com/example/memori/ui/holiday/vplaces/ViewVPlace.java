@@ -9,21 +9,44 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.memori.R;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
-public class ViewVPlace extends AppCompatActivity {
+public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private VisitedPlace impVisitedPlace;
     private Images impImage;
 
     private TextView viewVPlaceName, viewVPlaceDate, viewVPlaceNotes, viewVPlaceCompanions, viewNoImage;
     private ImageView viewHolidayImage;
+
+    private FusedLocationProviderClient fusedLocationClient;
+    private GoogleMap mMap;
+    private SupportMapFragment mapFragment;
+    private String placeID;
+    private Place vPlaceLoc;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +67,6 @@ public class ViewVPlace extends AppCompatActivity {
         viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
         viewVPlaceNotes = findViewById(R.id.text_VPlaceNotes);
         viewVPlaceCompanions = findViewById(R.id.text_VPlaceCompanions);
-        //viewVPlaceLocation = findViewById(R.id.label_HolidayEndDate);
 
 
         viewHolidayImage = findViewById(R.id.holidayImage);
@@ -84,5 +106,67 @@ public class ViewVPlace extends AppCompatActivity {
 
         setResult(5, obtainIntent);
 
+        placeID = impVisitedPlace.getLocation();
+
+        createMap();
+
     }
+
+    public void createMap(){
+        FragmentManager fm = getSupportFragmentManager();/// getChildFragmentManager();
+        mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_holder);
+        if (mapFragment == null) {
+            mapFragment = SupportMapFragment.newInstance();
+            fm.beginTransaction().replace(R.id.map_holder, mapFragment).commit();
+        }
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+        }
+
+        Log.d("VPlaceLocation", "ViewVPlace: placeID: " + placeID);
+        // Define a Place ID.
+        String placeId = placeID;
+
+        // Specify the fields to return.s
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+
+        // Construct a request object, passing the place ID and fields array.
+        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+
+        PlacesClient placesClient = Places.createClient(getApplicationContext());
+        placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+            vPlaceLoc = response.getPlace();
+            Log.d("VPlaceLocation", "ViewVPlace: Place found: " + vPlaceLoc.getName());
+
+//            double impLat = vPlaceLoc.getLatLng().latitude;
+//            double impLon = vPlaceLoc.getLatLng().longitude;
+            double impLat = 50;
+            double impLon = 50;
+
+            Log.d("VPlaceLocation", "setMarker- Longitude: " + impLat);
+            Log.d("VPlaceLocation", "setMarker- Latitude: " + impLon);
+
+            LatLng location = new LatLng(impLat, impLon);
+            mMap.addMarker(new MarkerOptions().position(location).title(vPlaceLoc.getName()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("VPlaceLocation", "ViewVPlace: Place Not Found: " + vPlaceLoc.getId());
+            }
+        });
+
+
+    }
+
+
+
 }

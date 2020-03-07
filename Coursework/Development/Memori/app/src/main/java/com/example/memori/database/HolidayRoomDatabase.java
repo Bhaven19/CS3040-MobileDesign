@@ -51,7 +51,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mHolidayDao;
 
-        private final boolean populate = false;
+        private final boolean populate = true;
 
         PopulateDbAsync(HolidayRoomDatabase db) {
             mHolidayDao = db.holidayDAO();
@@ -94,7 +94,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
             String [] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "Buckingham Palace", "Great Wall of China"};
             String [] dates = {"02/01/2020", "10/02/2020"};
-            String location = "Birmingham";
+            String location = "ChIJdd4hrwug2EcRmSrV3Vo6llI";
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
 

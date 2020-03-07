@@ -82,7 +82,6 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
         textViewVPlaceName = findViewById(R.id.edit_vPlaceName);
         textViewVPlaceDate = findViewById(R.id.edit_VPlaceDate);
-        textViewVPlaceLoc = findViewById(R.id.edit_vPlaceLoc);
         textViewVPlaceTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewVPlaceNotes = findViewById(R.id.edit_vPlaceNotes);
 
