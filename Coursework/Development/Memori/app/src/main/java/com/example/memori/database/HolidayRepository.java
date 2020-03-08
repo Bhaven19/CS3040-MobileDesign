@@ -160,6 +160,61 @@ public class HolidayRepository {
         }
     }
 
+    //----------------------------------
+
+    public void deleteHoliday (Holiday impHoliday){
+        new deleteHolidayAsyncTask(mHolidayDAO).execute(impHoliday);
+    }
+
+    private static class deleteHolidayAsyncTask extends AsyncTask<Holiday, Void, Void> {
+        private final HolidayDAO mDao;
+
+        deleteHolidayAsyncTask(HolidayDAO dao) {mDao = dao;}
+
+        @Override
+        protected Void doInBackground(Holiday... holidays) {
+            mDao.deleteHoliday(holidays[0]);
+
+            return null;
+        }
+    }
+
+    public void deleteVisitedPlace (VisitedPlace impVisitedPlace){
+        new deleteVisitedPlaceAsyncTask(mHolidayDAO).execute(impVisitedPlace);
+
+    }
+
+    private static class deleteVisitedPlaceAsyncTask extends AsyncTask<VisitedPlace, Void, Void> {
+        private final HolidayDAO mDao;
+
+        deleteVisitedPlaceAsyncTask(HolidayDAO dao) {mDao = dao;}
+
+        @Override
+        protected Void doInBackground(final VisitedPlace... visitedPlaces) {
+            mDao.deleteVisitedPlace(visitedPlaces[0]);
+
+            return null;
+        }
+    }
+
+    public void deleteImage (Images impImages){
+        new deleteImageAsyncTask(mHolidayDAO).execute(impImages);
+
+    }
+
+    private static class deleteImageAsyncTask extends AsyncTask<Images, Void, Void> {
+        private final HolidayDAO mDao;
+
+        deleteImageAsyncTask(HolidayDAO dao) {mDao = dao;}
+
+        @Override
+        protected Void doInBackground(final Images... images) {
+            mDao.deleteImage(images[0]);
+
+            return null;
+        }
+    }
+
 
 
 }

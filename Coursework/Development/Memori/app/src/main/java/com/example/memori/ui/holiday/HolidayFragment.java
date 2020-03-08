@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -128,7 +129,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         data.getStringExtra("hNotes"),
                         imageID);
 
-                mHolidayViewModel.insert(holiday);
+                mHolidayViewModel.insertHoliday(holiday);
 
             } else {
                 Holiday holiday = new Holiday(data.getStringExtra("hName"),
@@ -138,7 +139,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         data.getStringExtra("hNotes"),
                         0);
 
-                mHolidayViewModel.insert(holiday);
+                mHolidayViewModel.insertHoliday(holiday);
 
             }
 
@@ -149,7 +150,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
             Holiday holiday = (Holiday) data.getSerializableExtra("editedHoliday");
             Images image = (Images) data.getSerializableExtra("editedImage");
 
-            mHolidayViewModel.update(holiday);
+            mHolidayViewModel.updateHoliday(holiday);
             mHolidayViewModel.updateImage(image);
 
             Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
@@ -215,7 +216,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.holiday_action_edit:
-                displayToast("Holiday Edit Selected");
+                displayToast("Select the Holiday you would like to edit");
 
                 editClicked = true;
                 deleteClicked = false;
@@ -223,23 +224,15 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 return true;
 
             case R.id.holiday_action_delete:
-                displayToast("Holiday Delete Selected");
+                displayToast("Select the Holiday you would like to delete");
 
                 editClicked = false;
                 deleteClicked = true;
 
                 return true;
 
-            case R.id.holiday_action_deleteAll:
-                displayToast("Holiday DeleteAll Selected");
-
-                editClicked = false;
-                deleteClicked = false;
-
-                return true;
-
             case R.id.vplace_action_edit:
-                displayToast("Vplace Edit Selected");
+                displayToast("Select the Visited Place you would like to edit");
 
                 editClicked = true;
                 deleteClicked = false;
@@ -247,18 +240,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 return true;
 
             case R.id.vplace_action_delete:
-                displayToast("Vplace Delete Selected");
+                displayToast("Select the Visited Place you would like to delete");
 
                 editClicked = false;
                 deleteClicked = true;
-
-                return true;
-
-            case R.id.vplace_action_deleteAll:
-                displayToast("Vplace DeleteAll Selected");
-
-                editClicked = false;
-                deleteClicked = false;
 
                 return true;
 
@@ -284,8 +269,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
                     chosenHolidayID = myHoliday.get_id();
 
-                    displayToast("You clicked an image, which is at cell position " + position);
-
                     Log.d("HolidayClick", "HolidayFragment, onItemClicked");
 
                     if (editClicked == true){
@@ -296,8 +279,34 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
 
                     } else if (deleteClicked == true){
-                        displayToast(myHoliday.getName() + " has been deleted");
+                        String name = myHoliday.getName();
 
+                        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+                        pictureDialog.setTitle("Are you sure you would like to delete " + name + "?");
+                        String[] pictureDialogItems = {
+                                "Yes",
+                                "No"};
+                        pictureDialog.setItems(pictureDialogItems,
+                                (dialog, which) -> {
+                                    switch (which) {
+                                        case 0:
+                                            Images vPlaceImage = getImage(myHoliday.getImageID());
+                                            mHolidayViewModel.deleteImage(vPlaceImage);
+
+                                            mHolidayViewModel.deleteHoliday(myHoliday);
+
+                                            displayToast(name + " has been deleted");
+
+                                            break;
+                                        case 1:
+
+                                            break;
+                                    }
+                                });
+                        pictureDialog.show();
+
+                        editClicked = false;
+                        deleteClicked = false;
 
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
@@ -356,7 +365,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     VisitedPlace myVisitedPlace = vPlaceListAdapter.getWordAtPosition(position);
                     chosenVPlaceID = myVisitedPlace.get_id();
 
-                    displayToast("You clicked an image, which is VPlace:" + myVisitedPlace.get_id());
 
                     if (editClicked == true){
                         Intent editIntent = new Intent(getActivity(), EditVPlace.class);
@@ -369,8 +377,31 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         startActivityForResult(editIntent, SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
                     } else if (deleteClicked == true){
-//                        displayToast(myHoliday.getName() + " has been deleted");
+                        String name = myVisitedPlace.getName();
 
+                        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+                        pictureDialog.setTitle("Are you sure you would like to delete " + name + "?");
+                        String[] pictureDialogItems = {
+                                "Yes",
+                                "No"};
+                        pictureDialog.setItems(pictureDialogItems,
+                                (dialog, which) -> {
+                                    switch (which) {
+                                        case 0:
+                                            Images vPlaceImage = getImage(myVisitedPlace.getImageID());
+                                            mHolidayViewModel.deleteImage(vPlaceImage);
+
+                                            mHolidayViewModel.deleteVisitedPlace(myVisitedPlace);
+
+                                            displayToast(name + " has been deleted");
+
+                                            break;
+                                        case 1:
+
+                                            break;
+                                    }
+                                });
+                        pictureDialog.show();
 
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
@@ -443,14 +474,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
             currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
-            currentToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
 
         } else if (currentActive == VPLACE_ACTIVE) {
             currentToolbar = view.findViewById(R.id.toolbar_vPlaces);
 
             currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
             currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
-            currentToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
         }
 
 
@@ -497,7 +526,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                         currentActive = HOLIDAY_ACTIVE;
 
-                        displayToast("Holidays Toggled");
+                        displayToast("Showing all Holidays");
 
                         break;
                     case R.id.toggle_visitedPlaces:
@@ -506,7 +535,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                         currentActive = VPLACE_ACTIVE;
 
-                        displayToast("VPlace Toggled");
+                        displayToast("Showing all Visited Places");
                         break;
                 }
 

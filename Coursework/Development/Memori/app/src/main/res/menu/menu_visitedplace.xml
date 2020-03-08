@@ -15,10 +15,4 @@
         android:title="Delete"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/vplace_action_deleteAll"
-        android:orderInCategory="30"
-        android:title="Delete All"
-        app:showAsAction="never" />
-
 </menu>

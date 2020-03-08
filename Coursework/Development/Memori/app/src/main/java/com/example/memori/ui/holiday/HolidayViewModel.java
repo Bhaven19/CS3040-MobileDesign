@@ -41,14 +41,17 @@ public class HolidayViewModel extends AndroidViewModel {
         return list;
     }
 
-    public void insert(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
-    public void update(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
+    public void insertHoliday(Holiday impHoliday) { mRepository.insertHoliday(impHoliday); }
+    public void updateHoliday(Holiday impHoliday) { mRepository.updateHoliday(impHoliday); }
+    public void deleteHoliday(Holiday impHoliday) { mRepository.deleteHoliday(impHoliday); }
 
     public void insertVisitedPlace(VisitedPlace impVPlace) { mRepository.insertVisitedPlace(impVPlace); }
     public void updateVisitedPlace(VisitedPlace impVPlace) { mRepository.updateVisitedPlace(impVPlace); }
+    public void deleteVisitedPlace(VisitedPlace impVPlace) { mRepository.deleteVisitedPlace(impVPlace); }
 
     public void insertImage(Images impImage) { mRepository.insertImage(impImage); }
     public void updateImage(Images impImage) { mRepository.updateImage(impImage); }
+    public void deleteImage(Images impImage) { mRepository.deleteImage(impImage); }
 
     public Images getLatestImage(){
         List<Images> mAllImagesValue = getAllImages().getValue();
@@ -71,8 +74,6 @@ public class HolidayViewModel extends AndroidViewModel {
         return imageIDToImage.get(maxImageID);
     }
 
-    //public void deleteAllHolidays() { mRepository.insertHoliday(mRepository.deleteAllHolidays()); }
-    //public void delete(Holiday impHolidayName) { mRepository.deleteHoliday(impHolidayName); }
 
 
 }

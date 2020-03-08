@@ -2,6 +2,7 @@ package com.example.memori.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,6 +23,13 @@ public interface HolidayDAO {
     void insertVisitedPlace(VisitedPlace visitedPlace);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertImage(Images images);
+
+    @Delete
+    void deleteHoliday(Holiday holiday);
+    @Delete
+    void deleteVisitedPlace(VisitedPlace visitedPlace);
+    @Delete
+    void deleteImage(Images images);
 
     @Query("DELETE FROM holiday_table")
     void deleteAllHolidays();
