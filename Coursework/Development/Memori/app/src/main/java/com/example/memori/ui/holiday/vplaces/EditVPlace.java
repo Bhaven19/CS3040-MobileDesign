@@ -103,7 +103,14 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_create_vplace);
 
         mVisitedPlace = (VisitedPlace) getIntent().getSerializableExtra("chosenVisitedPlace");
-        vPlaceImage = (Images) getIntent().getSerializableExtra("vPlaceImage");
+
+        if (getIntent().getSerializableExtra("vPlaceImage") != null){
+            vPlaceImage = (Images) getIntent().getSerializableExtra("vPlaceImage");
+        } else {
+            vPlaceImage = null;
+        }
+
+
         chosenHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
         allHolidays = getIntent().getStringArrayListExtra("holidayNameList");
 
@@ -438,7 +445,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
         textViewVPlaceTravellers.setText(isNull(mVisitedPlace.getTravellers()));
         textViewVPlaceNotes.setText(isNull(mVisitedPlace.getNotes()));
 
-        if (vPlaceImage.getPath() != null){
+        if (vPlaceImage != null){
             pictureSaved = true;
             mImagePath = vPlaceImage.getPath();
             mImageDate = vPlaceImage.getDate();

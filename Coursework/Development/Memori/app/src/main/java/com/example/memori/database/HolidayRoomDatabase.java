@@ -92,9 +92,9 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         public void populateVisitedPlaces(){
             int holidayID = mHolidayDao.getLatestHoliday().get_id();
 
-            String [] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "Buckingham Palace", "Great Wall of China"};
-            String [] dates = {"02/01/2020", "10/02/2020"};
-            String location = "ChIJdd4hrwug2EcRmSrV3Vo6llI";
+            String[] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "The Pentagon", "Great Wall of China"};
+            String date = "10/02/2020";
+            String[] location = {"ChIJtTeDfh9w5kcRJEWRKN1Yy6I", "ChIJd6-vWIC8cEgRIZLs1KKcGBE", "ChIJJyztKd-2t4kRL1MTwPjQg68", "ChIJzyx_aNch8TUR3yIFlZslQNA"};
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
 
@@ -106,7 +106,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                 mHolidayDao.deleteAllVisitedPlaces();
 
                 for (int i = 0; i <= visitedPlaceNames.length - 1; i++) {
-                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], dates[0], location, travellerNames, travelNotes, imageID - j);
+                    VisitedPlace visitedPlace = new VisitedPlace(holidayID, visitedPlaceNames[i], date, location[i], travellerNames, travelNotes, imageID - j);
                     mHolidayDao.insertVisitedPlace(visitedPlace);
 
                     j++;

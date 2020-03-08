@@ -10,11 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memori.R;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
+import com.example.memori.database.listadapters.VPlaceListAdapter;
+import com.example.memori.ui.holiday.vplaces.ViewVPlace;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +29,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
     private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
     private ImageView viewHolidayImage;
-    private Images impImage;
+    private Images holidayImage, vPlaceImage;
 
     private ArrayList<VisitedPlace> allVisitedPlaces = new ArrayList<>();
 
@@ -34,7 +38,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_holiday);
 
-        Intent obtainIntent = getIntent();
+        allVisitedPlaces.clear();
 
         getValuesFromIntent();
 
@@ -52,9 +56,9 @@ public class ViewHolidayActivity extends AppCompatActivity {
         viewHolidayCompanions.setText(impHoliday.getTravellers());
         viewHolidayName.setText(impHoliday.getName());
 
-        if (impImage != null) {
-            Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + impImage.getPath());
-            String pathName = impImage.getPath();
+        if (holidayImage != null) {
+            Log.d("ImageFind", "Images path, impHoliday.getImagePath(): " + holidayImage.getPath());
+            String pathName = holidayImage.getPath();
 
             File imageFile = new File(pathName);
 
@@ -77,8 +81,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
         }
 
-
-        setResult(2, obtainIntent);
+        setupRecyclerView();
 
     }
 
@@ -86,10 +89,12 @@ public class ViewHolidayActivity extends AppCompatActivity {
         impHoliday = (Holiday) getIntent().getSerializableExtra("chosenHoliday");
 
         if (getIntent().getSerializableExtra("chosenImage") != null){
-            impImage = (Images) getIntent().getSerializableExtra("chosenImage");
+            holidayImage = (Images) getIntent().getSerializableExtra("chosenImage");
         } else {
-            impImage = null;
+            holidayImage = null;
         }
+
+        vPlaceImage = (Images) getIntent().getSerializableExtra("chosenVisitedPlaceImage");
 
         ArrayList<Integer> vPlaceArrayIDs = getIntent().getIntegerArrayListExtra("vPlaceArrayID");
         Bundle allVisitedPlacesBundle = getIntent().getBundleExtra("bundle");
@@ -100,8 +105,33 @@ public class ViewHolidayActivity extends AppCompatActivity {
             allVisitedPlaces.add(visitedPlace);
         }
 
+    }
 
+    public void setupRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_holiday);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        VPlaceListAdapter vPlaceListAdapter = new VPlaceListAdapter(getApplicationContext());
 
+        Log.d("VPlaceClick", "HolidayFragment, setting up recycler view");
+
+        recyclerView.setAdapter(vPlaceListAdapter);
+        vPlaceListAdapter.setVPlaces(allVisitedPlaces);
+
+        vPlaceListAdapter.setClickListener(new VPlaceListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                VisitedPlace myVisitedPlace = vPlaceListAdapter.getWordAtPosition(position);
+
+                Intent viewIntent = new Intent(getApplicationContext(), ViewVPlace.class);
+                viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                viewIntent.putExtra("chosenImage", vPlaceImage);
+
+                startActivity(viewIntent);
+
+            }
+
+        });
 
     }
+
 }

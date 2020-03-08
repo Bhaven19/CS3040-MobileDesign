@@ -406,6 +406,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
                         viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                        viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myVisitedPlace.getImageID()));
 
                         Log.d("FindImage", "myHoliday.getImageID(): "+ myVisitedPlace.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
