@@ -102,9 +102,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
+            app:layout_constraintEnd_toStartOf="@+id/btn_getCurrentLocation"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
 
         <Button
@@ -132,8 +131,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Who did you visit the place with"
-            app:layout_constraintStart_toStartOf="@+id/autocomplete_fragment"
-            app:layout_constraintTop_toBottomOf="@+id/autocomplete_fragment" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceAddress" />
+
+        <TextView
+            android:id="@+id/label_VPlaceAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Address: No Location Has Been Chosen"
+            app:layout_constraintEnd_toEndOf="@+id/btn_getCurrentLocation"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
+            app:layout_constraintTop_toBottomOf="@+id/btn_getCurrentLocation" />
 
         <EditText
             android:id="@+id/edit_vPlaceCompanions"
@@ -193,6 +202,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_saveVPlaceImage" />
+
+        <ImageButton
+            android:id="@+id/btn_getCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/autocomplete_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/autocomplete_fragment"
+            app:srcCompat="@drawable/ic_my_location_black_24dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
