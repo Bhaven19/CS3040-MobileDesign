@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
@@ -47,9 +48,10 @@ import java.util.Locale;
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView textViewNoImage;
-    private EditText textViewHolidayName, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
+    private EditText textViewHolidayName, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes, textViewImageTag;
     private ImageView imageViewHolidayImage;
     private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate, btnRemoveImage;
+    private ConstraintLayout constLayNoImage, constLayImageSaved;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -70,6 +72,9 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_holiday);
 
+        constLayNoImage = findViewById(R.id.constLay_noImage);
+        constLayImageSaved = findViewById(R.id.constLay_imageSaved);
+
         textViewHolidayName = findViewById(R.id.edit_vPlaceName);
 
         textViewStartDate = findViewById(R.id.edit_holidayStartDate);
@@ -79,7 +84,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
         textViewTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewNotes = findViewById(R.id.edit_vPlaceNotes);
-        textViewNoImage = findViewById(R.id.label_holidayNoImage);
+        textViewImageTag = findViewById(R.id.edit_holidayImageTag);
 
         imageViewHolidayImage = findViewById(R.id.imageView_newHolidayImage);
 
@@ -127,9 +132,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                     String hCompanions = textViewTravellers.getText().toString();
                     String hNotes = textViewNotes.getText().toString();
-
-                    //NEED TO IMPLEMENT DATE
-                    mImageTag = "";
+                    String mImageTag = textViewImageTag.getText().toString();
 
                     String placeID = "";
                     if(mImagePath != ""){
@@ -364,24 +367,19 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         if (choice) {
             Log.d("ImageFind", "CreateHoliday, printImage(true)");
 
-            textViewNoImage.setVisibility(View.INVISIBLE);
+            constLayImageSaved.setVisibility(View.VISIBLE);
+            constLayNoImage.setVisibility(View.INVISIBLE);
 
-            imageViewHolidayImage.setVisibility(View.VISIBLE);
             imageViewHolidayImage.setImageBitmap(bmpHolidayImage);
 
-            mAddImage.setVisibility(View.INVISIBLE);
-            btnRemoveImage.setVisibility(View.VISIBLE);
 
         } else {
             Log.d("ImageFind", "CreateHoliday, printImage(false)");
 
-            textViewNoImage.setVisibility(View.VISIBLE);
+            constLayImageSaved.setVisibility(View.INVISIBLE);
+            constLayNoImage.setVisibility(View.VISIBLE);
 
-            imageViewHolidayImage.setVisibility(View.INVISIBLE);
             imageViewHolidayImage.setImageBitmap(null);
-
-            mAddImage.setVisibility(View.VISIBLE);
-            btnRemoveImage.setVisibility(View.INVISIBLE);
 
         }
     }

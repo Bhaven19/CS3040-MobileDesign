@@ -88,37 +88,6 @@
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
-        <TextView
-            android:id="@+id/label_holidayNoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginTop="8dp"
-            android:text="No Image Has Been Saved"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/label_images" />
-
-        <Button
-            android:id="@+id/btn_holidaySaveImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Add an Image"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_images"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
-
-        <Button
-            android:id="@+id/btn_holidayDeleteImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Remove  Image"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_images"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
-
         <EditText
             android:id="@+id/edit_vPlaceName"
             android:layout_width="0dp"
@@ -206,25 +175,86 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:text="Save Holiday"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_holidaySaveImage" />
+            app:layout_constraintTop_toBottomOf="@+id/constLay_imageSaved" />
 
-        <ImageView
-            android:id="@+id/imageView_newHolidayImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLay_imageSaved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_images">
+
+            <Button
+                android:id="@+id/btn_holidayDeleteImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Remove  Image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
+
+            <ImageView
+                android:id="@+id/imageView_newHolidayImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@color/colorPrimaryDark" />
+
+            <EditText
+                android:id="@+id/edit_holidayImageTag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Add an Image Tag"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toStartOf="@+id/btn_holidayDeleteImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLay_noImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_images"
-            app:layout_constraintTop_toBottomOf="@+id/label_images"
-            app:srcCompat="@color/colorPrimaryDark" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_images">
+
+            <TextView
+                android:id="@+id/label_holidayNoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:text="No Image Has Been Saved"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_holidaySaveImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add an Image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_holidayNoImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
