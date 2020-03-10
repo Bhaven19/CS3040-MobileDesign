@@ -1,6 +1,7 @@
 package com.example.memori.ui.map;
 
 import android.Manifest;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.example.memori.R;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
+import com.example.memori.ui.holiday.vplaces.ViewVPlace;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
@@ -33,11 +36,13 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private MapViewModel mapViewModel;
 
@@ -54,10 +59,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private List<Images> allImages;
     private List<VisitedPlace> allVPlaces;
 
+    private HashMap<String, LatLng> hmTitleToPos;
     private List<Place> allPlaces = null;
 
     private int i;
     private Boolean move = false;
+
+    public ArrayList<Integer> vPlaceIDPerHoliday;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -79,6 +87,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        hmTitleToPos = new HashMap<String, LatLng>();
 
         createMap();
 
@@ -104,6 +114,42 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         setMarker("default", 50, 50, "PresetLocation");
 
         setAllEntityMarkers();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                for (String currentMarkerTitle : hmTitleToPos.keySet()) {
+                    if (currentMarkerTitle.equals(marker.getTitle()) && hmTitleToPos.get(currentMarkerTitle).equals(marker.getPosition())){
+                        displayLog("MarkerClick", "markerTitle: " + marker.getTitle());
+                        displayLog("MarkerClick", "markerPos: " + marker.getPosition());
+
+                        displayLog("ViewMarker", "currentMarkerTitle: " + currentMarkerTitle);
+
+                        if (currentMarkerTitle.contains("-VPlace")){
+                            Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
+
+                            String markerTitle = currentMarkerTitle.replaceAll("VPlace", "");
+                            markerTitle = markerTitle.replaceAll(" ", "");
+                            markerTitle = markerTitle.replaceAll("-", "");
+
+                            displayLog("ViewMarker", "VPlace Marker Title: " + markerTitle );
+
+                            VisitedPlace myVisitedPlace = getVPlaceByName(markerTitle);
+
+                            viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                            viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myVisitedPlace.getImageID()));
+
+                            viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
+
+                            startActivity(viewIntent);
+
+                        }
+
+                    }
+                }
+
+                return false;
+            }
+        });
     }
 
     public void getCurrentLocation(){
@@ -139,6 +185,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             case "default":
                 LatLng defaultLocation = new LatLng(impLat, impLon);
 
+                hmTitleToPos.put(impName, defaultLocation);
+
                 MarkerOptions defaultMarker = new MarkerOptions()
                         .position(defaultLocation)
                         .title(impName)
@@ -150,9 +198,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             case "vplace":
                 LatLng vplaceLocation = new LatLng(impLat, impLon);
 
+                hmTitleToPos.put(impName + " -VPlace", vplaceLocation);
+
                 MarkerOptions vplaceMarker = new MarkerOptions()
                         .position(vplaceLocation)
-                        .title(impName + " (VPlace)")
+                        .title(impName + " -VPlace")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
 
                 mMap.addMarker(vplaceMarker);
@@ -161,17 +211,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             case "holiday":
                 LatLng holidayLocation = new LatLng(impLat, impLon);
 
+                hmTitleToPos.put(impName + " -Holiday", holidayLocation);
+
                 MarkerOptions holidayMarker = new MarkerOptions()
                         .position(holidayLocation)
-                        .title(impName + " (Holiday)")
+                        .title(impName + " -Holiday")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
                 mMap.addMarker(holidayMarker);
 
                 break;
         }
-
-
 
     }
 
@@ -258,10 +308,55 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-
     public void displayLog(String tag, String message){
         Log.d(tag, "MapFragment, " + message);
     }
 
+    public Holiday getHolidayByName(String name){
+        Holiday chosenHoliday = null;
+
+        for (Holiday currentHoliday : allHolidays){
+            if (currentHoliday.getName().equals(name)){
+                chosenHoliday = currentHoliday;
+                break;
+            }
+        }
+
+        return chosenHoliday;
+    }
+
+    public VisitedPlace getVPlaceByName(String name){
+        VisitedPlace chosenVPlace = null;
+
+        for (VisitedPlace currentVPlace : allVPlaces){
+            String currentVPlaceNameNoSpace = currentVPlace.getName().replace(" ", "");
+
+            if (currentVPlaceNameNoSpace.equals(name)){
+                chosenVPlace = currentVPlace;
+                break;
+            }
+        }
+
+        return chosenVPlace;
+    }
+
+    public Images getImage(int id){
+        Images chosenImage = null;
+
+        Log.d("FindImage", "allImages.size:" + allImages.size());
+        for (int i = 0; i < allImages.size(); i++) {
+            Images currentImage = allImages.get(i);
+
+            if (currentImage.get_id() == id){
+                chosenImage = currentImage;
+
+                Log.d("FindImage", "ImageFound");
+            } else {
+                Log.d("FindImage", "ImageNotFound");
+
+            }
+        }
+        return chosenImage;
+    }
 
 }
