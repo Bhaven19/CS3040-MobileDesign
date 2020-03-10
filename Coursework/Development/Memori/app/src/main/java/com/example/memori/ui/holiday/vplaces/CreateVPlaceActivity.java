@@ -192,7 +192,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     saveVPlaceIntent.putExtra("vPlaceNotes", vPlaceNotes);
 
                     mImageTag = "";
-                    Images newImage = new Images(mImagePath, mImageDate, mImageTag);
+                    Images newImage = new Images(mImagePath, mImageDate, mImageTag, vPlaceLocation);
 
                     saveVPlaceIntent.putExtra("vImage", newImage);
 
@@ -275,7 +275,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 startDatePickerDialog.show();
                 break;
             case R.id.btn_getCurrentLocation:
-                FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);;
+                FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
                 if (!permissionsGranted) {
                     RxPermissions rxPermissions = new RxPermissions(this);

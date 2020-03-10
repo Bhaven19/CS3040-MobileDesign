@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -63,9 +64,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private List<Place> allPlaces = null;
 
     private int i;
+    private int j;
     private Boolean move = false;
 
     public ArrayList<Integer> vPlaceIDPerHoliday;
+
+    private Boolean markersLoaded = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -73,6 +77,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         retrieveTables();
         i = 0;
+        j = 0;
 
         requestPermissions();
 
@@ -88,7 +93,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        hmTitleToPos = new HashMap<String, LatLng>();
+        hmTitleToPos = new HashMap<>();
 
         createMap();
 
@@ -111,9 +116,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        setMarker("default", 50, 50, "PresetLocation");
+        setAllVPlaceMarkers();
+        setAllImageMarkers();
 
-        setAllEntityMarkers();
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -208,17 +213,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 mMap.addMarker(vplaceMarker);
 
                 break;
-            case "holiday":
-                LatLng holidayLocation = new LatLng(impLat, impLon);
+            case "image":
+                LatLng imageLocation = new LatLng(impLat, impLon);
 
-                hmTitleToPos.put(impName + " -Holiday", holidayLocation);
+                hmTitleToPos.put(impName + " -Image", imageLocation);
 
-                MarkerOptions holidayMarker = new MarkerOptions()
-                        .position(holidayLocation)
-                        .title(impName + " -Holiday")
+                MarkerOptions imageMarker = new MarkerOptions()
+                        .position(imageLocation)
+                        .title(impName + " -Image")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
-                mMap.addMarker(holidayMarker);
+                mMap.addMarker(imageMarker);
 
                 break;
         }
@@ -272,7 +277,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         });
     }
 
-    public void setAllEntityMarkers(){
+    public void setAllVPlaceMarkers(){
         int numVPlaces = allVPlaces.size();
 
         if(i < numVPlaces){
@@ -294,12 +299,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 // Construct a request object, passing the place ID and fields array.
                 FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
                 PlacesClient placesClient = Places.createClient(getActivity());
-
-                displayLog("SetAllMarkers", "Step 4");
                 placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
                     setMarker("vplace", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, response.getPlace().getName());
                     i++;
-                    setAllEntityMarkers();
+                    setAllVPlaceMarkers();
+
+                });
+            }
+
+        }
+
+    }
+
+    public void setAllImageMarkers(){
+        int numImages = allImages.size();
+
+        if(j < numImages){
+            Images image = allImages.get(j);
+            String placeID = image.getLocation();
+
+            if (placeID != "") {
+                if (!Places.isInitialized()) {
+                    Places.initialize(getActivity(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+                }
+
+                Log.d("SetAllMarkers", "ViewImage: placeID: " + placeID);
+                // Define a Place ID.
+                String placeId = placeID;
+
+                // Specify the fields to return.s
+                List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+                // Construct a request object, passing the place ID and fields array.
+                FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+                PlacesClient placesClient = Places.createClient(getActivity());
+
+                placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+                    setMarker("image", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, response.getPlace().getName());
+                    j++;
+                    setAllImageMarkers();
 
                 });
             }
@@ -357,6 +395,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             }
         }
         return chosenImage;
+    }
+
+    public void displayToast(String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
 }

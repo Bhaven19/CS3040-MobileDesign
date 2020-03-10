@@ -1,5 +1,6 @@
 package com.example.memori.ui.holiday.holidays;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,12 +26,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
 import com.example.memori.database.entities.Images;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -49,6 +61,9 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
     private Boolean pictureSaved = false;
     private String mImagePath, mImageDate, mImageTag;
     private Bitmap bmpHolidayImage;
+
+    private Boolean permissionsGranted = false;
+    private Place chosenPlace;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +98,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
         btnRemoveImage = findViewById(R.id.btn_holidayDeleteImage);
         btnRemoveImage.setOnClickListener(this);
 
+        getCurrentPlace();
+
     }
 
     @Override
@@ -114,7 +131,14 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                     //NEED TO IMPLEMENT DATE
                     mImageTag = "";
 
-                    Images newImage = new Images(mImagePath, mImageDate, mImageTag);
+                    String placeID = "";
+                    if(mImagePath != ""){
+                        placeID = chosenPlace.getId();
+                    }
+
+                    Log.d("ImageTrackLocation", "getPlace: " + chosenPlace.getName());
+
+                    Images newImage = new Images(mImagePath, mImageDate, mImageTag, placeID);
                     saveHolidayIntent.putExtra("newImage", newImage);
 
                     saveHolidayIntent.putExtra("hName", hName);
@@ -360,6 +384,64 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
             btnRemoveImage.setVisibility(View.INVISIBLE);
 
         }
+    }
+
+    public void getCurrentPlace(){
+        if (!permissionsGranted) {
+            RxPermissions rxPermissions = new RxPermissions(this);
+
+            Log.d("ImageTrackLocation", "getActivity: " + this);
+
+            rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION).subscribe(granted -> {
+                if (granted) {
+                    Log.d("ImageTrackLocation", "Permissions Granted");
+                    permissionsGranted = true;
+                } else {
+                    Log.d("ImageTrackLocation", "Permissions Denied");
+                    permissionsGranted = false;
+                    // At least one permission is denied
+                }
+            });
+        }
+
+        if (permissionsGranted){
+            if (!Places.isInitialized()) {
+                Places.initialize(getApplicationContext(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+            }
+
+            // Use fields to define the data types to return.
+            List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+            // Use the builder to create a FindCurrentPlaceRequest.
+            FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
+
+            PlacesClient placesClient = Places.createClient(this);
+
+            Task<FindCurrentPlaceResponse> placeResponse = placesClient.findCurrentPlace(request);
+            placeResponse.addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    FindCurrentPlaceResponse response = task.getResult();
+
+                    chosenPlace = response.getPlaceLikelihoods().get(0).getPlace();
+
+                    Log.d("ImageTrackLocation", "Most Likely Place Name: " + chosenPlace.getName());
+                    Log.d("ImageTrackLocation", "Most Likely Place ID: " + chosenPlace.getId());
+                    Log.d("ImageTrackLocation", "Most Likely Place getAddress: " + chosenPlace.getAddress());
+
+                } else {
+                    Exception exception = task.getException();
+
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+
+                        Log.d("ImageTrackLocation", "Place not found: " + apiException.getStatusCode());
+
+                    }
+                }
+            });
+
+        }
+
     }
 
 }

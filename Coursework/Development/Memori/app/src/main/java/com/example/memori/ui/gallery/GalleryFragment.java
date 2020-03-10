@@ -158,7 +158,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
 
-        galleryViewModel.getAllImages().observe(this, images -> {
+        galleryViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
             // Update the cached copy of the words in the adapter.
             Log.d("SortingGallery", "GalleryFragment: Updating Holidays");
 
@@ -427,12 +427,12 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     private void obtainAll(){
-        galleryViewModel.getAllHolidays().observe(this, holidays -> {
+        galleryViewModel.getAllHolidays().observe(getViewLifecycleOwner(), holidays -> {
             mAllHolidays = holidays;
 
         });
 
-        galleryViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+        galleryViewModel.getAllVisitedPlaces().observe(getViewLifecycleOwner(), vplaces -> {
             mAllVPlaces = vplaces;
 
         });

@@ -15,7 +15,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 
-@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 18, exportSchema = false)
+@Database(entities = {Holiday.class, VisitedPlace.class, Images.class}, version = 19, exportSchema = false)
 public abstract class HolidayRoomDatabase extends RoomDatabase {
 
     public abstract HolidayDAO holidayDAO();
@@ -118,13 +118,22 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
             String imageDate = "23/01/2020";
             String imageTag = "summer";
+            String[] imageLocation = {"ChIJtTeDfh9w5kcRJEWRKN1Yy6I",
+                    "ChIJd6-vWIC8cEgRIZLs1KKcGBE",
+                    "ChIJJyztKd-2t4kRL1MTwPjQg68",
+                    "ChIJzyx_aNch8TUR3yIFlZslQNA",
+                    "ChIJ5TCOcRaYpBIRCmZHTz37sEQ",
+                    "ChIJPV4oX_65j4ARVW8IJ6IJUYs",
+                    "ChIJwe1EZjDG5zsRaYxkjY_tpF0",
+                    "ChIJ4Wy5QyGO0RkROGVW9XHh810",
+                    "ChIJQ0eBpNNSvkcR6-S1wp2s0aE"};
 
             if (populate || mHolidayDao.isImagesEmpty() == 0){
 
                 mHolidayDao.deleteAllImages();
 
                 for (int i = 0; i < 9; i++) {
-                    Images newImages = new Images(imagePath, imageDate, imageTag);
+                    Images newImages = new Images(imagePath, imageDate, imageTag, imageLocation[i]);
                     mHolidayDao.insertImage(newImages);
                 }
             }

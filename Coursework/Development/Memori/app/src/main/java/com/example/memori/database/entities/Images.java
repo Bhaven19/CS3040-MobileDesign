@@ -25,10 +25,14 @@ public class Images implements Serializable {
     @ColumnInfo(name = "DATE")
     private String date;
 
-    public Images(@NonNull String path, String date, String tag) {
+    @ColumnInfo(name = "LOCATION")
+    private String location;
+
+    public Images(@NonNull String path, String date, String tag, String location) {
         this.path = path;
         this.date = date;
         this.tag = tag;
+        this.location = location;
     }
 
     public void set_id(int mID){
@@ -63,4 +67,11 @@ public class Images implements Serializable {
         this.date = date;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }
