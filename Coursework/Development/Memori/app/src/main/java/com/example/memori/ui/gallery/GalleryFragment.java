@@ -136,6 +136,15 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        createToolbar(getView());
+
+        setUpRecyclerView(-1);
+    }
+
     private void setUpRecyclerView(int sortOption) {
         // set up the RecyclerView
         RecyclerView recyclerView = getView().findViewById(R.id.gallery_recyclerview);

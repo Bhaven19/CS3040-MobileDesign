@@ -66,4 +66,6 @@ public interface HolidayDAO {
     @Update()
     void updateImage(Images... image);
 
+
+
 }

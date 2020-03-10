@@ -101,6 +101,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        retrieveTables();
+        i = 0;
+        j = 0;
+
+        requestPermissions();
+
+        btn_currentLoc = getView().findViewById(R.id.btn_currentLoc);
+        btn_currentLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TrackLocation", "Button Pressed");
+                getCurrentLocation();
+
+            }
+        });
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        hmTitleToPos = new HashMap<>();
+
+        createMap();
+    }
+
     public void createMap(){
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_holder);

@@ -103,6 +103,25 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        retrieveTables();
+
+        vPlaceIDPerHoliday = new ArrayList<>();
+
+        navController = Navigation.findNavController(getView());
+
+        createToolbar(getView());
+
+        setupCreateButton(getView());
+
+        setupToggle(getView());
+
+        setupRecyclerView();
+    }
+
     public void displayToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
@@ -450,7 +469,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     private Bundle getAllVPlacesForHoliday(Holiday myHoliday) {
         Bundle allVPlacesBundle = new Bundle();
 
+        Log.d("PassingList", "(HolidayFragment) allVPlaces size: " + allVPlaces.size());
+
         for (int i = 0; i < allVPlaces.size(); i++){
+            Log.d("PassingList", "(HolidayFragment) myHoliday.get_id(): " + myHoliday.get_id());
+            Log.d("PassingList", "(HolidayFragment) allVPlaces.get(" + i + ").getHolidayID(): " + allVPlaces.get(i).getHolidayID());
+
             if (myHoliday.get_id() == allVPlaces.get(i).getHolidayID()){
                 VisitedPlace currentVPlace = allVPlaces.get(i);
 

@@ -102,6 +102,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         for (int i = 0; i < vPlaceArrayIDs.size(); i++) {
             VisitedPlace visitedPlace = (VisitedPlace) allVisitedPlacesBundle.get("VPlaceObj" + vPlaceArrayIDs.get(i));
 
+            Log.d("ViewVPlace", "ViewHoliday, adding to allVplace list: " + visitedPlace.getName());
+
             allVisitedPlaces.add(visitedPlace);
         }
 
@@ -112,7 +114,7 @@ public class ViewHolidayActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         VPlaceListAdapter vPlaceListAdapter = new VPlaceListAdapter(getApplicationContext());
 
-        Log.d("VPlaceClick", "HolidayFragment, setting up recycler view");
+        Log.d("ViewVPlace", "ViewHoliday, setting up recycler view");
 
         recyclerView.setAdapter(vPlaceListAdapter);
         vPlaceListAdapter.setVPlaces(allVisitedPlaces);
