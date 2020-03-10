@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,10 +57,10 @@ import java.util.Locale;
 public class CreateVPlaceActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceTravellers, textViewVPlaceNotes;
-    private TextView textViewVPlaceAddress;
+    private TextView textViewVPlaceAddress, textViewNoImage;
     private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
-    private Button mAddImage, mSaveVPlace, btnDate;
+    private Button mAddImage, mSaveVPlace, btnDate, btnRemoveImage;
     private ImageButton mGetCurrentLoc;
 
     private final Calendar c = Calendar.getInstance();
@@ -102,6 +103,9 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         textViewVPlaceDate.setEnabled(false);
 
+        imageViewVPlaceImage = findViewById(R.id.imageView_newVPlaceImage);
+        textViewNoImage = findViewById(R.id.label_vPlaceNoImage);
+
         mAddImage = findViewById(R.id.btn_saveVPlaceImage);
         mAddImage.setOnClickListener(this);
 
@@ -113,6 +117,9 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         mGetCurrentLoc = findViewById(R.id.btn_getCurrentLocation);
         mGetCurrentLoc.setOnClickListener(this);
+
+        btnRemoveImage = findViewById(R.id.btn_deleteVPlaceImage);
+        btnRemoveImage.setOnClickListener(this);
 
         setupAutoComplete();
     }
@@ -213,8 +220,6 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                                 }
                             });
                     pictureDialog.show();
-
-                    pictureSaved = true;
 
                 } else {
                     displayToast("You can only save 1 image, any new images will overwrite previous images");
@@ -330,6 +335,15 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
                 }
                 break;
+            case R.id.btn_deleteVPlaceImage:
+                printImage(false);
+
+                mImagePath = "";
+                mImageDate = "";
+                bmpHolidayImage = null;
+                pictureSaved = false;
+
+                break;
         }
     }
 
@@ -357,9 +371,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-
-                    bmpHolidayImage = bitmap;
+                    saveImage(bitmap);
 
                     Toast.makeText(CreateVPlaceActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
@@ -371,16 +383,15 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            String path = saveImage(thumbnail);
+            saveImage(thumbnail);
 
-            bmpHolidayImage = thumbnail;
 
             Toast.makeText(CreateVPlaceActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    public String saveImage(Bitmap myBitmap) {
+    public void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
@@ -403,11 +414,27 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
             mImagePath = f.getAbsolutePath();
             mImageDate = HolidayDate.getCurrentDate();
 
-            return f.getAbsolutePath();
+            pictureSaved = true;
+
+            printImage(true);
+
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        return "";
+
+        File imageFile = new File(mImagePath);
+        if (imageFile.exists()){
+            bmpHolidayImage = BitmapFactory.decodeFile(mImagePath);
+
+            Log.d("ImageFind", "CreateVplace, IMAGE FOUND");
+
+            printImage(true);
+
+        } else {
+            Log.d("ImageFind", "CreateVplace, IMAGE NOT FOUND");
+
+        }
+
     }
 
     public void displayToast(String message) {
@@ -436,6 +463,33 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+    }
+
+
+    public void printImage(Boolean choice){
+        if (choice) {
+            Log.d("ImageFind", "CreateHoliday, printImage(true)");
+
+            textViewNoImage.setVisibility(View.INVISIBLE);
+
+            imageViewVPlaceImage.setVisibility(View.VISIBLE);
+            imageViewVPlaceImage.setImageBitmap(bmpHolidayImage);
+
+            mAddImage.setVisibility(View.INVISIBLE);
+            btnRemoveImage.setVisibility(View.VISIBLE);
+
+        } else {
+            Log.d("ImageFind", "CreateHoliday, printImage(false)");
+
+            textViewNoImage.setVisibility(View.VISIBLE);
+
+            imageViewVPlaceImage.setVisibility(View.INVISIBLE);
+            imageViewVPlaceImage.setImageBitmap(null);
+
+            mAddImage.setVisibility(View.VISIBLE);
+            btnRemoveImage.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 }

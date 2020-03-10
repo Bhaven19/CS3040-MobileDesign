@@ -3,6 +3,7 @@ package com.example.memori.ui.holiday.holidays;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,9 +34,10 @@ import java.util.Calendar;
 
 public class CreateHolidayActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private TextView textViewNoImage;
     private EditText textViewHolidayName, textViewStartDate, textViewEndDate, textViewTravellers, textViewNotes;
     private ImageView imageViewHolidayImage;
-    private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate;
+    private Button mAddImage, mSaveHoliday, btnStartDate, btnEndDate, btnRemoveImage;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -54,29 +57,31 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
         textViewHolidayName = findViewById(R.id.edit_vPlaceName);
 
-        textViewStartDate = findViewById(R.id.edit_StartDate);
-        textViewEndDate = findViewById(R.id.edit_EndDate);
+        textViewStartDate = findViewById(R.id.edit_holidayStartDate);
+        textViewEndDate = findViewById(R.id.edit_holidayEndDate);
         textViewStartDate.setEnabled(false);
         textViewEndDate.setEnabled(false);
 
         textViewTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewNotes = findViewById(R.id.edit_vPlaceNotes);
+        textViewNoImage = findViewById(R.id.label_holidayNoImage);
 
-        imageViewHolidayImage = findViewById(R.id.imageView_image);
+        imageViewHolidayImage = findViewById(R.id.imageView_newHolidayImage);
 
-        mAddImage = findViewById(R.id.btn_saveImage);
+        mAddImage = findViewById(R.id.btn_holidaySaveImage);
         mAddImage.setOnClickListener(this);
 
         mSaveHoliday = findViewById(R.id.btn_saveHoliday);
         mSaveHoliday.setOnClickListener(this);
 
-        btnStartDate = findViewById(R.id.btn_startDate);
+        btnStartDate = findViewById(R.id.btn_holidayStartDate);
         btnStartDate.setOnClickListener(this);
 
-        btnEndDate = findViewById(R.id.btn_endDate);
+        btnEndDate = findViewById(R.id.btn_holidayEndDate);
         btnEndDate.setOnClickListener(this);
 
-
+        btnRemoveImage = findViewById(R.id.btn_holidayDeleteImage);
+        btnRemoveImage.setOnClickListener(this);
 
     }
 
@@ -124,7 +129,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                 finish();
 
                 break;
-            case R.id.btn_saveImage:
+
+            case R.id.btn_holidaySaveImage:
                 if (pictureSaved == false) {
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
@@ -143,8 +149,6 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                                 }
                             });
                     pictureDialog.show();
-
-                    pictureSaved = true;
 
                 } else {
                     displayToast("You can only save 1 image, any new images will overwrite previous images");
@@ -178,7 +182,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                 imageViewHolidayImage.setImageBitmap(bmpHolidayImage);
                 break;
-            case R.id.btn_startDate:
+
+            case R.id.btn_holidayStartDate:
                 // Get Current Date
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -198,7 +203,8 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                         }, mYear, mMonth, mDay);
                 startDatePickerDialog.show();
                 break;
-            case R.id.btn_endDate:
+
+            case R.id.btn_holidayEndDate:
                 // Get Current Date
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -224,12 +230,21 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                         }, mYear, mMonth, mDay);
                 endDatePickerDialog.show();
                 break;
+
+            case R.id.btn_holidayDeleteImage:
+                printImage(false);
+
+                mImagePath = "";
+                mImageDate = "";
+                bmpHolidayImage = null;
+                pictureSaved = false;
+
+                break;
         }
     }
 
     public void choosePhotoFromGallary() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(galleryIntent, GALLERY);
     }
@@ -251,9 +266,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-
-                    bmpHolidayImage = bitmap;
+                    saveImage(bitmap);
 
                     Toast.makeText(CreateHolidayActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
@@ -265,16 +278,14 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            String path = saveImage(thumbnail);
-
-            bmpHolidayImage = thumbnail;
+            saveImage(thumbnail);
 
             Toast.makeText(CreateHolidayActivity.this, "Images Saved!", Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    public String saveImage(Bitmap myBitmap) {
+    public void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
@@ -297,16 +308,58 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
             mImagePath = f.getAbsolutePath();
             mImageDate = HolidayDate.getCurrentDate();
 
-            return f.getAbsolutePath();
+            pictureSaved = true;
+
         } catch (IOException e1) {
             e1.printStackTrace();
+
         }
-        return "";
+
+
+        File imageFile = new File(mImagePath);
+        if (imageFile.exists()){
+            bmpHolidayImage = BitmapFactory.decodeFile(mImagePath);
+
+            Log.d("ImageFind", "CreateHoliday, IMAGE FOUND");
+
+            printImage(true);
+
+        } else {
+            Log.d("ImageFind", "CreateHoliday, IMAGE NOT FOUND");
+
+        }
+
     }
 
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void printImage(Boolean choice){
+        if (choice) {
+            Log.d("ImageFind", "CreateHoliday, printImage(true)");
+
+            textViewNoImage.setVisibility(View.INVISIBLE);
+
+            imageViewHolidayImage.setVisibility(View.VISIBLE);
+            imageViewHolidayImage.setImageBitmap(bmpHolidayImage);
+
+            mAddImage.setVisibility(View.INVISIBLE);
+            btnRemoveImage.setVisibility(View.VISIBLE);
+
+        } else {
+            Log.d("ImageFind", "CreateHoliday, printImage(false)");
+
+            textViewNoImage.setVisibility(View.VISIBLE);
+
+            imageViewHolidayImage.setVisibility(View.INVISIBLE);
+            imageViewHolidayImage.setImageBitmap(null);
+
+            mAddImage.setVisibility(View.VISIBLE);
+            btnRemoveImage.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 }

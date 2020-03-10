@@ -59,26 +59,26 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
 
         textViewHolidayName = findViewById(R.id.edit_vPlaceName);
 
-        textViewStartDate = findViewById(R.id.edit_StartDate);
-        textViewEndDate = findViewById(R.id.edit_EndDate);
+        textViewStartDate = findViewById(R.id.edit_holidayStartDate);
+        textViewEndDate = findViewById(R.id.edit_holidayEndDate);
         textViewStartDate.setEnabled(false);
         textViewEndDate.setEnabled(false);
 
         textViewTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewNotes = findViewById(R.id.edit_vPlaceNotes);
 
-        imageViewHolidayImage = findViewById(R.id.imageView_image);
+        imageViewHolidayImage = findViewById(R.id.imageView_newHolidayImage);
 
-        mAddImage = findViewById(R.id.btn_saveImage);
+        mAddImage = findViewById(R.id.btn_holidaySaveImage);
         mAddImage.setOnClickListener(this);
 
         mSaveHoliday = findViewById(R.id.btn_saveHoliday);
         mSaveHoliday.setOnClickListener(this);
 
-        btnStartDate = findViewById(R.id.btn_startDate);
+        btnStartDate = findViewById(R.id.btn_holidayStartDate);
         btnStartDate.setOnClickListener(this);
 
-        btnEndDate = findViewById(R.id.btn_endDate);
+        btnEndDate = findViewById(R.id.btn_holidayEndDate);
         btnEndDate.setOnClickListener(this);
 
         setValues();
@@ -136,7 +136,7 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
                 finish();
 
                 break;
-            case R.id.btn_saveImage:
+            case R.id.btn_holidaySaveImage:
                 if (mImagePath.equals("")) {
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
@@ -188,7 +188,7 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
 
                 imageViewHolidayImage.setImageBitmap(bmpHolidayImage);
                 break;
-            case R.id.btn_startDate:
+            case R.id.btn_holidayStartDate:
                 // Get Current Date
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -207,7 +207,7 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
                         }, mYear, mMonth, mDay);
                 startDatePickerDialog.show();
                 break;
-            case R.id.btn_endDate:
+            case R.id.btn_holidayEndDate:
                 // Get Current Date
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);

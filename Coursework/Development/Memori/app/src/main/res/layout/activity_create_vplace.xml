@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".ui.holiday.holidays.CreateHolidayActivity">
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,13 +12,16 @@
         android:paddingBottom="75dp">
 
         <TextView
-            android:id="@+id/label_vPlaceName"
+            android:id="@+id/title_createVPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="What is the name of the visited place?"
-            app:layout_constraintStart_toStartOf="@+id/label_createvplaceolidays"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_vPlaceChooseHoliday" />
+            android:text="Create a Visited Place"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/label_vPlaceChooseHoliday"
@@ -27,8 +29,82 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Choose the holiday where you visited this place"
-            app:layout_constraintStart_toStartOf="@+id/label_createvplaceolidays"
-            app:layout_constraintTop_toBottomOf="@+id/label_createvplaceolidays" />
+            app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
+            app:layout_constraintTop_toBottomOf="@+id/title_createVPlace" />
+
+        <TextView
+            android:id="@+id/label_vPlaceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="What is the name of the visited place?"
+            app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_vPlaceChooseHoliday" />
+
+        <TextView
+            android:id="@+id/label_vPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="What date did you visit this place?"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
+
+        <TextView
+            android:id="@+id/label_vPlaceLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Where is this place?"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
+            app:layout_constraintTop_toBottomOf="@+id/edit_VPlaceDate" />
+
+        <TextView
+            android:id="@+id/label_VPlaceAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Address: No Location Has Been Chosen"
+            app:layout_constraintEnd_toEndOf="@+id/btn_getCurrentLocation"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
+            app:layout_constraintTop_toBottomOf="@+id/btn_getCurrentLocation" />
+
+        <TextView
+            android:id="@+id/label_vPlaceCompanions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Who did you visit the place with"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
+            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceAddress" />
+
+        <TextView
+            android:id="@+id/label_vPlaceNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_notes"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceCompanions"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceCompanions" />
+
+        <TextView
+            android:id="@+id/label_vPlaceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="16dp"
+            android:text="Would you like to add an images?"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
+
+        <TextView
+            android:id="@+id/label_vPlaceNoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="16dp"
+            android:text="No Image Has Been Saved"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage" />
 
         <EditText
             android:id="@+id/edit_vPlaceName"
@@ -45,45 +121,6 @@
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceName" />
 
 
-        <Spinner
-            android:id="@+id/spinner_vPlaceChooseHoliday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceChooseHoliday" />
-
-        <TextView
-            android:id="@+id/label_images2"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginTop="16dp"
-            android:text="Would you like to add an images?"
-            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
-
-        <TextView
-            android:id="@+id/label_createvplaceolidays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Create a Visited Place"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/label_vPlaceDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="What date did you visit this place?"
-            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
-
         <EditText
             android:id="@+id/edit_VPlaceDate"
             android:layout_width="0dp"
@@ -92,57 +129,9 @@
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
-            app:layout_constraintEnd_toEndOf="@+id/edit_StartDate"
+            app:layout_constraintEnd_toEndOf="@+id/edit_holidayStartDate"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate" />
-
-        <fragment
-            android:id="@+id/autocomplete_fragment"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_getCurrentLocation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
-
-        <Button
-            android:id="@+id/btn_selectVPlaceDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SELECT DATE"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_VPlaceDate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/edit_VPlaceDate"
-            app:layout_constraintTop_toTopOf="@+id/edit_VPlaceDate" />
-
-        <TextView
-            android:id="@+id/label_vPlaceLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Where is this place?"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
-            app:layout_constraintTop_toBottomOf="@+id/edit_VPlaceDate" />
-
-        <TextView
-            android:id="@+id/label_Companions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Who did you visit the place with"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceAddress" />
-
-        <TextView
-            android:id="@+id/label_VPlaceAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Address: No Location Has Been Chosen"
-            app:layout_constraintEnd_toEndOf="@+id/btn_getCurrentLocation"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
-            app:layout_constraintTop_toBottomOf="@+id/btn_getCurrentLocation" />
 
         <EditText
             android:id="@+id/edit_vPlaceCompanions"
@@ -154,17 +143,8 @@
             android:hint="e.g. John, Mark, Sophie "
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_Companions"
-            app:layout_constraintTop_toBottomOf="@+id/label_Companions" />
-
-        <TextView
-            android:id="@+id/label_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_notes"
-            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceCompanions"
-            app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceCompanions" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceCompanions"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceCompanions" />
 
         <EditText
             android:id="@+id/edit_vPlaceNotes"
@@ -177,18 +157,68 @@
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/label_notes"
-            app:layout_constraintTop_toBottomOf="@+id/label_notes" />
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceNotes" />
+
+        <Spinner
+            android:id="@+id/spinner_vPlaceChooseHoliday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceChooseHoliday" />
+
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_getCurrentLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceLoc" />
+
+        <ImageButton
+            android:id="@+id/btn_getCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/autocomplete_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/autocomplete_fragment"
+            app:srcCompat="@drawable/ic_my_location_black_24dp" />
+
+        <Button
+            android:id="@+id/btn_selectVPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT DATE"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_VPlaceDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edit_VPlaceDate"
+            app:layout_constraintTop_toTopOf="@+id/edit_VPlaceDate" />
 
         <Button
             android:id="@+id/btn_saveVPlaceImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:text="Add an Image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_images2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_newVPlaceImage" />
+
+        <Button
+            android:id="@+id/btn_deleteVPlaceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Remove Image"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_newVPlaceImage" />
 
         <Button
             android:id="@+id/btn_saveVPlace"
@@ -203,15 +233,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_saveVPlaceImage" />
 
-        <ImageButton
-            android:id="@+id/btn_getCurrentLocation"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView_newVPlaceImage"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/autocomplete_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/autocomplete_fragment"
-            app:srcCompat="@drawable/ic_my_location_black_24dp" />
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceImage"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage"
+            app:srcCompat="@color/colorPrimaryDark" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
