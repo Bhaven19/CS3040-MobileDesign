@@ -5,131 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.holiday.holidays.ViewHolidayActivity">
+    tools:context=".ui.holiday.vplaces.ViewVPlace">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/label_VPlaceDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Dates"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceName" />
-
-        <TextView
-            android:id="@+id/label_VPlaceNotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Notes"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceDate" />
-
-        <TextView
-            android:id="@+id/label_noImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No Image Has Been Saved"
-            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_VPlaceImages"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
-
-        <TextView
-            android:id="@+id/text_VPlaceDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="start date"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceName"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceDate" />
-
-        <TextView
-            android:id="@+id/label_VPlaceImages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Images"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/text_VPlaceNotes" />
-
-        <TextView
-            android:id="@+id/label_holidayMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Map"
-            app:layout_constraintStart_toStartOf="@+id/text_VPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/holidayImage" />
-
-        <TextView
-            android:id="@+id/label_VPlacePeople"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Travel Companions"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/label_LocAddress" />
-
-        <TextView
-            android:id="@+id/label_LocAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Address: "
-            app:layout_constraintEnd_toEndOf="@+id/map_holder"
-            app:layout_constraintStart_toStartOf="@+id/map_holder"
-            app:layout_constraintTop_toBottomOf="@+id/map_holder" />
-
-        <TextView
-            android:id="@+id/text_VPlaceNotes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Holiday Notes"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_VPlaceDate"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceNotes" />
-
-        <ImageView
-            android:id="@+id/holidayImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlaceImages" />
-
-        <fragment
-            android:id="@+id/map_holder"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_VPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/label_holidayMap"
-            tools:context=".ui.holiday.vplaces.ViewVPlace" />
-
-        <TextView
-            android:id="@+id/text_VPlaceCompanions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Holiday Travel Companions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_holidayMap"
-            app:layout_constraintTop_toBottomOf="@+id/label_VPlacePeople" />
-
-        <TextView
-            android:id="@+id/text_VPlaceName"
+            android:id="@+id/title_vPlaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -138,6 +21,130 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_vPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Dates"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_vPlaceName" />
+
+        <TextView
+            android:id="@+id/text_vPlaceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="start date"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate" />
+
+        <TextView
+            android:id="@+id/label_vPlaceImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Images"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_vPlaceDate" />
+
+        <ImageView
+            android:id="@+id/imageView_vPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceImages"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImages" />
+
+        <TextView
+            android:id="@+id/label_noImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="No Image Has Been Saved"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceImages"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImages" />
+
+        <TextView
+            android:id="@+id/label_vPlaceMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_vPlace" />
+
+        <fragment
+            android:id="@+id/vplace_map_holder"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceMap"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceMap"
+            tools:context=".ui.holiday.vplaces.ViewVPlace" />
+
+        <TextView
+            android:id="@+id/label_vPlaceAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Address: "
+            app:layout_constraintEnd_toEndOf="@+id/vplace_map_holder"
+            app:layout_constraintStart_toStartOf="@+id/vplace_map_holder"
+            app:layout_constraintTop_toBottomOf="@+id/vplace_map_holder" />
+
+        <TextView
+            android:id="@+id/label_vPlaceNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Notes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceAddress" />
+
+        <TextView
+            android:id="@+id/text_vPlaceNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Holiday Notes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceNotes"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceNotes" />
+
+        <TextView
+            android:id="@+id/label_vPlacePeople"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Travel Companions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_vPlaceNotes" />
+
+        <TextView
+            android:id="@+id/text_vPlaceCompanions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Holiday Travel Companions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceMap"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlacePeople" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

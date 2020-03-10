@@ -60,14 +60,13 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
             impImage = null;
         }
 
+        viewVPlaceName = findViewById(R.id.title_vPlaceName);
+        viewVPlaceDate = findViewById(R.id.text_vPlaceDate);
+        viewVPlaceNotes = findViewById(R.id.text_vPlaceNotes);
+        viewVPlaceCompanions = findViewById(R.id.text_vPlaceCompanions);
+        viewVPlaceAddress = findViewById(R.id.label_vPlaceAddress);
 
-        viewVPlaceName = findViewById(R.id.text_VPlaceName);
-        viewVPlaceDate = findViewById(R.id.text_VPlaceDate);
-        viewVPlaceNotes = findViewById(R.id.text_VPlaceNotes);
-        viewVPlaceCompanions = findViewById(R.id.text_VPlaceCompanions);
-        viewVPlaceAddress = findViewById(R.id.label_LocAddress);
-
-        viewHolidayImage = findViewById(R.id.holidayImage);
+        viewHolidayImage = findViewById(R.id.imageView_vPlace);
         viewNoImage = findViewById(R.id.label_noImage);
 
         viewVPlaceName.setText(impVisitedPlace.getName());
@@ -112,10 +111,10 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
 
     public void createMap(){
         FragmentManager fm = getSupportFragmentManager();/// getChildFragmentManager();
-        mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_holder);
+        mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.vplace_map_holder);
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
-            fm.beginTransaction().replace(R.id.map_holder, mapFragment).commit();
+            fm.beginTransaction().replace(R.id.vplace_map_holder, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
     }

@@ -21,6 +21,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.ui.holiday.vplaces.ViewVPlace;
+import com.example.memori.ui.images.ViewImageActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -116,6 +117,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        retrieveTables();
+
+        displayToast("Loading all map markers");
+
         setAllVPlaceMarkers();
         setAllImageMarkers();
 
@@ -139,6 +144,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                             displayLog("ViewMarker", "VPlace Marker Title: " + markerTitle );
 
                             VisitedPlace myVisitedPlace = getVPlaceByName(markerTitle);
+                            displayLog("ViewMarker", "myVisitedPlace: " + myVisitedPlace);
 
                             viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
                             viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myVisitedPlace.getImageID()));
@@ -147,11 +153,43 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
                             startActivity(viewIntent);
 
-                        }
+                        } else if (currentMarkerTitle.contains("-Image")){
+                            Intent viewIntent = new Intent(getActivity(), ViewImageActivity.class);
 
+                            String markerTitle = currentMarkerTitle.replaceAll("Image", "");
+                            markerTitle = markerTitle.replaceAll(" ", "");
+                            markerTitle = markerTitle.replaceAll("-", "");
+
+                            displayLog("ViewMarker", "Image Marker Title: " + markerTitle );
+
+                            if (getVPlaceByName(markerTitle) != null){
+                                VisitedPlace chosenVPlace = getVPlaceByName(markerTitle);
+
+                                Images myImage = getImage(chosenVPlace.getImageID());
+
+                                viewIntent.putExtra("chosenImage", myImage);
+                                viewIntent.putExtra("chosenImageName", chosenVPlace.getName());
+
+                                startActivity(viewIntent);
+
+                            } else if (getHolidayByName(markerTitle) != null){
+                                Holiday chosenHoliday = getHolidayByName(markerTitle);
+
+                                Images myImage = getImage(chosenHoliday.getImageID());
+
+                                viewIntent.putExtra("chosenImage", myImage);
+                                viewIntent.putExtra("chosenImageName", chosenHoliday.getName());
+
+                                startActivity(viewIntent);
+
+                            } else {
+                                displayLog("ViewMarker", "UNUSUAL ACTIVITY");
+
+                            }
+
+                        }
                     }
                 }
-
                 return false;
             }
         });
@@ -187,27 +225,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         Log.d("TrackLocation", "setMarker- Latitude: " + impLon);
 
         switch(type) {
-            case "default":
-                LatLng defaultLocation = new LatLng(impLat, impLon);
-
-                hmTitleToPos.put(impName, defaultLocation);
-
-                MarkerOptions defaultMarker = new MarkerOptions()
-                        .position(defaultLocation)
-                        .title(impName)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-                mMap.addMarker(defaultMarker);
-
-                break;
             case "vplace":
                 LatLng vplaceLocation = new LatLng(impLat, impLon);
 
-                hmTitleToPos.put(impName + " -VPlace", vplaceLocation);
+                String vPlaceName = impName + " -VPlace";
+
+                hmTitleToPos.put(vPlaceName, vplaceLocation);
 
                 MarkerOptions vplaceMarker = new MarkerOptions()
                         .position(vplaceLocation)
-                        .title(impName + " -VPlace")
+                        .title(vPlaceName)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
 
                 mMap.addMarker(vplaceMarker);
@@ -216,17 +243,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             case "image":
                 LatLng imageLocation = new LatLng(impLat, impLon);
 
-                hmTitleToPos.put(impName + " -Image", imageLocation);
+                String imageName = impName + " -Image";
+
+                hmTitleToPos.put(imageName, imageLocation);
 
                 MarkerOptions imageMarker = new MarkerOptions()
                         .position(imageLocation)
-                        .title(impName + " -Image")
+                        .title(imageName)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
                 mMap.addMarker(imageMarker);
 
                 break;
         }
+
+
 
     }
 
@@ -289,7 +320,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     Places.initialize(getActivity(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
                 }
 
-                Log.d("SetAllMarkers", "ViewVPlace: placeID: " + placeID);
                 // Define a Place ID.
                 String placeId = placeID;
 
@@ -300,7 +330,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
                 PlacesClient placesClient = Places.createClient(getActivity());
                 placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-                    setMarker("vplace", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, response.getPlace().getName());
+                    setMarker("vplace", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, visitedPlace.getName());
                     i++;
                     setAllVPlaceMarkers();
 
@@ -335,7 +365,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 PlacesClient placesClient = Places.createClient(getActivity());
 
                 placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-                    setMarker("image", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, response.getPlace().getName());
+                    setMarker("image", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, getImageName(image.get_id()));
                     j++;
                     setAllImageMarkers();
 
@@ -344,10 +374,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         }
 
-    }
-
-    public void displayLog(String tag, String message){
-        Log.d(tag, "MapFragment, " + message);
     }
 
     public Holiday getHolidayByName(String name){
@@ -399,6 +425,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public void displayToast(String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void displayLog(String tag, String message){
+        Log.d(tag, "MapFragment, " + message);
+    }
+
+    public String getImageName(int imageID){
+        String name = "";
+
+        for (Holiday holiday : allHolidays){
+            if (holiday.getImageID() == imageID){
+                name = holiday.getName();
+            }
+        }
+
+        for (VisitedPlace vplace : allVPlaces){
+            if (vplace.getImageID() == imageID){
+                name = vplace.getName();
+            }
+        }
+
+        return name;
+
     }
 
 }

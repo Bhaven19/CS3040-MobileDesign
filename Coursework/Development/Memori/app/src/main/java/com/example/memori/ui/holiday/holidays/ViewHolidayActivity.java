@@ -42,12 +42,12 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
         getValuesFromIntent();
 
-        viewHolidayName = findViewById(R.id.text_VPlaceName);
-        viewHolidayStartDate = findViewById(R.id.text_VPlaceDate);
-        viewHolidayEndDate = findViewById(R.id.label_HolidayEndDate);
-        viewHolidayCompanions = findViewById(R.id.text_VPlaceCompanions);
-        viewHolidayNotes = findViewById(R.id.text_VPlaceNotes);
-        viewHolidayImage = findViewById(R.id.holidayImage);
+        viewHolidayName = findViewById(R.id.title_holidayName);
+        viewHolidayStartDate = findViewById(R.id.text_holidayStartDate);
+        viewHolidayEndDate = findViewById(R.id.text_holidayEndDate);
+        viewHolidayCompanions = findViewById(R.id.text_holidayCompanions);
+        viewHolidayNotes = findViewById(R.id.text_holidayNotes);
+        viewHolidayImage = findViewById(R.id.imageView_holiday);
         viewNoImage = findViewById(R.id.label_noImage);
 
         viewHolidayNotes.setText(impHoliday.getNotes());

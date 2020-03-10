@@ -68,7 +68,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         }
 
         public void populateHolidays(){
-            String [] holidayNames = {"Devon", "Cornwall", "New York", "Munich", "Berlin"};
+            String [] holidayNames = {"Las Vegas", "Paris", "New York", "Moscow", "Mumbai"};
             String [] dates = {"02/01/2020", "10/02/2020"};
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
@@ -92,9 +92,9 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         public void populateVisitedPlaces(){
             int holidayID = mHolidayDao.getLatestHoliday().get_id();
 
-            String[] visitedPlaceNames = {"Eiffel Tower", "Ghetto Golf", "The Pentagon", "Great Wall of China"};
+            String[] visitedPlaceNames = {"Bellagio Hotel", "Eiffel Tower", "Empire State Building", "The Moscow Kremlin", "Gateway of India"};
             String date = "10/02/2020";
-            String[] location = {"ChIJtTeDfh9w5kcRJEWRKN1Yy6I", "ChIJd6-vWIC8cEgRIZLs1KKcGBE", "ChIJJyztKd-2t4kRL1MTwPjQg68", "ChIJzyx_aNch8TUR3yIFlZslQNA"};
+            String[] location = {"ChIJvUdRyzDEyIARhA3R2cXH8oI", "ChIJtTeDfh9w5kcRJEWRKN1Yy6I", "ChIJaXQRs6lZwokRY6EFpJnhNNE", "ChIJc-UVs1BKtUYRaC6bPVq_hqg", "ChIJrVwNOsfR5zsRPHOcIKclCsc"};
             String travellerNames = "John, Mark, Sophie";
             String travelNotes = "Here are some notes";
 
@@ -118,15 +118,27 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             String imagePath = Environment.getExternalStorageDirectory() + "/memori/1581444893270.jpg";
             String imageDate = "23/01/2020";
             String imageTag = "summer";
-            String[] imageLocation = {"ChIJtTeDfh9w5kcRJEWRKN1Yy6I",
-                    "ChIJd6-vWIC8cEgRIZLs1KKcGBE",
-                    "ChIJJyztKd-2t4kRL1MTwPjQg68",
-                    "ChIJzyx_aNch8TUR3yIFlZslQNA",
-                    "ChIJ5TCOcRaYpBIRCmZHTz37sEQ",
-                    "ChIJPV4oX_65j4ARVW8IJ6IJUYs",
+            String[] imageLocation = {
+                    //Las Vegas
+                    "ChIJ0X31pIK3voARo3mz1ebVzDo",
+                    //Paris
+                    "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+                    //New York
+                    "ChIJOwg_06VPwokRYv534QaPC8g",
+                    //Moscow
+                    "ChIJybDUc_xKtUYRTM9XV8zWRD0",
+                    //Mumbai
                     "ChIJwe1EZjDG5zsRaYxkjY_tpF0",
-                    "ChIJ4Wy5QyGO0RkROGVW9XHh810",
-                    "ChIJQ0eBpNNSvkcR6-S1wp2s0aE"};
+                    //Bellagio Hotel
+                    "ChIJvUdRyzDEyIARhA3R2cXH8oI",
+                    //Eiffel Tower
+                    "ChIJtTeDfh9w5kcRJEWRKN1Yy6I",
+                    //Empire State Building
+                    "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+                    //The Moscow Kremlin
+                    "ChIJc-UVs1BKtUYRaC6bPVq_hqg",
+                    //Gateway of India
+                    "ChIJrVwNOsfR5zsRPHOcIKclCsc"};
 
             if (populate || mHolidayDao.isImagesEmpty() == 0){
 
