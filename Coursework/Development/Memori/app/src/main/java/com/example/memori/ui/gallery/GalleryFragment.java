@@ -22,13 +22,22 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.GalleryImageListAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
@@ -525,6 +534,59 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 }
 
                 return images;
+
+            case SORT_OPTIONS_LOCATION_A_TO_Z:
+                ArrayList<String> hAZLocationsNames = new ArrayList<>();
+
+                for (Images currentImage : mImages){
+                    hAZLocationsNames.add(getPlaceName(currentImage.getLocation()));
+
+                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                }
+
+                Collections.sort(hAZLocationsNames);
+                Log.d("OrderGallery", "----------SORTED----------");
+
+                for (String currentHolidayTag : hAZLocationsNames) {
+                    for (Images currentImage : mImages) {
+                        if (currentHolidayTag == currentImage.getTag()) {
+                            images.add(currentImage);
+
+                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+
+                        }
+
+                    }
+                }
+
+                return images;
+
+            case SORT_OPTIONS_LOCATION_Z_TO_A:
+                ArrayList<String> hZALocationsNames = new ArrayList<>();
+
+                for (Images currentImage : mImages){
+                    hZALocationsNames.add(getPlaceName(currentImage.getLocation()));
+
+                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                }
+
+                Collections.sort(hZALocationsNames);
+                Collections.reverse(hZALocationsNames);
+                Log.d("OrderGallery", "----------SORTED----------");
+
+                for (String currentHolidayTag : hZALocationsNames) {
+                    for (Images currentImage : mImages) {
+                        if (currentHolidayTag == currentImage.getTag()) {
+                            images.add(currentImage);
+
+                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+
+                        }
+
+                    }
+                }
+
+                return images;
         }
 
         return mImages;
@@ -587,6 +649,38 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             mAllVPlaces = vplaces;
 
         });
+    }
+
+    private String getPlaceName(String placeID){
+        AtomicReference<String> placeName = new AtomicReference<>("");
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getActivity(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+        }
+
+        // Define a Place ID.
+        String placeId = placeID;
+        Log.d("OrderGallery", "placeId: " + placeId);
+
+        // Specify the fields to return.s
+        List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+        // Construct a request object, passing the place ID and fields array.
+        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+        PlacesClient placesClient = Places.createClient(getActivity());
+        placesClient.fetchPlace(request).addOnCompleteListener((response) -> {
+            response.addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                @Override
+                public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
+                    Log.d("OrderGallery", "response.getPlace().getName(): " + fetchPlaceResponse.getPlace().getName());
+                    placeName.set(fetchPlaceResponse.getPlace().getName());
+
+                }
+            });
+
+        });
+
+        return placeName.get();
     }
 
 }
