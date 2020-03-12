@@ -23,8 +23,13 @@ import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.GalleryImageListAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,26 +64,35 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        createToolbar(getView());
+
+        setUpRecyclerView(-1);
+    }
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_sort_name) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Select the order for sorting the Images Name...");
+            pictureDialog.setTitle("What order would you like to sort the Image names by?");
             String[] pictureDialogItems = {
-                    "Ascending",
-                    "Descending"};
+                    "A to Z",
+                    "Z to A"};
             pictureDialog.setItems(pictureDialogItems,
                     (dialog, which) -> {
                         switch (which) {
                             case 0:
-                                Log.d("SortingGallery", "Sort By Name ASC");
+                                Log.d("OrderGallery", "Sort By Name ASC");
 
                                 setUpRecyclerView(SORT_OPTIONS_NAME_A_TO_Z);
 
                                 break;
                             case 1:
-                                Log.d("SortingGallery", "Sort By Name DESC");
+                                Log.d("OrderGallery", "Sort By Name DESC");
 
                                 setUpRecyclerView(SORT_OPTIONS_NAME_Z_TO_A);
                                 break;
@@ -89,32 +103,74 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             return true;
 
         } else if (id == R.id.action_sort_date) {
-            displayToast("Sort Date Selected");
+            AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+            pictureDialog.setTitle("What order would you like to sort the Image dates by?");
+            String[] pictureDialogItems = {
+                    "Oldest to Newest",
+                    "Newest to Oldest"};
+            pictureDialog.setItems(pictureDialogItems,
+                    (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                Log.d("OrderGallery", "Sort By Date Oldest To Newest");
+
+                                setUpRecyclerView(SORT_OPTIONS_DATE_OLD_TO_NEW);
+
+                                break;
+                            case 1:
+                                Log.d("OrderGallery", "Sort By Date Newest To Oldest");
+
+                                setUpRecyclerView(SORT_OPTIONS_DATE_NEW_TO_OLD);
+                                break;
+                        }
+                    });
+            pictureDialog.show();
 
             return true;
 
         } else if (id == R.id.action_sort_location) {
-            displayToast("Sort Location Selected");
+            AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+            pictureDialog.setTitle("What order would you like to sort the Image locations by?");
+            String[] pictureDialogItems = {
+                    "A to Z",
+                    "Z to A"};
+            pictureDialog.setItems(pictureDialogItems,
+                    (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                Log.d("OrderGallery", "Sort By Location AZ");
+
+                                setUpRecyclerView(SORT_OPTIONS_LOCATION_A_TO_Z);
+
+                                break;
+                            case 1:
+                                Log.d("OrderGallery", "Sort By Location ZA");
+
+                                setUpRecyclerView(SORT_OPTIONS_LOCATION_Z_TO_A);
+                                break;
+                        }
+                    });
+            pictureDialog.show();
 
             return true;
 
         } else if (id == R.id.action_sort_tag) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("Select the order for sorting the Images Tag...");
+            pictureDialog.setTitle("What order would you like to sort the Image tags by?");
             String[] pictureDialogItems = {
-                    "Ascending",
-                    "Descending"};
+                    "A to Z",
+                    "Z to A"};
             pictureDialog.setItems(pictureDialogItems,
                     (dialog, which) -> {
                         switch (which) {
                             case 0:
-                                Log.d("SortingGallery", "Sort By Tag ASC");
+                                Log.d("OrderGallery", "Sort By Tag ASC");
 
                                 setUpRecyclerView(SORT_OPTIONS_TAG_A_TO_Z);
 
                                 break;
                             case 1:
-                                Log.d("SortingGallery", "Sort By Tag DESC");
+                                Log.d("OrderGallery", "Sort By Tag DESC");
 
                                 setUpRecyclerView(SORT_OPTIONS_TAG_Z_TO_A);
                                 break;
@@ -136,15 +192,6 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        createToolbar(getView());
-
-        setUpRecyclerView(-1);
-    }
-
     private void setUpRecyclerView(int sortOption) {
         // set up the RecyclerView
         RecyclerView recyclerView = getView().findViewById(R.id.gallery_recyclerview);
@@ -152,12 +199,16 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         galleryImageListAdapter = new GalleryImageListAdapter(getContext());
 
-        Log.d("GalleryClick", "GalleryFragment, setting up recycler view");
-
         galleryImageListAdapter.setClickListener(new GalleryImageListAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.d("GalleryClick", "GalleryFragment, onItemClick");
+                Images myImage = galleryImageListAdapter.getImageAtPosition(position);
+
+                Log.d("ImageClick", "-------------------");
+                Log.d("ImageClick", "GalleryFragment, onItemClick imageID: " + myImage.get_id() );
+                Log.d("ImageClick", "GalleryFragment, onItemClick imageDate: " + myImage.getDate() );
+                Log.d("ImageClick", "GalleryFragment, onItemClick imageTag: " + myImage.getTag() );
+                Log.d("ImageClick", "-------------------");
 
                 displayToast("You clicked an image, which is at cell position " + position);
             }
@@ -169,7 +220,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         galleryViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
             // Update the cached copy of the words in the adapter.
-            Log.d("SortingGallery", "GalleryFragment: Updating Holidays");
+            Log.d("OrderGallery", "GalleryFragment: Updating Holidays");
 
             mAllImages = images;
 
@@ -193,16 +244,30 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     private List<Images> sortBy(int option, List<Images> mImages){
-        Log.d("SortingGallery", "GalleryFragment: Sorting");
+        Log.d("OrderGallery", "GalleryFragment: Sorting");
 
         ArrayList<Images> images = new ArrayList<>();
         ArrayList<String> imageSortField = new ArrayList<>();
 
         obtainAll();
 
+        class StringDateComparator implements Comparator<String>{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            public int compare(String lhs, String rhs)
+            {
+                try {
+                    return dateFormat.parse(lhs).compareTo(dateFormat.parse(rhs));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return -100;
+                }
+            }
+        }
+
         switch (option) {
             case SORT_OPTIONS_NAME_A_TO_Z:
-                Log.d("SortingGallery", "GalleryFragment: Sorting Name ASC");
+                Log.d("OrderGallery", "GalleryFragment: Sorting Name ASC");
 
                 images.clear();
                 imageSortField.clear();
@@ -230,7 +295,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 return images;
 
             case SORT_OPTIONS_NAME_Z_TO_A:
-                Log.d("SortingGallery", "GalleryFragment: Sorting Name DESC");
+                Log.d("OrderGallery", "GalleryFragment: Sorting Name DESC");
 
                 images.clear();
                 imageSortField.clear();
@@ -257,92 +322,87 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 }
 
                 return images;
-//            case SORT_OPTIONS_LOCATION_A_TO_Z:
-//                Log.d("SortingGallery", "GalleryFragment: Sorting Location ASC");
-//
-//                holiday.clear();
-//                hSortField.clear();
-//
-//                for (Images currentImage : mImages){
-//                    hSortField.add(currentImage.getName());
-//                }
-//
-//                Collections.reverse(hSortField);
-//
-//                for (String currentHolidayName : hSortField){
-//                    for (Images currentImage : mImages){
-//                        if (currentHolidayName == currentImage.getName()){
-//                            holiday.add(currentImage);
-//
-//                        }
-//
-//                    }
-//                }
-//
-//                return holiday;
-//            case SORT_OPTIONS_LOCATION_Z_TO_A:
-//                ArrayList<String> hNames = new ArrayList<>();
-//
-//                for (Images currentImage : mImages){
-//                    hNames.add(currentImage.getName());
-//                }
-//
-//                Collections.sort(hNames);
-//
-//                for (String currentHolidayName : hNames){
-//                    for (Images currentImage : mImages){
-//                        if (currentHolidayName == currentImage.getName()){
-//                            holiday.add(currentImage);
-//
-//                        }
-//
-//                    }
-//                }
-//
-//
-//                return holiday;
-//            case SORT_OPTIONS_NAME_A_TO_Z:
-//                ArrayList<String> hNames = new ArrayList<>();
-//
-//                for (Images currentImage : mImages){
-//                    hNames.add(currentImage.getName());
-//                }
-//
-//                Collections.sort(hNames);
-//
-//                for (String currentHolidayName : hNames){
-//                    for (Images currentImage : mImages){
-//                        if (currentHolidayName == currentImage.getName()){
-//                            holiday.add(currentImage);
-//
-//                        }
-//
-//                    }
-//                }
-//
-//
-//                return holiday;
-//            case SORT_OPTIONS_NAME_Z_TO_A:
-//                ArrayList<String> hNames = new ArrayList<>();
-//
-//                for (Images currentImage : mImages){
-//                    hNames.add(currentImage.getName());
-//                }
-//
-//                Collections.sort(hNames);
-//
-//                for (String currentHolidayName : hNames){
-//                    for (Images currentImage : mImages){
-//                        if (currentHolidayName == currentImage.getName()){
-//                            holiday.add(currentImage);
-//
-//                        }
-//
-//                    }
-//                }
-//
-//
-//                return holiday;
+
+            case SORT_OPTIONS_DATE_OLD_TO_NEW:
+                Log.d("OrderGallery", "GalleryFragment: Sorting Date Old to New");
+                images.clear();
+                imageSortField.clear();
+
+                ArrayList<Date> imageONDates = new ArrayList<>();
+
+                HashMap<Date, Images> hmONImageToString = new HashMap<>();
+
+                for (Images currentImage : mImages){
+                    String currentDateString = currentImage.getDate();
+
+                    Log.d("OrderGallery", "------------------");
+
+                    int currentYear = Integer.parseInt(currentDateString.substring(currentDateString.length() - 4));
+                    int currentMonth = Integer.parseInt(currentDateString.substring(3, 5));
+                    int currentDay = Integer.parseInt(currentDateString.substring(0, 2));
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(currentYear, currentMonth - 1, currentDay);
+
+
+                    imageONDates.add(calendar.getTime());
+                    hmONImageToString.put(calendar.getTime(), currentImage);
+
+                }
+
+                Collections.sort(imageONDates);
+                Log.d("OrderGallery", "------SORTED-------");
+
+                for (Date currentImageDate : imageONDates){
+                    Log.d("OrderGallery", "currentImageDate: " + currentImageDate);
+
+                    Images currentImage = hmONImageToString.get(currentImageDate);
+
+                    images.add(currentImage);
+
+                }
+
+                return images;
+
+            case SORT_OPTIONS_DATE_NEW_TO_OLD:
+                Log.d("OrderGallery", "GalleryFragment: Sorting Date Old to New");
+                images.clear();
+                imageSortField.clear();
+
+                ArrayList<Date> imageNODates = new ArrayList<>();
+
+                HashMap<Date, Images> hmNOImageToString = new HashMap<>();
+
+                for (Images currentImage : mImages){
+                    String currentDateString = currentImage.getDate();
+
+                    int currentYear = Integer.parseInt(currentDateString.substring(currentDateString.length() - 4));
+                    int currentMonth = Integer.parseInt(currentDateString.substring(3, 5));
+                    int currentDay = Integer.parseInt(currentDateString.substring(0, 2));
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(currentYear, currentMonth - 1, currentDay);
+
+                    imageNODates.add(calendar.getTime());
+                    hmNOImageToString.put(calendar.getTime(), currentImage);
+
+                }
+
+                Collections.sort(imageNODates);
+                Collections.reverse(imageNODates);
+                Log.d("OrderGallery", "------SORTED-------");
+
+                for (Date currentImageDate : imageNODates){
+                    Log.d("OrderGallery", "currentImageDate: " + currentImageDate);
+
+                    Images currentImage = hmNOImageToString.get(currentImageDate);
+
+                    images.add(currentImage);
+
+                }
+
+                return images;
+
             case SORT_OPTIONS_TAG_A_TO_Z:
                 ArrayList<String> hAZTagsNames = new ArrayList<>();
 

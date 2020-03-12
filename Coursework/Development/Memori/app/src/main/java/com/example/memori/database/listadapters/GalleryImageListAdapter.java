@@ -118,7 +118,6 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
         notifyDataSetChanged();
         listToArrayList(mAllImages);
 
-
     }
 
     // parent activity will implement this method to respond to click events
@@ -128,7 +127,7 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
-        Log.d("GalleryClick", "GalleryImageListAdapter, setClickListener()");
+        Log.d("AdaptGalleryClick", "GalleryImageListAdapter, setClickListener()");
 
         this.mClickListener = itemClickListener;
     }
@@ -144,17 +143,17 @@ public class GalleryImageListAdapter extends RecyclerView.Adapter<GalleryImageLi
 
         @Override
         public void onClick(View view) {
-            Log.d("GalleryClick", "GalleryImageListAdapter, onClick()");
+            Log.d("AdaptGalleryClick", "GalleryImageListAdapter, onClick()");
             if (mClickListener != null) {
-                Log.d("GalleryClick", "GalleryImageListAdapter, mClickListener is true");
+                Log.d("AdaptGalleryClick", "GalleryImageListAdapter, mClickListener is true");
                 mClickListener.onItemClick(view, getAdapterPosition());
             }
         }
     }
 
     // convenience method for getting data at click position
-    public String getItem(int id) {
-        return allImages.get(id);
+    public Images getImageAtPosition(int id) {
+        return mAllImages.get(id);
     }
 
     public void listToArrayList(List<Images> mData){
