@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,25 +19,35 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.VPlaceListAdapter;
+import com.example.memori.ui.holiday.HolidayViewModel;
 import com.example.memori.ui.holiday.vplaces.ViewVPlace;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewHolidayActivity extends AppCompatActivity {
 
     private Holiday impHoliday;
 
-    private TextView viewHolidayNotes, viewHolidayStartingLoc, viewHolidayDestination, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
+    private TextView viewHolidayNotes, viewHolidayStartDate, viewHolidayEndDate, viewHolidayCompanions, viewHolidayName, viewNoImage;
     private ImageView viewHolidayImage;
     private Images holidayImage, vPlaceImage;
 
     private ArrayList<VisitedPlace> allVisitedPlaces = new ArrayList<>();
+    public HolidayViewModel mHolidayViewModel;
+    private List<Holiday> allHolidays;
+    private List<Images> allImages;
+    private List<VisitedPlace> allVPlaces;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_holiday);
+
+        mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
+        retrieveTables();
 
         allVisitedPlaces.clear();
 
@@ -94,8 +105,6 @@ public class ViewHolidayActivity extends AppCompatActivity {
             holidayImage = null;
         }
 
-        vPlaceImage = (Images) getIntent().getSerializableExtra("chosenVisitedPlaceImage");
-
         ArrayList<Integer> vPlaceArrayIDs = getIntent().getIntegerArrayListExtra("vPlaceArrayID");
         Bundle allVisitedPlacesBundle = getIntent().getBundleExtra("bundle");
 
@@ -126,6 +135,10 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
                 Intent viewIntent = new Intent(getApplicationContext(), ViewVPlace.class);
                 viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                
+                vPlaceImage = getImage(myVisitedPlace.getImageID());
+
+                //Log.d("ViewVPlace", "ViewHoliday, vPlaceImage: " + vPlaceImage.get_id());
                 viewIntent.putExtra("chosenImage", vPlaceImage);
 
                 startActivity(viewIntent);
@@ -134,6 +147,48 @@ public class ViewHolidayActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    public Images getImage(int id){
+        Images chosenImage = null;
+
+        Log.d("FindImage", "allImages.size(): " + allImages.size());
+
+        for(Images currentImage : allImages){
+
+            Log.d("FindImage", "Comparison: " + currentImage.get_id() + " == " + id);
+
+            if (currentImage.get_id() == id){
+                chosenImage = currentImage;
+
+                Log.d("FindImage", "ImageFound");
+
+            }
+        }
+
+
+        return chosenImage;
+    }
+
+    public void retrieveTables(){
+        mHolidayViewModel.getAllHolidays().observe(this, holidays -> {
+            // Update the cached copy of the words in the adapter.
+            allHolidays = holidays;
+
+
+        });
+
+        mHolidayViewModel.getAllImages().observe(this, images -> {
+            // Update the cached copy of the words in the adapter.
+            allImages = images;
+
+        });
+
+        mHolidayViewModel.getAllVisitedPlaces().observe(this, vplaces -> {
+            // Update the cached copy of the words in the adapter.
+            allVPlaces = vplaces;
+
+        });
     }
 
 }

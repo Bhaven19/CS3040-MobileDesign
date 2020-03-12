@@ -24,9 +24,9 @@ public class HolidayViewModel extends AndroidViewModel {
         mRepository = new HolidayRepository(application);
     }
 
-    LiveData<List<Holiday>> getAllHolidays() { return mRepository.getAllHolidays(); }
-    LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mRepository.getAllVisitedPlaces(); }
-    LiveData<List<Images>> getAllImages() { return mRepository.getAllImages(); }
+    public LiveData<List<Holiday>> getAllHolidays() { return mRepository.getAllHolidays(); }
+    public LiveData<List<VisitedPlace>> getAllVisitedPlaces() { return mRepository.getAllVisitedPlaces(); }
+    public LiveData<List<Images>> getAllImages() { return mRepository.getAllImages(); }
 
     public String holidayNamesToString(){
         String list = "";

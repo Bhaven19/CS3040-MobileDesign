@@ -331,14 +331,14 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                         Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
                         viewIntent.putExtra("chosenHoliday", myHoliday);
 
-                        Log.d("FindImage", "myHoliday.getImageID(): "+ myHoliday.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myHoliday.getImageID()));
-
                         viewIntent.putIntegerArrayListExtra("vPlaceArrayID", vPlaceIDPerHoliday);
 
                         Bundle bundle = getAllVPlacesForHoliday(myHoliday);
-                        Log.d("PassingList", "(HolidayFragment) Putting Bundle within the Intent: " + bundle);
                         viewIntent.putExtra("bundle", bundle);
+
+
+                        viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myHoliday.getImageID()));
 
                         startActivity(viewIntent);
 
