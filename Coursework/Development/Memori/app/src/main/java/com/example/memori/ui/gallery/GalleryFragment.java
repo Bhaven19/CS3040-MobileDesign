@@ -22,11 +22,9 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.GalleryImageListAdapter;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Map;
 
 public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
@@ -62,22 +60,41 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     private HashMap<String, Integer> hmNameToID;
 
+    private HashMap<Images, Place> hmImageToPlace;
+
+    private int i;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        i = 0;
+        hmImageToPlace = new HashMap<>();
+
+        obtainAll();
+
         createToolbar(view);
 
         setUpRecyclerView(-1);
+
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+        i = 0;
+        hmImageToPlace = new HashMap<>();
+
+        obtainAll();
+
         createToolbar(getView());
 
         setUpRecyclerView(-1);
+
+
+
     }
 
     @Override
@@ -264,6 +281,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             galleryImageListAdapter.setImages(images);
 
         });
+
 
     }
 
@@ -539,20 +557,20 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 ArrayList<String> hAZLocationsNames = new ArrayList<>();
 
                 for (Images currentImage : mImages){
-                    hAZLocationsNames.add(getPlaceName(currentImage.getLocation()));
+                    hAZLocationsNames.add(hmImageToPlace.get(currentImage).getName());
 
-                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + hmImageToPlace.get(currentImage).getName());
                 }
 
                 Collections.sort(hAZLocationsNames);
                 Log.d("OrderGallery", "----------SORTED----------");
 
-                for (String currentHolidayTag : hAZLocationsNames) {
-                    for (Images currentImage : mImages) {
-                        if (currentHolidayTag == currentImage.getTag()) {
-                            images.add(currentImage);
+                for (String currentPlaceName : hAZLocationsNames) {
+                    for (Map.Entry<Images, Place> currentPlace : hmImageToPlace.entrySet()) {
+                        if (currentPlace.getValue().getName().equals(currentPlaceName)) {
+                            images.add(currentPlace.getKey());
 
-                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + currentPlace.getValue().getName());
 
                         }
 
@@ -565,21 +583,21 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 ArrayList<String> hZALocationsNames = new ArrayList<>();
 
                 for (Images currentImage : mImages){
-                    hZALocationsNames.add(getPlaceName(currentImage.getLocation()));
+                    hZALocationsNames.add(hmImageToPlace.get(currentImage).getName());
 
-                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                    Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + hmImageToPlace.get(currentImage).getName());
                 }
 
                 Collections.sort(hZALocationsNames);
                 Collections.reverse(hZALocationsNames);
                 Log.d("OrderGallery", "----------SORTED----------");
 
-                for (String currentHolidayTag : hZALocationsNames) {
-                    for (Images currentImage : mImages) {
-                        if (currentHolidayTag == currentImage.getTag()) {
-                            images.add(currentImage);
+                for (String currentPlaceName : hZALocationsNames) {
+                    for (Map.Entry<Images, Place> currentPlace : hmImageToPlace.entrySet()) {
+                        if (currentPlace.getValue().getName().equals(currentPlaceName)) {
+                            images.add(currentPlace.getKey());
 
-                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + getPlaceName(currentImage.getLocation()));
+                            Log.d("OrderGallery", "getPlaceName(currentImage.getLocation()): " + currentPlace.getValue().getName());
 
                         }
 
@@ -649,38 +667,44 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             mAllVPlaces = vplaces;
 
         });
-    }
 
-    private String getPlaceName(String placeID){
-        AtomicReference<String> placeName = new AtomicReference<>("");
+        galleryViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
+            mAllImages = images;
 
-        if (!Places.isInitialized()) {
-            Places.initialize(getActivity(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
-        }
-
-        // Define a Place ID.
-        String placeId = placeID;
-        Log.d("OrderGallery", "placeId: " + placeId);
-
-        // Specify the fields to return.s
-        List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
-
-        // Construct a request object, passing the place ID and fields array.
-        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
-        PlacesClient placesClient = Places.createClient(getActivity());
-        placesClient.fetchPlace(request).addOnCompleteListener((response) -> {
-            response.addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-                @Override
-                public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
-                    Log.d("OrderGallery", "response.getPlace().getName(): " + fetchPlaceResponse.getPlace().getName());
-                    placeName.set(fetchPlaceResponse.getPlace().getName());
-
-                }
-            });
+            getAllImagePlaces();
 
         });
+    }
 
-        return placeName.get();
+    private void getAllImagePlaces(){
+        if (i < mAllImages.size()) {
+            if (!Places.isInitialized()) {
+                Places.initialize(getActivity(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
+            }
+
+            Images currentImage = mAllImages.get(i);
+
+            // Define a Place ID.
+            String placeId = currentImage.getLocation();
+            Log.d("OrderGallery", "placeId: " + placeId);
+
+            // Specify the fields to return.s
+            List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+            // Construct a request object, passing the place ID and fields array.
+            FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+            PlacesClient placesClient = Places.createClient(getActivity());
+            placesClient.fetchPlace(request).addOnCompleteListener(fetchPlaceResponse -> {
+                    Log.d("OrderGallery", "response.getPlace().getName(): " + fetchPlaceResponse.getResult().getPlace().getName());
+                    hmImageToPlace.put(currentImage, fetchPlaceResponse.getResult().getPlace());
+
+                    i++;
+
+                    getAllImagePlaces();
+
+            });
+        }
+
     }
 
 }
