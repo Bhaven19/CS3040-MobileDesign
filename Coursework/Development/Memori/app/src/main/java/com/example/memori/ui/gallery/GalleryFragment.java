@@ -285,7 +285,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 images.clear();
                 imageSortField.clear();
 
-                accessAllHolidayImagesNames(mImages);
+                accessAllHolidayImagesNames();
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -313,7 +313,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 images.clear();
                 imageSortField.clear();
 
-                accessAllHolidayImagesNames(mImages);
+                accessAllHolidayImagesNames();
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -342,7 +342,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 images.clear();
                 imageSortField.clear();
 
-                accessAllVPlaceImagesNames(mImages);
+                accessAllVPlaceImagesNames();
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -370,7 +370,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 images.clear();
                 imageSortField.clear();
 
-                accessAllVPlaceImagesNames(mImages);
+                accessAllVPlaceImagesNames();
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -536,7 +536,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
-    private void accessAllHolidayImagesNames(List<Images> mAllImages){
+    private void accessAllHolidayImagesNames(){
         hmNameToID = new HashMap<>();
 
         hmNameToID.clear();
@@ -550,7 +550,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
-    private void accessAllVPlaceImagesNames(List<Images> mAllImages){
+    private void accessAllVPlaceImagesNames(){
         hmNameToID = new HashMap<>();
 
         hmNameToID.clear();
@@ -558,8 +558,8 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         Log.d("OrderGallery", "mAllHolidays.size(): " + mAllHolidays.size());
         Log.d("OrderGallery", "mAllVPlaces.size(): " + mAllVPlaces.size());
 
-        for (Holiday currentHoliday : mAllHolidays){
-            hmNameToID.put(currentHoliday.getName(), currentHoliday.getImageID());
+        for (VisitedPlace currentVPlace : mAllVPlaces){
+            hmNameToID.put(currentVPlace.getName(), currentVPlace.getImageID());
         }
 
     }
