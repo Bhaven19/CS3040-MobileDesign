@@ -23,12 +23,9 @@ import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.GalleryImageListAdapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,14 +36,16 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     private GalleryImageListAdapter galleryImageListAdapter;
     private Toolbar gToolbar;
 
-    private static final int SORT_OPTIONS_NAME_A_TO_Z = 1;
-    private static final int SORT_OPTIONS_NAME_Z_TO_A = 2;
-    private static final int SORT_OPTIONS_LOCATION_A_TO_Z = 3;
-    private static final int SORT_OPTIONS_LOCATION_Z_TO_A = 4;
-    private static final int SORT_OPTIONS_DATE_OLD_TO_NEW = 5;
-    private static final int SORT_OPTIONS_DATE_NEW_TO_OLD = 6;
-    private static final int SORT_OPTIONS_TAG_A_TO_Z = 7;
-    private static final int SORT_OPTIONS_TAG_Z_TO_A = 8;
+    private static final int SORT_OPTIONS_HOLIDAY_NAME_A_TO_Z = 1;
+    private static final int SORT_OPTIONS_HOLIDAY_NAME_Z_TO_A = 2;
+    private static final int SORT_OPTIONS_VPLACE_NAME_A_TO_Z = 3;
+    private static final int SORT_OPTIONS_VPLACE_NAME_Z_TO_A = 4;
+    private static final int SORT_OPTIONS_LOCATION_A_TO_Z = 5;
+    private static final int SORT_OPTIONS_LOCATION_Z_TO_A = 6;
+    private static final int SORT_OPTIONS_DATE_OLD_TO_NEW = 7;
+    private static final int SORT_OPTIONS_DATE_NEW_TO_OLD = 8;
+    private static final int SORT_OPTIONS_TAG_A_TO_Z = 9;
+    private static final int SORT_OPTIONS_TAG_Z_TO_A = 10;
 
     private List<Images> mAllImages;
     private List<Holiday> mAllHolidays;
@@ -76,9 +75,9 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_sort_name) {
+        if (id == R.id.action_sort_holiday) {
             AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
-            pictureDialog.setTitle("What order would you like to sort the Image names by?");
+            pictureDialog.setTitle("What order would you like to sort the Holiday Images by?");
             String[] pictureDialogItems = {
                     "A to Z",
                     "Z to A"};
@@ -88,13 +87,39 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                             case 0:
                                 Log.d("OrderGallery", "Sort By Name ASC");
 
-                                setUpRecyclerView(SORT_OPTIONS_NAME_A_TO_Z);
+                                setUpRecyclerView(SORT_OPTIONS_HOLIDAY_NAME_A_TO_Z);
 
                                 break;
                             case 1:
                                 Log.d("OrderGallery", "Sort By Name DESC");
 
-                                setUpRecyclerView(SORT_OPTIONS_NAME_Z_TO_A);
+                                setUpRecyclerView(SORT_OPTIONS_HOLIDAY_NAME_Z_TO_A);
+                                break;
+                        }
+                    });
+            pictureDialog.show();
+
+            return true;
+
+        } else if (id == R.id.action_sort_vplace) {
+            AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+            pictureDialog.setTitle("What order would you like to sort the Visited Places images by?");
+            String[] pictureDialogItems = {
+                    "A to Z",
+                    "Z to A"};
+            pictureDialog.setItems(pictureDialogItems,
+                    (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                Log.d("OrderGallery", "Sort By Date Oldest To Newest");
+
+                                setUpRecyclerView(SORT_OPTIONS_VPLACE_NAME_A_TO_Z);
+
+                                break;
+                            case 1:
+                                Log.d("OrderGallery", "Sort By Date Newest To Oldest");
+
+                                setUpRecyclerView(SORT_OPTIONS_VPLACE_NAME_Z_TO_A);
                                 break;
                         }
                     });
@@ -211,6 +236,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 Log.d("ImageClick", "-------------------");
 
                 displayToast("You clicked an image, which is at cell position " + position);
+
             }
         });
 
@@ -240,6 +266,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         gToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
         gToolbar.getMenu().getItem(2).setOnMenuItemClickListener(this);
         gToolbar.getMenu().getItem(3).setOnMenuItemClickListener(this);
+        gToolbar.getMenu().getItem(4).setOnMenuItemClickListener(this);
 
     }
 
@@ -251,28 +278,14 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         obtainAll();
 
-        class StringDateComparator implements Comparator<String>{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-            public int compare(String lhs, String rhs)
-            {
-                try {
-                    return dateFormat.parse(lhs).compareTo(dateFormat.parse(rhs));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    return -100;
-                }
-            }
-        }
-
         switch (option) {
-            case SORT_OPTIONS_NAME_A_TO_Z:
+            case SORT_OPTIONS_HOLIDAY_NAME_A_TO_Z:
                 Log.d("OrderGallery", "GalleryFragment: Sorting Name ASC");
 
                 images.clear();
                 imageSortField.clear();
 
-                accessAllImagesNames(mImages);
+                accessAllHolidayImagesNames(mImages);
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -294,13 +307,70 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                 return images;
 
-            case SORT_OPTIONS_NAME_Z_TO_A:
+            case SORT_OPTIONS_HOLIDAY_NAME_Z_TO_A:
                 Log.d("OrderGallery", "GalleryFragment: Sorting Name DESC");
 
                 images.clear();
                 imageSortField.clear();
 
-                accessAllImagesNames(mImages);
+                accessAllHolidayImagesNames(mImages);
+
+                for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
+                    imageSortField.add(currentPair.getKey());
+
+                    Log.d("OrderGallery", "currentPair.getKey(): " + currentPair.getKey());
+                }
+
+                Collections.sort(imageSortField);
+                Collections.reverse(imageSortField);
+                Log.d("OrderGallery", "------SORTED-------");
+
+                for (String currentImageName : imageSortField){
+                    Log.d("OrderGallery", "currentImageName: " + currentImageName);
+
+                    Images currentImage = getImage(hmNameToID.get(currentImageName));
+
+                    images.add(currentImage);
+
+                }
+
+                return images;
+
+            case SORT_OPTIONS_VPLACE_NAME_A_TO_Z:
+                Log.d("OrderGallery", "GalleryFragment: Sorting Name ASC");
+
+                images.clear();
+                imageSortField.clear();
+
+                accessAllVPlaceImagesNames(mImages);
+
+                for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
+                    imageSortField.add(currentPair.getKey());
+
+                    Log.d("OrderGallery", "currentPair.getKey(): " + currentPair.getKey());
+                }
+
+                Collections.sort(imageSortField);
+                Log.d("OrderGallery", "------SORTED-------");
+
+                for (String currentImageName : imageSortField){
+                    Log.d("OrderGallery", "currentImageName: " + currentImageName);
+
+                    Images currentImage = getImage(hmNameToID.get(currentImageName));
+
+                    images.add(currentImage);
+
+                }
+
+                return images;
+
+            case SORT_OPTIONS_VPLACE_NAME_Z_TO_A:
+                Log.d("OrderGallery", "GalleryFragment: Sorting Name DESC");
+
+                images.clear();
+                imageSortField.clear();
+
+                accessAllVPlaceImagesNames(mImages);
 
                 for (HashMap.Entry<String, Integer> currentPair : hmNameToID.entrySet()){
                     imageSortField.add(currentPair.getKey());
@@ -466,8 +536,10 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     }
 
-    private void accessAllImagesNames(List<Images> mAllImages){
+    private void accessAllHolidayImagesNames(List<Images> mAllImages){
         hmNameToID = new HashMap<>();
+
+        hmNameToID.clear();
 
         Log.d("OrderGallery", "mAllHolidays.size(): " + mAllHolidays.size());
         Log.d("OrderGallery", "mAllVPlaces.size(): " + mAllVPlaces.size());
@@ -476,8 +548,18 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             hmNameToID.put(currentHoliday.getName(), currentHoliday.getImageID());
         }
 
-        for (VisitedPlace currentVPlace : mAllVPlaces){
-            hmNameToID.put(currentVPlace.getName(), currentVPlace.getImageID());
+    }
+
+    private void accessAllVPlaceImagesNames(List<Images> mAllImages){
+        hmNameToID = new HashMap<>();
+
+        hmNameToID.clear();
+
+        Log.d("OrderGallery", "mAllHolidays.size(): " + mAllHolidays.size());
+        Log.d("OrderGallery", "mAllVPlaces.size(): " + mAllVPlaces.size());
+
+        for (Holiday currentHoliday : mAllHolidays){
+            hmNameToID.put(currentHoliday.getName(), currentHoliday.getImageID());
         }
 
     }

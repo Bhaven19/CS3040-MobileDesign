@@ -4,9 +4,15 @@
     tools:context="com.example.droidcafe.MainActivity">
 
     <item
-        android:id="@+id/action_sort_name"
+        android:id="@+id/action_sort_holiday"
         android:orderInCategory="10"
-        android:title="Sort By Name"
+        android:title="Sort By Holiday"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_vplace"
+        android:orderInCategory="10"
+        android:title="Sort By Visited Place"
         app:showAsAction="never" />
 
     <item

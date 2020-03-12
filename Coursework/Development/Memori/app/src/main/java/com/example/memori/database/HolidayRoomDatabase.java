@@ -3,6 +3,7 @@ package com.example.memori.database;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -68,12 +69,10 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
 
+
+
             populateImages();
-
-
             populateHolidays();
-
-
             populateVisitedPlaces();
 
             return null;
@@ -128,7 +127,6 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
         }
 
         public void populateVisitedPlaces(){
-
             String[] visitedPlaceNames = {
                     "Bellagio Hotel",
                     "Eiffel Tower",
@@ -173,6 +171,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                             travellerNames[i],
                             travelNotes,
                             allImageIDs.get(j));
+
 
                     mHolidayDao.insertVisitedPlace(visitedPlace);
 
@@ -243,15 +242,12 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             boolean check = false;
             int imageID = 0;
 
-            List<String> imageList = Arrays.asList(imagePath);
             List<String> dateList = Arrays.asList(imageDate);
             List<String> tagList = Arrays.asList(imageTag);
 
-            Collections.shuffle(imageList);
             Collections.shuffle(dateList);
             Collections.shuffle(tagList);
 
-            imageList.toArray(imagePath);
             dateList.toArray(imageDate);
             tagList.toArray(imageTag);
 
@@ -270,10 +266,14 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                         check = true;
                     }
 
-                    allImageIDs.add(imageID + i + 1);
+                    int newID = imageID + i;
+
+                    Log.d("ImagePathError", "imageID + i + 1: " + newID);
+                    allImageIDs.add(newID);
 
                 }
             }
+
         }
 
     }

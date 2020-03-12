@@ -425,9 +425,8 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                     } else {
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
                         viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
-                        viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myVisitedPlace.getImageID()));
 
-                        Log.d("FindImage", "myHoliday.getImageID(): "+ myVisitedPlace.getImageID());
+                        Log.d("FindImage", "myVisitedPlace.getImageID(): "+ myVisitedPlace.getImageID());
                         viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
 
                         startActivity(viewIntent);
@@ -724,19 +723,21 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     public Images getImage(int id){
         Images chosenImage = null;
 
-        Log.d("FindImage", "allImages.size:" + allImages.size());
-        for (int i = 0; i < allImages.size(); i++) {
-            Images currentImage = allImages.get(i);
+        Log.d("FindImage", "allImages.size(): " + allImages.size());
+
+        for(Images currentImage : allImages){
+
+            Log.d("FindImage", "Comparison: " + currentImage.get_id() + " == " + id);
 
             if (currentImage.get_id() == id){
                 chosenImage = currentImage;
 
                 Log.d("FindImage", "ImageFound");
-            } else {
-                Log.d("FindImage", "ImageNotFound");
 
             }
         }
+
+
         return chosenImage;
     }
 
