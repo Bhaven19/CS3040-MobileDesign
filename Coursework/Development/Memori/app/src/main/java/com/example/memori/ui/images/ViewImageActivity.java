@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +30,7 @@ import java.util.Locale;
 
 public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private TextView mImageName, mImageDate, mNoImage, mImageAddress;
+    private TextView mImageName, mImageDate, mImageTag, mImageAddress;
     private ImageView mImageView;
 
     private Images impImage;
@@ -49,8 +48,9 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
 
         mImageName = findViewById(R.id.title_imageName);
         mImageDate = findViewById(R.id.text_imageDate);
-        mNoImage = findViewById(R.id.label_noImage);
+        mImageTag = findViewById(R.id.label_imageTag);
         mImageAddress = findViewById(R.id.label_imageAddress);
+
         mImageView = findViewById(R.id.imageView_image);
 
         setValuesFromIntent();
@@ -69,23 +69,13 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
 
         mImageName.setText(impImageName);
         mImageDate.setText(impImageDate);
+        mImageTag.setText("Image Tag: " + impImageTag);
         //mImageTag.setText(impImageTag);
 
         File imageFile = new File(impImagePath);
 
-        if (imageFile.exists()){
-            mImageView.setVisibility(View.VISIBLE);
-            mNoImage.setVisibility(View.INVISIBLE);
-
-            Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            mImageView.setImageBitmap(mHolidayImage);
-
-            Log.d("ImageFind", "ViewVPlace, IMAGE FOUND");
-
-        } else {
-            Log.d("ImageFind", "ViewVPlace, IMAGE NOT FOUND");
-
-        }
+        Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        mImageView.setImageBitmap(mHolidayImage);
 
     }
 
