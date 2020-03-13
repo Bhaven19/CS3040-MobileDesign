@@ -1,8 +1,10 @@
 package com.example.memori.ui.home;
 
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,13 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.memori.R;
+import com.example.memori.components.ShakeEventListener;
 import com.example.memori.database.entities.Holiday;
 
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
+
+    private SensorManager mSensorManager;
+
+    private ShakeEventListener mSensorListener;
 
     private HomeViewModel homeViewModel;
 
@@ -33,6 +41,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         return root;
     }
+
 
     public void extractLatestHoliday(){
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -114,4 +123,34 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                Log.d("DetectGesture","Action was DOWN");
+                return true;
+
+            case (MotionEvent.ACTION_MOVE) :
+                Log.d("DetectGesture","Action was MOVE");
+                return true;
+
+            case (MotionEvent.ACTION_UP) :
+                Log.d("DetectGesture","Action was UP");
+                return true;
+
+            case (MotionEvent.ACTION_CANCEL) :
+                Log.d("DetectGesture","Action was CANCEL");
+                return true;
+
+            case (MotionEvent.ACTION_OUTSIDE) :
+                Log.d("DetectGesture","Movement occurred outside bounds of current screen element");
+                return true;
+
+            default :
+                return false;
+
+        }
+    }
 }
