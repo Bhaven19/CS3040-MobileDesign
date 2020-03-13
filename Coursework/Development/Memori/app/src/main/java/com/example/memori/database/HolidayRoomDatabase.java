@@ -228,16 +228,16 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                     "ChIJybDUc_xKtUYRTM9XV8zWRD0",
                     //Mumbai
                     "ChIJwe1EZjDG5zsRaYxkjY_tpF0",
-                    //Bellagio Hotel
-                    "ChIJvUdRyzDEyIARhA3R2cXH8oI",
-                    //Eiffel Tower
-                    "ChIJtTeDfh9w5kcRJEWRKN1Yy6I",
-                    //Empire State Building
-                    "ChIJaXQRs6lZwokRY6EFpJnhNNE",
-                    //The Moscow Kremlin
-                    "ChIJc-UVs1BKtUYRaC6bPVq_hqg",
-                    //Gateway of India
-                    "ChIJrVwNOsfR5zsRPHOcIKclCsc"};
+                    //Las Vegas - City Center
+                    "EiNXIEFyaWEgUGwsIExhcyBWZWdhcywgTlYgODkxNTgsIFVTQSIuKiwKFAoSCR_m0SgyxMiAESNKQUbHcgJVEhQKEgnRffWkgre-gBGjebPV5tXMOg",
+                    //Paris - Pantheon
+                    "ChIJc8mX0udx5kcRWKcjTwDr5QA",
+                    //New York - Wall Street
+                    "EhpXYWxsIFN0LCBOZXcgWW9yaywgTlksIFVTQSIuKiwKFAoSCavM7VsWWsKJEQGutQPw3bIsEhQKEgk7CD_TpU_CiRFi_nfhBo8LyA",
+                    //Moscow -  State Tretyakov Gallery
+                    "ChIJV4MHMv5KtUYRjwJ7motuDaU",
+                    //Mumbai - Maharashtra Nature Park
+                    "ChIJMQw-GtvI5zsRwERQp-CzzbQ"};
 
             boolean check = false;
             int imageID = 0;

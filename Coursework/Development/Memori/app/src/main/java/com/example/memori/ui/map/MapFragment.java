@@ -89,6 +89,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private View view;
 
     private ArrayList<Marker> allVPlaceMarkers = new ArrayList<>();
+    private ArrayList<VisitedPlace> filterVPlaces;
+
+    private boolean filtersActive = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -244,8 +247,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onResume() {
         super.onResume();
 
-        allVPlaceMarkers.clear();
-
         retrieveTables();
         i = 0;
         j = 0;
@@ -279,7 +280,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         retrieveTables();
 
-        displayToast("Loading all map markers");
+        if(filtersActive){
+            displayToast("All filters have been reset, loading all markers");
+            filtersActive = false;
+        } else {
+            displayToast("Loading all Map Markers");
+        }
+
 
         setAllVPlaceMarkers(allVPlaces);
         setAllImageMarkers();
@@ -396,7 +403,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
                 Marker currentMarker = mMap.addMarker(vplaceMarker);
 
-                Log.d("RemovingMarkers", "Adding Marker to List: " + currentMarker.getTitle());
+                Log.d("RemovingMarkers", "Adding VMarker to List: " + currentMarker.getTitle());
                 allVPlaceMarkers.add(currentMarker);
 
                 break;
@@ -531,7 +538,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     public void setAllImageMarkers(){
-
         if(j < allImages.size()){
             Images image = allImages.get(j);
             String placeID = image.getLocation();
@@ -665,6 +671,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
                 setAllVPlaceMarkers(allVPlacesOriginal);
                 setAllImageMarkers();
+                filtersActive = false;
 
                 break;
             case "clear":
@@ -680,7 +687,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     @Override
     public void onClick(View v) {
-        List<VisitedPlace> filterVPlaces = new ArrayList<>();
+        filterVPlaces = new ArrayList<>();
 
         switch (v.getId()) {
             case R.id.btn_filterByDate:
@@ -712,11 +719,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
                 displayToast("Loading all filtered markers");
 
+                for (VisitedPlace vplace : filterVPlaces){
+                    Log.d("RemovingMarkers", "filtered list: " + vplace.getName());
+
+                }
+
                 i = 0;
                 setAllVPlaceMarkers(filterVPlaces);
                 setAllImageMarkers();
 
                 setConstLayView("clear");
+                filtersActive = true;
 
                 break;
 
@@ -745,6 +758,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     setAllImageMarkers();
 
                     setConstLayView("clear");
+                    filtersActive = true;
 
                 } else {
                     displayToast("Please select a Holiday before filtering");
@@ -800,6 +814,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     setAllImageMarkers();
 
                     setConstLayView("clear");
+                    filtersActive = true;
 
                 } else {
                     displayToast("Please enter a list of the desired travellers");
@@ -838,7 +853,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     public ArrayList<String> extractNames(String companions){
-        Log.d("ExtractName", "extractNames Start: --------------------------------");
+        Log.d("ExtractName", "extractNames Start: --------------------------------" + companions);
 
         ArrayList<String> chosenCompanions = new ArrayList<>();
 
@@ -849,9 +864,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
             for (int i = 0; i < searchItems.length; i++) {
                 String currentName = searchItems[i];
-                Log.d("ExtractName", "currentName: " + currentName);
-
                 currentName = currentName.replaceAll("\\s+", "");
+
                 Log.d("ExtractName", "currentName (without spaces): " + currentName);
 
                 chosenCompanions.add(currentName);
