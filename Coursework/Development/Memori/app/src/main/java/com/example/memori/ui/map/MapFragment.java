@@ -19,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.volley.Request;
@@ -103,6 +105,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
         view = inflater.inflate(R.layout.fragment_map, container, false);
+
+        final TextView textView = view.findViewById(R.id.textView_htttpResult);
+        mapViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
 
         retrieveTables();
         i = 0;
