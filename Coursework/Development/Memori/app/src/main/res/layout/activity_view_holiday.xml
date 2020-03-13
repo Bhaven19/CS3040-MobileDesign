@@ -12,11 +12,25 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/title_viewingHoliday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="right|center_vertical"
+            android:text="Viewing Holiday"
+            android:textColor="#AAAAAA"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/title_holidayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="Your Holiday"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <fragment
         android:id="@+id/map_holder"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -31,16 +32,260 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_currentLoc"
+        app:layout_constraintTop_toBottomOf="@+id/btn_filterMapMarkers"
         tools:context=".ui.map.MapsActivity" />
 
     <Button
-        android:id="@+id/btn_currentLoc"
+        android:id="@+id/btn_filterMapMarkers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark Current Location"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:drawableEnd="@drawable/ic_filter_list_black_24dp"
+        android:gravity="right|center_vertical"
+        android:text="Filter  "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_map" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLay_filterMarkersByDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:background="#555555"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title_filterByDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Filter By Date"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_filterStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Start Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_filterByDate" />
+
+        <EditText
+            android:id="@+id/edit_filterStartDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            app:layout_constraintEnd_toStartOf="@+id/btn_filterStartDate"
+            app:layout_constraintStart_toStartOf="@+id/label_filterStartDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_filterStartDate" />
+
+        <Button
+            android:id="@+id/btn_filterStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="SELECT DATE"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_filterStartDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_filterStartDate" />
+
+
+        <TextView
+            android:id="@+id/label_filterEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="End Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filterStartDate" />
+
+        <EditText
+            android:id="@+id/edit_filterEndDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            app:layout_constraintEnd_toStartOf="@+id/btn_filterEndDate"
+            app:layout_constraintStart_toStartOf="@+id/label_filterEndDate"
+            app:layout_constraintTop_toBottomOf="@+id/label_filterEndDate" />
+
+        <Button
+            android:id="@+id/btn_filterEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="SELECT DATE"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_filterEndDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_filterEndDate" />
+
+        <Button
+            android:id="@+id/btn_filterByDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_filterEndDate" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLay_filterMarkersByHoliday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:background="#555555"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title_filterByHoliday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Filter By Holiday"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_filterByHoliday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Start Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_filterByHoliday" />
+
+        <Spinner
+            android:id="@+id/spinner_filterByHoliday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_filterByHoliday"
+            app:layout_constraintTop_toBottomOf="@+id/label_filterByHoliday" />
+
+        <Button
+            android:id="@+id/btn_filterByHoliday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_filterByHoliday" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLay_filterMarkersByCompanion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:background="#555555"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title_filterByCompanion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Filter By Companions"
+            android:textAlignment="center"
+            android:textColor="#AAAAAA"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_filterByCompanion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Which companions would you like to filter by?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_filterByCompanion" />
+
+        <EditText
+            android:id="@+id/edit_filterCompanion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="John, Mark, Sophie"
+            app:layout_constraintEnd_toEndOf="@+id/title_filterByCompanion"
+            app:layout_constraintStart_toStartOf="@+id/label_filterByCompanion"
+            app:layout_constraintTop_toBottomOf="@+id/label_filterByCompanion" />
+
+        <Button
+            android:id="@+id/btn_filterByCompanion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_filterCompanion" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

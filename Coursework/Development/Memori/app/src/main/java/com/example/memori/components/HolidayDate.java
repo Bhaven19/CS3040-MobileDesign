@@ -18,8 +18,6 @@ public class HolidayDate {
 
     }
 
-    public HolidayDate(){};
-
     public HolidayDate toObject(String stringDate){
         int date;
         int month;
@@ -60,7 +58,24 @@ public class HolidayDate {
     public int getDate(){ return date;}
 
     public String toString(){
-        return date + "/" + month + "/" + year;
+        Log.d("DatePadding", "old date: " + date);
+        Log.d("DatePadding", "old month: " + month);
+
+        String dateString = String.valueOf(date);
+        if (String.valueOf(date).length() == 1){
+            dateString = String.format("%02d", date);
+
+        }
+
+        String monthString = String.valueOf(month);
+        if (String.valueOf(month).length() == 1){
+            monthString = String.format("%02d", month);
+        }
+
+        Log.d("DatePadding", "new date: " + dateString);
+        Log.d("DatePadding", "new month: " + monthString);
+
+        return dateString + "/" + monthString + "/" + year;
     }
 
     public Boolean validDate(HolidayDate startDate){

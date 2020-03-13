@@ -224,12 +224,6 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     displayToast("You can only save 1 image, any new images will overwrite previous images");
 
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-
-                    }
-
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {

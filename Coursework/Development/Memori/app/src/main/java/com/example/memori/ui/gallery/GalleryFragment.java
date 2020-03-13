@@ -441,7 +441,6 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(currentYear, currentMonth - 1, currentDay);
 
-
                     imageONDates.add(calendar.getTime());
                     hmONImageToString.put(calendar.getTime(), currentImage);
 
