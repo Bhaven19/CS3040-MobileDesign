@@ -16,6 +16,7 @@ public class MapViewModel extends AndroidViewModel {
 
     private HolidayRepository mRepository;
 
+
     public MapViewModel(Application application) {
         super(application);
         mRepository = new HolidayRepository(application);

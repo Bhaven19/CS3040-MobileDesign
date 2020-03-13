@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
 import com.example.memori.database.entities.Holiday;
@@ -64,7 +71,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private SupportMapFragment mapFragment;
     private Boolean permissionsGranted = false;
 
-    private Button btn_filterMarkers, btn_filterByDate, btn_filterByHoliday, btn_filterByCompanion, btn_filterStartDate, btn_filterEndDate;
+    private Button btn_getPOI, btn_filterMarkers, btn_filterByDate, btn_filterByHoliday, btn_filterByCompanion, btn_filterStartDate, btn_filterEndDate;
     private ConstraintLayout constLay_filterByDate, constLay_filterByHoliday, constLay_filterByCompanions;
     private EditText edit_StartDate, edit_EndDate, edit_Companions;
     private Spinner spinner_Holiday;
@@ -238,6 +245,40 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                             }
                         });
                 pictureDialog.show();
+            }
+        });
+
+        //-------------------------------------
+
+        TextView label_result = view.findViewById(R.id.textView_htttpResult);
+
+
+        btn_getPOI = view.findViewById(R.id.btn_getPOI);
+        btn_getPOI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Instantiate the RequestQueue .
+                RequestQueue queue = Volley.newRequestQueue (getContext());
+                String url = "http ://www.google.com";
+
+                // Request a string response from the provided URL .
+                StringRequest stringRequest = new StringRequest (Request.Method.GET, url,
+                        new Response. Listener <String >() {
+                    @Override
+                    public void onResponse (String response) {
+                        // Display the first 500 characters of the response string .
+                        label_result.setText ("Response is: " + response . substring (0 , 500));
+
+                    }},
+                        new Response.ErrorListener () {
+                    @Override
+                    public void onErrorResponse (VolleyError error) {
+                        label_result.setText ("That didn ’t work !\n" + error.getMessage());
+
+                    }});
+
+                // Add the request to the RequestQueue .
+                queue.add( stringRequest );
             }
         });
 

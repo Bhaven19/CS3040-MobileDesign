@@ -11,12 +11,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="764512a7-a4f2-44fc-8767-fdaa00393d6a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../Coursework/CS3040- ToDo List.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/CS3040- ToDo List.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Assets/Database/holiday_database-shm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Assets/Database/holiday_database-wal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/java/com/example/memori/ui/map/MapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/java/com/example/memori/ui/map/MapFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/java/com/example/memori/ui/map/MapViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/java/com/example/memori/ui/map/MapViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/res/layout/fragment_map.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/res/layout/fragment_map.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Development/Memori/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Coursework/Documents/CS3040 Coursework Spec.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Coursework/Documents/CS3040 Coursework Spec.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AndroidX Lab/AndroidXLab/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AndroidX Lab/AndroidXLab/.idea/gradle.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

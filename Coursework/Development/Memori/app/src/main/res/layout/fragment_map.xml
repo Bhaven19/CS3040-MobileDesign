@@ -5,20 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:id="@+id/label_map"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:textAlignment="center"
         android:text="Map"
+        android:textAlignment="center"
         android:textColor="#AAAAAA"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <fragment
         android:id="@+id/map_holder"
@@ -32,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_filterMapMarkers"
+        app:layout_constraintTop_toBottomOf="@+id/textView_htttpResult"
         tools:context=".ui.map.MapsActivity" />
 
     <Button
@@ -40,11 +41,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:drawableEnd="@drawable/ic_filter_list_black_24dp"
         android:gravity="right|center_vertical"
         android:text="Filter  "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_map" />
+
+    <Button
+        android:id="@+id/btn_getPOI"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Get Places of Interest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_filterMapMarkers"
+        app:layout_constraintTop_toBottomOf="@+id/label_map" />
+
+    <TextView
+        android:id="@+id/textView_htttpResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_getPOI" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constLay_filterMarkersByDate"
@@ -285,7 +309,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
