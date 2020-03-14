@@ -15,21 +15,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
@@ -102,32 +97,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private ArrayList<VisitedPlace> filterVPlaces;
 
     private boolean filtersActive = false;
-
-    public void setupResultTextView(){
-        final TextView textView = view.findViewById(R.id.textView_htttpResult);
-        mapViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-
-    }
+    private Double[] currentLatLong;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
         view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        setupResultTextView();
+        requestPermissions();
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        getCurrentLocation();
 
         retrieveTables();
         i = 0;
         j = 0;
-
-        requestPermissions();
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         hmTitleToPos = new HashMap<>();
 
@@ -267,62 +250,97 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
         //-------------------------------------
 
-        TextView label_result = view.findViewById(R.id.textView_htttpResult);
-
-
         btn_getPOI = view.findViewById(R.id.btn_getPOI);
         btn_getPOI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Instantiate the RequestQueue .
-                RequestQueue queue = Volley.newRequestQueue (getContext());
-                String url = " https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=52.47819,-1.89984&radius=1500&type=restaurant&radius=1500&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
-
-                // Request a JSON rsponse from the provided URL
-                GsonRequest jsonRequest = new GsonRequest <PlaceList>(url, PlaceList.class, null, new Response.Listener<PlaceList>() {
-                    @Override
-                    public void onResponse ( PlaceList response ) {
-                        // Display the first 500 characters of the response string .
-                        List < GooglePlace > places = response . getResults ();
-                        StringBuilder namesBuilder = new StringBuilder("Response status: ");
-
-                        namesBuilder.append ( response . getStatus ());
-                        namesBuilder.append ("\nPlaces: [\n");
-
-                        for (GooglePlace place : places) {
-                            namesBuilder.append(place.getName());
-                            namesBuilder.append("\n");
-                        }
-
-                        namesBuilder.append ("]");
-
-                        mapViewModel.setText(namesBuilder.toString ());
-
-                    }},new Response . ErrorListener () {
-                        @Override
-                        public void onErrorResponse ( VolleyError error ) {
-                            mapViewModel.setText ("That didn’t work !\n" + error.getMessage());
-                        }});
-
-                // Add the request to the RequestQueue .
-                queue .add( jsonRequest );
+                AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
+                pictureDialog.setTitle("What category of nearby places would you like to see?");
+                String[] pictureDialogItems = {
+                        "Find Restaurants",
+                        "Find Museum",
+                        "Find Shopping Mall",
+                        "Find Stadium",
+                        "Find Tourist Attraction",
+                        "Cancel"};
+                pictureDialog.setItems(pictureDialogItems,
+                        (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    getNearbyPlaces("restaurant");
+                                    break;
+                                case 1:
+                                    getNearbyPlaces("museum");
+                                    break;
+                                case 2:
+                                    getNearbyPlaces("shopping_mall");
+                                    break;
+                                case 3:
+                                    getNearbyPlaces("stadium");
+                                    break;
+                                case 4:
+                                    getNearbyPlaces("tourist_attraction");
+                                    break;
+                                case 5:
+                                    getNearbyPlaces("cancel");
+                                    break;
+                            }
+                        });
+                pictureDialog.show();
 
             }
         });
 
     }
 
+    public void getNearbyPlaces(String placeType){
+        RequestQueue queue = Volley.newRequestQueue (getContext());
+
+        displayToast("currentLong " + currentLatLong[0]);
+        displayToast("currentLat " + currentLatLong[1]);
+
+        String url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=52.47819,-1.89984&radius=3000&type=" + placeType + "&radius=3000&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
+        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + currentLatLong[0] + "," + currentLatLong[1] + "&radius=3000&type=" + placeType + "&radius=3000&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
+
+        // Request a JSON rsponse from the provided URL
+        GsonRequest jsonRequest = new GsonRequest <PlaceList>(url, PlaceList.class, null, response -> {
+            // Display the first 500 characters of the response string .
+            List<GooglePlace> places = response.getResults();
+
+            if (places.size() != 0) {
+                Intent viewPOIIntent = new Intent(getActivity(), ViewPOI.class);
+
+                viewPOIIntent.putExtra("AllPlaces", new ArrayList<>(places));
+                viewPOIIntent.putExtra("POIType", placeType);
+
+                startActivity(viewPOIIntent);
+
+            } else {
+                displayToast("There are none of these places within a 3000m radius");
+
+            }
+
+        }, error -> {
+            displayToast("Failed");
+
+            });
+
+        // Add the request to the RequestQueue .
+        queue.add(jsonRequest);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        requestPermissions();
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        getCurrentLocation();
 
         retrieveTables();
         i = 0;
         j = 0;
-
-        requestPermissions();
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         hmTitleToPos = new HashMap<>();
 
@@ -432,6 +450,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     public void getCurrentLocation(){
+        currentLatLong = new Double[2];
+
+        if (!permissionsGranted){
+            requestPermissions();
+
+        }
+
         if (permissionsGranted){
             fusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                 @Override
@@ -442,7 +467,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         Log.d("TrackLocation", "Longitude: " + location.getLongitude());
                         Log.d("TrackLocation", "Latitude: " + location.getLatitude());
 
-                        setMarker("default", location.getLatitude(), location.getLongitude(), "CurrentLocation");
+                        currentLatLong[0] = location.getLatitude();
+                        currentLatLong[1] = location.getLongitude();
+
 
                     } else {
                         Log.d("TrackLocation", "No Location");
