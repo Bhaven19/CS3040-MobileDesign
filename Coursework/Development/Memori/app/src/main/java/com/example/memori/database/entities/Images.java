@@ -74,4 +74,6 @@ public class Images implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+
 }

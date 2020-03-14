@@ -93,4 +93,14 @@ public class Holiday implements Serializable {
     public void setImageID(int imageID) {
         this.imageID = imageID;
     }
+
+    public String toString(){
+        return "ID: " + _id +
+                ", Name: " + name +
+                ", StartDate: " + startDate +
+                ", EndDate: " + endDate +
+                ", Travellers: " + travellers +
+                ", Notes: " + notes +
+                ", ImageID: " + imageID;
+    }
 }

@@ -101,4 +101,15 @@ public class VisitedPlace implements Serializable {
     public void setImageID(int imageID) {
         this.imageID = imageID;
     }
+
+    public String toString(){
+        return "ID: " + _id +
+                ", Name: " + name +
+                ", Date: " + date +
+                ", Location: " + location +
+                ", HolidayID: " + holidayID +
+                ", Notes: " + notes +
+                ", Travellers: " + imageID +
+                ", ImageID: " + imageID;
+    }
 }

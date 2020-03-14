@@ -49,14 +49,6 @@ public class ViewHolidayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_holiday);
 
-        btnShare = findViewById(R.id.btn_shareHoliday);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayToast("Share Holiday Pressed");
-            }
-        });
-
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
         retrieveTables();
@@ -105,6 +97,20 @@ public class ViewHolidayActivity extends AppCompatActivity {
         }
 
         setupRecyclerView();
+
+        btnShare = findViewById(R.id.btn_shareHoliday);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, impHoliday.toString());
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, "Sharing Holiday...");
+                startActivity(shareIntent);
+            }
+        });
 
     }
 

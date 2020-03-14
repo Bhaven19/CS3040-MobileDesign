@@ -55,14 +55,6 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_vplace);
 
-        btnShare = findViewById(R.id.btn_shareVPlace);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayToast("Share VPlace Pressed");
-            }
-        });
-
         Intent obtainIntent = getIntent();
 
         impVisitedPlace = (VisitedPlace) obtainIntent.getSerializableExtra("chosenVisitedPlace");
@@ -118,6 +110,21 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
         placeID = impVisitedPlace.getLocation();
 
         createMap();
+
+
+        btnShare = findViewById(R.id.btn_shareVPlace);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, impVisitedPlace.toString());
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, "Sharing Visited Place...");
+                startActivity(shareIntent);
+            }
+        });
 
     }
 
