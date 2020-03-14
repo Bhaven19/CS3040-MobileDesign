@@ -27,14 +27,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
+import com.example.memori.components.places.GooglePlace;
+import com.example.memori.components.places.GsonRequest;
+import com.example.memori.components.places.PlaceList;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
@@ -102,10 +103,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     private boolean filtersActive = false;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
-        view = inflater.inflate(R.layout.fragment_map, container, false);
-
+    public void setupResultTextView(){
         final TextView textView = view.findViewById(R.id.textView_htttpResult);
         mapViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -113,6 +111,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 textView.setText(s);
             }
         });
+
+
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        view = inflater.inflate(R.layout.fragment_map, container, false);
+
+        setupResultTextView();
 
         retrieveTables();
         i = 0;
@@ -269,26 +276,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             public void onClick(View v) {
                 // Instantiate the RequestQueue .
                 RequestQueue queue = Volley.newRequestQueue (getContext());
-                String url = "http ://www.google.com";
+                String url = " https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=52.47819,-1.89984&radius=1500&type=restaurant&radius=1500&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
 
-                // Request a string response from the provided URL .
-                StringRequest stringRequest = new StringRequest (Request.Method.GET, url,
-                        new Response. Listener <String >() {
+                // Request a JSON rsponse from the provided URL
+                GsonRequest jsonRequest = new GsonRequest <PlaceList>(url, PlaceList.class, null, new Response.Listener<PlaceList>() {
                     @Override
-                    public void onResponse (String response) {
+                    public void onResponse ( PlaceList response ) {
                         // Display the first 500 characters of the response string .
-                        label_result.setText ("Response is: " + response . substring (0 , 500));
+                        List < GooglePlace > places = response . getResults ();
+                        StringBuilder namesBuilder = new StringBuilder("Response status: ");
 
-                    }},
-                        new Response.ErrorListener () {
-                    @Override
-                    public void onErrorResponse (VolleyError error) {
-                        label_result.setText ("That didn ’t work !\n" + error.getMessage());
+                        namesBuilder.append ( response . getStatus ());
+                        namesBuilder.append ("\nPlaces: [\n");
 
-                    }});
+                        for (GooglePlace place : places) {
+                            namesBuilder.append(place.getName());
+                            namesBuilder.append("\n");
+                        }
+
+                        namesBuilder.append ("]");
+
+                        mapViewModel.setText(namesBuilder.toString ());
+
+                    }},new Response . ErrorListener () {
+                        @Override
+                        public void onErrorResponse ( VolleyError error ) {
+                            mapViewModel.setText ("That didn’t work !\n" + error.getMessage());
+                        }});
 
                 // Add the request to the RequestQueue .
-                queue.add( stringRequest );
+                queue .add( jsonRequest );
+
             }
         });
 
