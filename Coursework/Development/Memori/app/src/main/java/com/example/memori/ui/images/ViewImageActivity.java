@@ -1,7 +1,9 @@
 package com.example.memori.ui.images;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,8 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
 
     private Images impImage;
     private String impImageName, impImageDate, impImagePath, impImageTag;
+    private Bitmap mHolidayImage;
+    private File imageFile;
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -51,14 +55,6 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_image);
 
-        btnShare = findViewById(R.id.btn_shareImage);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayToast("Share Image Pressed");
-            }
-        });
-
         mImageName = findViewById(R.id.title_imageName);
         mImageDate = findViewById(R.id.text_imageDate);
         mImageTag = findViewById(R.id.label_imageTag);
@@ -69,6 +65,18 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
         setValuesFromIntent();
 
         createMap();
+
+        btnShare = findViewById(R.id.btn_shareImage);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/jpeg");
+
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse(imageFile.getAbsolutePath()));
+                startActivity(Intent.createChooser(share, "Share Image"));
+            }
+        });
 
     }
 
@@ -85,9 +93,8 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
         mImageTag.setText("Image Tag: " + impImageTag);
         //mImageTag.setText(impImageTag);
 
-        File imageFile = new File(impImagePath);
-
-        Bitmap mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        imageFile = new File(impImagePath);
+        mHolidayImage = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         mImageView.setImageBitmap(mHolidayImage);
 
     }
