@@ -1,4 +1,4 @@
-package com.example.memori.ui.holiday;
+package com.example.memori.ui.vplace;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,14 +27,16 @@ import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.HolidayListAdapter;
 import com.example.memori.database.listadapters.VPlaceListAdapter;
+import com.example.memori.ui.holiday.HolidayViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
+public class VPlaceFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
@@ -65,7 +67,7 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_holiday, container, false);
+        View root = inflater.inflate(R.layout.fragment_vplace, container, false);
 
         retrieveTables();
 
@@ -257,29 +259,32 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     public void setupRecyclerView(){
-            RecyclerView recyclerView = getView().findViewById(R.id.recyclerview_holiday);
+
+            RecyclerView recyclerView = getView().findViewById(R.id.recyclerview_vPlaces);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-            holidayListAdapter = new HolidayListAdapter(getActivity().getApplicationContext());
+            vPlaceListAdapter = new VPlaceListAdapter(getActivity().getApplicationContext());
 
-            Log.d("HolidayClick", "HolidayFragment, setting up recycler view");
+            Log.d("VPlaceClick", "HolidayFragment, setting up recycler view");
 
-            holidayListAdapter.setClickListener(new HolidayListAdapter.ItemClickListener() {
+            vPlaceListAdapter.setClickListener(new VPlaceListAdapter.ItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Holiday myHoliday = holidayListAdapter.getWordAtPosition(position);
-                    chosenHolidayID = myHoliday.get_id();
+                    VisitedPlace myVisitedPlace = vPlaceListAdapter.getWordAtPosition(position);
+                    chosenVPlaceID = myVisitedPlace.get_id();
 
-                    Log.d("HolidayClick", "HolidayFragment, onItemClicked");
 
                     if (editClicked == true){
-                        Intent editIntent = new Intent(getActivity(), EditHolidayActivity.class);
-                        editIntent.putExtra("chosenHoliday", myHoliday);
-                        editIntent.putExtra("chosenHolidayImage", getImage(myHoliday.getImageID()));
+                        Intent editIntent = new Intent(getActivity(), EditVPlace.class);
 
-                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE);
+                        editIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
+                        editIntent.putExtra("vPlaceImage", getImage(myVisitedPlace.getImageID()));
+                        editIntent.putExtra("chosenHoliday", getHoliday(myVisitedPlace.getHolidayID()));
+                        editIntent.putExtra("holidayNameList", getAllHolidayNames());
+
+                        startActivityForResult(editIntent, SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
                     } else if (deleteClicked == true){
-                        String name = myHoliday.getName();
+                        String name = myVisitedPlace.getName();
 
                         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getContext());
                         pictureDialog.setTitle("Are you sure you would like to delete " + name + "?");
@@ -290,10 +295,10 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                                 (dialog, which) -> {
                                     switch (which) {
                                         case 0:
-                                            Images vPlaceImage = getImage(myHoliday.getImageID());
+                                            Images vPlaceImage = getImage(myVisitedPlace.getImageID());
                                             mHolidayViewModel.deleteImage(vPlaceImage);
 
-                                            mHolidayViewModel.deleteHoliday(myHoliday);
+                                            mHolidayViewModel.deleteVisitedPlace(myVisitedPlace);
 
                                             displayToast(name + " has been deleted");
 
@@ -305,21 +310,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                                 });
                         pictureDialog.show();
 
-                        editClicked = false;
-                        deleteClicked = false;
-
                     } else {
-                        Intent viewIntent = new Intent(getActivity(), ViewHolidayActivity.class);
-                        viewIntent.putExtra("chosenHoliday", myHoliday);
+                        Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
+                        viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
 
-                        viewIntent.putExtra("chosenImage", getImage(myHoliday.getImageID()));
-                        viewIntent.putIntegerArrayListExtra("vPlaceArrayID", vPlaceIDPerHoliday);
-
-                        Bundle bundle = getAllVPlacesForHoliday(myHoliday);
-                        viewIntent.putExtra("bundle", bundle);
-
-
-                        viewIntent.putExtra("chosenVisitedPlaceImage", getImage(myHoliday.getImageID()));
+                        Log.d("FindImage", "myVisitedPlace.getImageID(): "+ myVisitedPlace.getImageID());
+                        viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
 
                         startActivity(viewIntent);
 
@@ -334,10 +330,6 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 // Update the cached copy of the words in the adapter.
                 allHolidays = holidays;
 
-                recyclerView.setAdapter(holidayListAdapter);
-
-                holidayListAdapter.setWords(holidays);
-
             });
 
             mHolidayViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
@@ -350,7 +342,12 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
                 // Update the cached copy of the words in the adapter.
                 allVPlaces = vplaces;
 
+                recyclerView.setAdapter(vPlaceListAdapter);
+                vPlaceListAdapter.setVPlaces(vplaces);
+
             });
+
+
 
 
 
@@ -383,22 +380,23 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public void createToolbar(View view){
         setHasOptionsMenu(true);
+        currentToolbar = view.findViewById(R.id.toolbar_vplaces);
 
-            currentToolbar = view.findViewById(R.id.toolbar_holidays);
-
-            currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
-            currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
-
+        currentToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
+        currentToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
 
     }
 
     public void setupCreateButton(View view){
-        Button createHoliday_btn = view.findViewById(R.id.create_holiday_btn);
+        Button createVPlace_btn = view.findViewById(R.id.create_visitedplaces_btn);
 
-        createHoliday_btn.setOnClickListener(v -> {
-            Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
+        createVPlace_btn.setOnClickListener(v -> {
 
-            startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
+            Intent createIntent = new Intent(getActivity(), CreateVPlaceActivity.class);
+
+            createIntent.putExtra("holidayList", getAllHolidayNames());
+
+            startActivityForResult(createIntent, NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE);
 
         });
 

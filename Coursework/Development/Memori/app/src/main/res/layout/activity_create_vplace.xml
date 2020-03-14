@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Create a Visited Place"
+            android:text="@string/create_a_visited_place"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Choose the holiday where you visited this place"
+            android:text="@string/choose_the_holiday_where_you_visited_this_place"
             app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
             app:layout_constraintTop_toBottomOf="@+id/title_createVPlace" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="What is the name of the visited place?"
+            android:text="@string/what_is_the_name_of_the_visited_place"
             app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
             app:layout_constraintTop_toBottomOf="@+id/spinner_vPlaceChooseHoliday" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="What date did you visit this place?"
+            android:text="@string/what_date_did_you_visit_this_place"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
 
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Where is this place?"
+            android:text="@string/where_is_this_place"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/edit_VPlaceDate" />
 
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Address: No Location Has Been Chosen"
+            android:text="@string/address_no_location_has_been_chosen"
             app:layout_constraintEnd_toEndOf="@+id/btn_getCurrentLocation"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
             app:layout_constraintTop_toBottomOf="@+id/btn_getCurrentLocation" />
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Who did you visit the place with"
+            android:text="@string/who_did_you_visit_the_place_with"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
             app:layout_constraintTop_toBottomOf="@+id/label_VPlaceAddress" />
 
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
-            android:text="Would you like to add an images?"
+            android:text="@string/would_you_like_to_add_an_images"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
-            android:text="No Image Has Been Saved"
+            android:text="@string/no_image_has_been_saved"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage" />
@@ -113,7 +113,7 @@
             android:layout_marginEnd="16dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="e.g. Eiffel Tower"
+            android:hint="@string/e_g_eiffel_tower"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -127,11 +127,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="DD/MM/YYYY"
+            android:hint="@string/dd_mm_yyyy"
             android:inputType="date"
-            app:layout_constraintEnd_toEndOf="@+id/edit_holidayStartDate"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate" />
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate"
+            android:autofillHints="@string/dd_mm_yyyy" />
 
         <EditText
             android:id="@+id/edit_vPlaceCompanions"
@@ -140,11 +140,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:hint="e.g. John, Mark, Sophie "
+            android:hint="@string/e_g_john_mark_sophie"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceCompanions"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceCompanions" />
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceCompanions"
+            android:autofillHints="@string/e_g_john_mark_sophie" />
 
         <EditText
             android:id="@+id/edit_vPlaceNotes"
@@ -153,12 +154,13 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Any Notes?"
+            android:hint="@string/any_notes"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceNotes" />
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceNotes"
+            android:autofillHints="@string/any_notes" />
 
         <Spinner
             android:id="@+id/spinner_vPlaceChooseHoliday"
@@ -169,7 +171,7 @@
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceChooseHoliday" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/autocomplete_fragment"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="0dp"
@@ -193,7 +195,7 @@
             android:id="@+id/btn_selectVPlaceDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SELECT DATE"
+            android:text="@string/select_date"
             app:layout_constraintBottom_toBottomOf="@+id/edit_VPlaceDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_VPlaceDate"
@@ -204,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Add an Image"
+            android:text="@string/add_an_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_newVPlaceImage" />
@@ -214,7 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Remove Image"
+            android:text="@string/remove_image"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +229,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="Save Visited Place"
+            android:text="@string/save_visited_place"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

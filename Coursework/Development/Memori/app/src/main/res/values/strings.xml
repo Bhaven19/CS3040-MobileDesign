@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Memori</string>
     <string name="title_home">Home</string>
+    <string name="title_vplace">Visted Place</string>
     <string name="title_map">Map</string>
     <string name="title_gallery">Gallery</string>
     <string name="title_holiday">Holiday</string>
@@ -34,5 +35,23 @@
     <string name="btnlbl_location">Location</string>
     <string name="btnlbl_people">People</string>
     <string name="btnlbl_notes">Notes</string>
+    <string name="create_a_visited_place">Create a Visited Place</string>
+    <string name="choose_the_holiday_where_you_visited_this_place">Choose the holiday where you visited this place</string>
+    <string name="what_is_the_name_of_the_visited_place">What is the name of the visited place?</string>
+    <string name="what_date_did_you_visit_this_place">What date did you visit this place?</string>
+    <string name="where_is_this_place">Where is this place?</string>
+    <string name="address_no_location_has_been_chosen">Address: No Location Has Been Chosen</string>
+    <string name="who_did_you_visit_the_place_with">Who did you visit the place with</string>
+    <string name="would_you_like_to_add_an_images">Would you like to add an images?</string>
+    <string name="no_image_has_been_saved">No Image Has Been Saved</string>
+    <string name="e_g_eiffel_tower">e.g. Eiffel Tower</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="e_g_john_mark_sophie">e.g. John, Mark, Sophie</string>
+    <string name="any_notes">Any Notes?</string>
+    <string name="select_date">SELECT DATE</string>
+    <string name="add_an_image">Add an Image</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="save_visited_place">Save Visited Place</string>
+    <string name="visited_places">Visited Places</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.memori.ui.holiday.holidays;
+package com.example.memori.ui.holiday;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,8 +21,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.VPlaceListAdapter;
-import com.example.memori.ui.holiday.HolidayViewModel;
-import com.example.memori.ui.holiday.vplaces.ViewVPlace;
+import com.example.memori.ui.vplace.ViewVPlace;
 
 import java.io.File;
 import java.util.ArrayList;

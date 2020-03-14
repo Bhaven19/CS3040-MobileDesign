@@ -62,7 +62,7 @@ public class VPlaceListAdapter extends RecyclerView.Adapter<VPlaceListAdapter.VP
 
     public void setVPlaces(List<VisitedPlace> vPlaces){
         for (VisitedPlace vplace : vPlaces){
-            Log.d("ViewVPlace", "VPlaceListAdapter: vplace: " + vplace.getName());
+            Log.d("ViewVPlace", "VPlaceListAdapter: VPlaceFragment: " + vplace.getName());
         }
 
         mVPlaces = vPlaces;

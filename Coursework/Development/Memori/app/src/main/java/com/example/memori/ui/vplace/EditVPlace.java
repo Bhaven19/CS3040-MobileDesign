@@ -1,4 +1,4 @@
-package com.example.memori.ui.holiday.vplaces;
+package com.example.memori.ui.vplace;
 
 import android.Manifest;
 import android.app.DatePickerDialog;

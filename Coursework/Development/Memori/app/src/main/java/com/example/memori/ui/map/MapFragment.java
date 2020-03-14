@@ -34,7 +34,7 @@ import com.example.memori.components.places.PlaceList;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
-import com.example.memori.ui.holiday.vplaces.ViewVPlace;
+import com.example.memori.ui.vplace.ViewVPlace;
 import com.example.memori.ui.images.ViewImageActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -485,7 +485,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     public void setMarker(String type, double impLat, double impLon, String impName){
         switch(type) {
-            case "vplace":
+            case "VPlaceFragment":
                 LatLng vplaceLocation = new LatLng(impLat, impLon);
 
                 String vPlaceName = impName + " -VPlace";
@@ -617,7 +617,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
                     PlacesClient placesClient = Places.createClient(getActivity());
                     placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-                        setMarker("vplace", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, visitedPlace.getName());
+                        setMarker("VPlaceFragment", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, visitedPlace.getName());
                         i++;
                         setAllVPlaceMarkers(impAllVPlaces);
 

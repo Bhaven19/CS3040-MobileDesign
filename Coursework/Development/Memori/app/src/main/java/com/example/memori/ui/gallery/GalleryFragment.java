@@ -322,7 +322,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                                     break;
                                 case 3:
-                                    setConstLayView("vplace");
+                                    setConstLayView("VPlaceFragment");
 
                                     break;
                                 case 4:
@@ -905,7 +905,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
                 break;
 
-            case "vplace":
+            case "VPlaceFragment":
                 constLay_searchDate.setVisibility(View.INVISIBLE);
                 constLay_searchTag.setVisibility(View.INVISIBLE);
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);

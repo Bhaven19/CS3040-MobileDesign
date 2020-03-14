@@ -1,4 +1,4 @@
-package com.example.memori.ui.holiday.vplaces;
+package com.example.memori.ui.vplace;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

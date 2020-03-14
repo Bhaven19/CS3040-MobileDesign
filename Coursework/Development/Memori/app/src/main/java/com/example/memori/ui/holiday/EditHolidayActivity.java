@@ -1,4 +1,4 @@
-package com.example.memori.ui.holiday.holidays;
+package com.example.memori.ui.holiday;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
