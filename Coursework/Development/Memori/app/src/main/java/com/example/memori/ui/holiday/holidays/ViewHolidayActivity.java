@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -40,10 +42,20 @@ public class ViewHolidayActivity extends AppCompatActivity {
     private List<Images> allImages;
     private List<VisitedPlace> allVPlaces;
 
+    private ImageButton btnShare;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_holiday);
+
+        btnShare = findViewById(R.id.btn_shareHoliday);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayToast("Share Holiday Pressed");
+            }
+        });
 
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
 
@@ -191,4 +203,8 @@ public class ViewHolidayActivity extends AppCompatActivity {
         });
     }
 
+
+    public void displayToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 }

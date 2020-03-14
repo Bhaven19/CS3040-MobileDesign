@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -32,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback {
+public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
 
     private VisitedPlace impVisitedPlace;
     private Images impImage;
@@ -46,10 +48,20 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
     private String placeID;
     private Place vPlaceLoc;
 
+    private ImageButton btnShare;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_vplace);
+
+        btnShare = findViewById(R.id.btn_shareVPlace);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayToast("Share VPlace Pressed");
+            }
+        });
 
         Intent obtainIntent = getIntent();
 
@@ -160,6 +172,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback 
 
     }
 
-
-
+    public void displayToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 }

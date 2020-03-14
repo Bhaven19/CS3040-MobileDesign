@@ -1,6 +1,7 @@
 package com.example.memori.ui.gallery;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
 import com.example.memori.database.listadapters.GalleryImageListAdapter;
+import com.example.memori.ui.images.ViewImageActivity;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
@@ -382,14 +384,19 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             public void onItemClick(View view, int position) {
                 Images myImage = galleryImageListAdapter.getImageAtPosition(position);
 
-                Log.d("ImageClick", "-------------------");
-                Log.d("ImageClick", "GalleryFragment, onItemClick imageID: " + myImage.get_id() );
-                Log.d("ImageClick", "GalleryFragment, onItemClick imageDate: " + myImage.getDate() );
-                Log.d("ImageClick", "GalleryFragment, onItemClick imageTag: " + myImage.getTag() );
-                Log.d("ImageClick", "-------------------");
+                accessAllImageNames();
 
-                displayToast("You clicked an image, which is at cell position " + position);
+                for (Map.Entry<String, Integer> currentMapping : hmNameToID.entrySet()){
+                    if (currentMapping.getValue() == myImage.get_id()){
+                        Intent viewIntent = new Intent(getActivity(), ViewImageActivity.class);
 
+                        viewIntent.putExtra("chosenImage", myImage);
+                        viewIntent.putExtra("chosenImageName", currentMapping.getKey());
+
+                        startActivity(viewIntent);
+                    }
+
+                }
             }
         });
 
@@ -752,6 +759,24 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         Log.d("OrderGallery", "mAllHolidays.size(): " + mAllHolidays.size());
         Log.d("OrderGallery", "mAllVPlaces.size(): " + mAllVPlaces.size());
+
+        for (VisitedPlace currentVPlace : mAllVPlaces){
+            hmNameToID.put(currentVPlace.getName(), currentVPlace.getImageID());
+        }
+
+    }
+
+    private void accessAllImageNames(){
+        hmNameToID = new HashMap<>();
+
+        hmNameToID.clear();
+
+        Log.d("OrderGallery", "mAllHolidays.size(): " + mAllHolidays.size());
+        Log.d("OrderGallery", "mAllVPlaces.size(): " + mAllVPlaces.size());
+
+        for (Holiday currentHoliday : mAllHolidays){
+            hmNameToID.put(currentHoliday.getName(), currentHoliday.getImageID());
+        }
 
         for (VisitedPlace currentVPlace : mAllVPlaces){
             hmNameToID.put(currentVPlace.getName(), currentVPlace.getImageID());

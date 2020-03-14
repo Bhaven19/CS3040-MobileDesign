@@ -11,13 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/btn_shareVPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_share_black_24dp" />
+
         <TextView
             android:id="@+id/title_viewingVPlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:gravity="right|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
             android:text="Viewing Visited Place"
             android:textColor="#AAAAAA"
             android:textSize="15sp"

@@ -4,8 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -28,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private TextView mImageName, mImageDate, mImageTag, mImageAddress;
     private ImageView mImageView;
@@ -41,10 +44,20 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
     private String placeID;
     private Place imageLocation;
 
+    private ImageButton btnShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_image);
+
+        btnShare = findViewById(R.id.btn_shareImage);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayToast("Share Image Pressed");
+            }
+        });
 
         mImageName = findViewById(R.id.title_imageName);
         mImageDate = findViewById(R.id.text_imageDate);
@@ -125,4 +138,7 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+    public void displayToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 }
