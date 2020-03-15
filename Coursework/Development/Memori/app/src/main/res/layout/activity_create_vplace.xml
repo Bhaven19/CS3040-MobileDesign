@@ -13,13 +13,11 @@
 
         <TextView
             android:id="@+id/title_createVPlace"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:text="@string/create_a_visited_place"
-            android:textColor="#000000"
-            android:textSize="20sp"
+            android:theme="@style/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,9 +25,11 @@
             android:id="@+id/label_vPlaceChooseHoliday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/choose_the_holiday_where_you_visited_this_place"
-            app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
+            android:theme="@style/label_text"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_createVPlace" />
 
         <TextView
@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/what_is_the_name_of_the_visited_place"
-            app:layout_constraintStart_toStartOf="@+id/title_createVPlace"
+            android:theme="@style/label_text"
+            app:layout_constraintStart_toStartOf="@+id/spinner_vPlaceChooseHoliday"
             app:layout_constraintTop_toBottomOf="@+id/spinner_vPlaceChooseHoliday" />
 
         <TextView
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/what_date_did_you_visit_this_place"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
 
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/where_is_this_place"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/edit_VPlaceDate" />
 
@@ -65,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/address_no_location_has_been_chosen"
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="@+id/btn_getCurrentLocation"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
             app:layout_constraintTop_toBottomOf="@+id/btn_getCurrentLocation" />
@@ -75,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/who_did_you_visit_the_place_with"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceLoc"
             app:layout_constraintTop_toBottomOf="@+id/label_VPlaceAddress" />
 
@@ -84,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_notes"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceCompanions" />
 
@@ -93,6 +99,7 @@
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
             android:text="@string/would_you_like_to_add_an_images"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
@@ -102,6 +109,7 @@
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
             android:text="@string/no_image_has_been_saved"
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage" />
@@ -115,6 +123,7 @@
             android:ems="10"
             android:hint="@string/e_g_eiffel_tower"
             android:inputType="textPersonName"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
@@ -129,6 +138,7 @@
             android:ems="10"
             android:hint="@string/dd_mm_yyyy"
             android:inputType="date"
+            android:theme="@style/edit_text"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate"
             android:autofillHints="@string/dd_mm_yyyy" />
@@ -142,6 +152,7 @@
             android:ems="10"
             android:hint="@string/e_g_john_mark_sophie"
             android:inputType="textPersonName"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceCompanions"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceCompanions"
@@ -156,6 +167,7 @@
             android:gravity="start|top"
             android:hint="@string/any_notes"
             android:inputType="textMultiLine"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceNotes"
@@ -168,7 +180,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
+            android:theme="@style/spinner"
+            app:layout_constraintStart_toStartOf="@+id/label_vPlaceChooseHoliday"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceChooseHoliday" />
 
         <androidx.fragment.app.FragmentContainerView

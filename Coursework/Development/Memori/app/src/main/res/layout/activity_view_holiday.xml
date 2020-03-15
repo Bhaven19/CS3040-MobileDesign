@@ -15,34 +15,30 @@
             android:id="@+id/btn_shareHoliday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_viewingHoliday"
             app:srcCompat="@drawable/ic_share_black_24dp" />
 
         <TextView
             android:id="@+id/title_viewingHoliday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="Viewing Holiday"
-            android:textColor="#AAAAAA"
-            android:textSize="15sp"
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title_holidayName" />
 
         <TextView
             android:id="@+id/title_holidayName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:text="Your Holiday"
-            android:textSize="20sp"
+            android:theme="@style/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +49,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Dates"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_holidayName" />
+            app:layout_constraintTop_toBottomOf="@+id/title_viewingHoliday" />
 
         <TextView
             android:id="@+id/label_to"
@@ -62,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="to"
+            android:theme="@style/label_text"
             app:layout_constraintBottom_toBottomOf="@+id/text_holidayStartDate"
             app:layout_constraintStart_toEndOf="@+id/text_holidayStartDate"
             app:layout_constraintTop_toTopOf="@+id/text_holidayStartDate" />
@@ -72,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="start date"
-            android:textSize="20dp"
+            android:theme="@style/view_text"
             app:layout_constraintStart_toStartOf="@+id/label_holidayDates"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayDates" />
 
@@ -82,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="end date"
-            android:textSize="20dp"
+            android:theme="@style/view_text"
             app:layout_constraintStart_toEndOf="@+id/label_to"
             app:layout_constraintTop_toTopOf="@+id/text_holidayStartDate" />
 
@@ -93,6 +91,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Images"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_holidayNotes" />
 
@@ -110,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="No Image Has Been Saved"
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_holidayImages"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayImages" />
@@ -121,6 +121,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Holiday Notes"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_holidayStartDate" />
 
@@ -131,6 +132,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="Holiday Notes"
+            android:theme="@style/view_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_holidayNotes"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayNotes" />
@@ -142,6 +144,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="Travel Companions"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_holiday" />
 
@@ -152,6 +155,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Visited Places"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_holidayCompanions" />
 
@@ -161,6 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Holiday Travel Companions"
+            android:theme="@style/view_text"
             app:layout_constraintStart_toStartOf="@+id/label_holidayPeople"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayPeople" />
 

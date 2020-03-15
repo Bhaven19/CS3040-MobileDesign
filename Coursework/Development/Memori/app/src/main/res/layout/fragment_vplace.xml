@@ -24,9 +24,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="All Visited Places"
-            android:textAlignment="center"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,9 +33,10 @@
             android:id="@+id/toolbar_vplaces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintBottom_toBottomOf="@+id/create_visitedplaces_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/create_visitedplaces_btn"
             app:menu="@menu/menu_visitedplace">
 
         </androidx.appcompat.widget.Toolbar>
@@ -46,9 +45,9 @@
             android:id="@+id/create_visitedplaces_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="50dp"
             android:text="Add a Visited Place"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +60,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Your Visited Places"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/create_visitedplaces_btn" />
 
@@ -83,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="0dp"
-                android:background="@android:color/darker_gray"
+                android:theme="@style/recycler_view"
                 tools:listitem="@layout/recyclerview_holidayitem" />
         </ScrollView>
 

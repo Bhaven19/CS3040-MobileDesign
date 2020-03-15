@@ -13,9 +13,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:text="Map"
-        android:textAlignment="center"
-        android:textColor="#AAAAAA"
-        android:textSize="20sp"
+        android:theme="@style/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_htttpResult"
+        app:layout_constraintTop_toBottomOf="@+id/btn_getPOI"
         tools:context=".ui.map.MapsActivity" />
 
     <Button
@@ -60,15 +58,18 @@
         app:layout_constraintStart_toEndOf="@+id/btn_filterMapMarkers"
         app:layout_constraintTop_toBottomOf="@+id/label_map" />
 
-    <TextView
-        android:id="@+id/textView_htttpResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+    <ImageView
+        android:id="@+id/hide_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_getPOI" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constLay_filterMarkersByDate"
@@ -78,7 +79,8 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="#555555"
+        android:elevation="10dp"
+        android:theme="@style/const_lay"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,9 +94,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="Filter By Date"
-            android:textAlignment="center"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +106,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Start Date"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_filterByDate" />
 
@@ -118,6 +119,7 @@
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toStartOf="@+id/btn_filterStartDate"
             app:layout_constraintStart_toStartOf="@+id/label_filterStartDate"
             app:layout_constraintTop_toBottomOf="@+id/label_filterStartDate" />
@@ -140,6 +142,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="End Date"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_filterStartDate" />
 
@@ -152,6 +155,7 @@
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toStartOf="@+id/btn_filterEndDate"
             app:layout_constraintStart_toStartOf="@+id/label_filterEndDate"
             app:layout_constraintTop_toBottomOf="@+id/label_filterEndDate" />
@@ -178,7 +182,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_filterEndDate" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,7 +192,8 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="#555555"
+        android:elevation="10dp"
+        android:theme="@style/const_lay"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -203,9 +207,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="Filter By Holiday"
-            android:textAlignment="center"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -217,6 +219,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Start Date"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_filterByHoliday" />
 
@@ -225,6 +228,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:theme="@style/spinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_filterByHoliday"
             app:layout_constraintTop_toBottomOf="@+id/label_filterByHoliday" />
@@ -252,7 +256,8 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="#555555"
+        android:elevation="10dp"
+        android:theme="@style/const_lay"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -266,9 +271,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="Filter By Companions"
-            android:textAlignment="center"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -277,8 +280,11 @@
             android:id="@+id/label_filterByCompanion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="Which companions would you like to filter by?"
+            android:theme="@style/label_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_filterByCompanion" />
@@ -288,10 +294,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="John, Mark, Sophie"
-            app:layout_constraintEnd_toEndOf="@+id/title_filterByCompanion"
+            android:theme="@style/edit_text"
+            app:layout_constraintEnd_toEndOf="@+id/label_filterByCompanion"
             app:layout_constraintStart_toStartOf="@+id/label_filterByCompanion"
             app:layout_constraintTop_toBottomOf="@+id/label_filterByCompanion" />
 

@@ -1,22 +1,57 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@android:color/white</item>
+
+        <item name="colorPrimary">@color/title_background</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="text_view_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
-        <item name="android:background">@color/colorPrimaryLight</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+    <style name="title">
+        <item name="android:background">@color/title_background</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/title_text</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="label_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_colour</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="view_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_colour</item>
+    </style>
+
+    <style name="edit_text">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_colour</item>
+    </style>
+
+    <style name="spinner">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_colour</item>
+    </style>
+
+    <style name="small_text">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/small_text</item>
+    </style>
+
+    <style name="recycler_view">
+        <item name="android:background">@color/screen_background</item>
+    </style>
+
+    <style name="const_lay">
+        <item name="android:background">@color/screen_background</item>
+    </style>
+
+
+
 
 </resources>

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,8 +35,8 @@ import com.example.memori.components.places.PlaceList;
 import com.example.memori.database.entities.Holiday;
 import com.example.memori.database.entities.Images;
 import com.example.memori.database.entities.VisitedPlace;
-import com.example.memori.ui.vplace.ViewVPlace;
 import com.example.memori.ui.images.ViewImageActivity;
+import com.example.memori.ui.vplace.ViewVPlace;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -71,6 +72,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     private Button btn_getPOI, btn_filterMarkers, btn_filterByDate, btn_filterByHoliday, btn_filterByCompanion, btn_filterStartDate, btn_filterEndDate;
     private ConstraintLayout constLay_filterByDate, constLay_filterByHoliday, constLay_filterByCompanions;
+    private ImageView hideBack;
+
     private EditText edit_StartDate, edit_EndDate, edit_Companions;
     private Spinner spinner_Holiday;
     private String chosenHolidayName;
@@ -125,6 +128,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         constLay_filterByDate = view.findViewById(R.id.constLay_filterMarkersByDate);
         constLay_filterByHoliday = view.findViewById(R.id.constLay_filterMarkersByHoliday);
         constLay_filterByCompanions = view.findViewById(R.id.constLay_filterMarkersByCompanion);
+        hideBack = view.findViewById(R.id.hide_back);
 
         //-------------------------------------
 
@@ -540,11 +544,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 });
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMap = null;
-    }
 
     public void retrieveTables(){
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -746,24 +745,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 constLay_filterByHoliday.setVisibility(View.INVISIBLE);
                 constLay_filterByCompanions.setVisibility(View.INVISIBLE);
                 constLay_filterByDate.setVisibility(View.VISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
                 break;
 
             case "holiday":
                 constLay_filterByDate.setVisibility(View.INVISIBLE);
                 constLay_filterByCompanions.setVisibility(View.INVISIBLE);
                 constLay_filterByHoliday.setVisibility(View.VISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                     break;
             case "companion":
                 constLay_filterByDate.setVisibility(View.INVISIBLE);
                 constLay_filterByHoliday.setVisibility(View.INVISIBLE);
                 constLay_filterByCompanions.setVisibility(View.VISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
             case "reset":
                 constLay_filterByDate.setVisibility(View.INVISIBLE);
                 constLay_filterByHoliday.setVisibility(View.INVISIBLE);
                 constLay_filterByCompanions.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.INVISIBLE);
 
                 setAllVPlaceMarkers(allVPlacesOriginal);
                 setAllImageMarkers();
@@ -774,6 +777,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 constLay_filterByDate.setVisibility(View.INVISIBLE);
                 constLay_filterByHoliday.setVisibility(View.INVISIBLE);
                 constLay_filterByCompanions.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.INVISIBLE);
 
                 break;
 

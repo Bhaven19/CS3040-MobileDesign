@@ -15,34 +15,29 @@
             android:id="@+id/btn_shareImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/label_imageDate"
             app:srcCompat="@drawable/ic_share_black_24dp" />
 
         <TextView
             android:id="@+id/title_viewingImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="Viewing Image"
-            android:textColor="#AAAAAA"
-            android:textSize="15sp"
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title_imageName" />
 
         <TextView
             android:id="@+id/title_imageName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:text="Your Image"
-            android:textSize="20sp"
+            android:theme="@style/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +48,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Dates"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_imageName" />
+            app:layout_constraintTop_toBottomOf="@+id/title_viewingImage" />
 
         <TextView
             android:id="@+id/text_imageDate"
@@ -62,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="start date"
-            android:textSize="20dp"
+            android:theme="@style/view_text"
             app:layout_constraintStart_toStartOf="@+id/label_imageDate"
             app:layout_constraintTop_toBottomOf="@+id/label_imageDate" />
 
@@ -73,6 +69,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Images"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_imageDate" />
 
@@ -81,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-
+            android:theme="@style/view_text"
             android:text="Image Tag: "
             app:layout_constraintStart_toStartOf="@+id/label_imageImage"
             app:layout_constraintTop_toBottomOf="@+id/imageView_image" />
@@ -93,6 +90,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Map"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_imageTag" />
 
@@ -127,6 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Address: "
+            android:theme="@style/small_text"
             app:layout_constraintEnd_toEndOf="@+id/image_map_holder"
             app:layout_constraintStart_toStartOf="@+id/image_map_holder"
             app:layout_constraintTop_toBottomOf="@+id/image_map_holder" />

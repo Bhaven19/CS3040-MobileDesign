@@ -14,24 +14,23 @@
 
         <TextView
             android:id="@+id/title_createHoliday"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:text="@string/lbl_createHolidays"
-            android:textColor="#000000"
-            android:textSize="20sp"
+            android:theme="@style/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/label_vPlaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_journeyName"
-            app:layout_constraintStart_toStartOf="@+id/title_createHoliday"
+            android:theme="@style/label_text"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_createHoliday" />
 
         <TextView
@@ -40,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_companions"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_holidayEndDate"
             app:layout_constraintTop_toBottomOf="@+id/edit_holidayEndDate" />
 
@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_notes"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceCompanions" />
 
@@ -58,7 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/lbl_startdate"
-            app:layout_constraintStart_toStartOf="@+id/title_createHoliday"
+            android:theme="@style/label_text"
+            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceName" />
 
         <TextView
@@ -67,6 +69,7 @@
             android:layout_height="21dp"
             android:layout_marginTop="8dp"
             android:text="@string/lbl_enddate"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_holidayStartDate"
             app:layout_constraintTop_toBottomOf="@+id/edit_holidayStartDate" />
 
@@ -75,7 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
-            android:text="Would you like to add any images?"
+            android:text="@string/would_you_like_to_add_any_images"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
@@ -84,7 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginTop="16dp"
-            android:text="Would you like to add any images?"
+            android:text="@string/would_you_like_to_add_any_images"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
@@ -97,6 +102,7 @@
             android:ems="10"
             android:hint="e.g. John's 30th "
             android:inputType="textPersonName"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceName" />
@@ -110,6 +116,7 @@
             android:ems="10"
             android:hint="e.g. John, Mark, Sophie "
             android:inputType="textPersonName"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceName"
@@ -123,6 +130,7 @@
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toStartOf="@+id/btn_holidayStartDate"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_vPlaceDate" />
@@ -144,6 +152,7 @@
             android:layout_marginEnd="8dp"
             android:text="SELECT DATE"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_holidayStartDate"
             app:layout_constraintTop_toTopOf="@+id/edit_holidayEndDate" />
 
         <EditText
@@ -153,6 +162,7 @@
             android:ems="10"
             android:hint="DD/MM/YYYY"
             android:inputType="date"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="@+id/edit_holidayStartDate"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceDate"
             app:layout_constraintTop_toBottomOf="@+id/label_holidayEndDate" />
@@ -165,6 +175,7 @@
             android:gravity="start|top"
             android:hint="Any Notes?"
             android:inputType="textMultiLine"
+            android:theme="@style/edit_text"
             app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceCompanions"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/label_vPlaceNotes"
@@ -222,6 +233,7 @@
                 android:gravity="start|top"
                 android:hint="Add an Image Tag"
                 android:inputType="textMultiLine"
+                android:theme="@style/edit_text"
                 app:layout_constraintEnd_toStartOf="@+id/btn_holidayDeleteImage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />

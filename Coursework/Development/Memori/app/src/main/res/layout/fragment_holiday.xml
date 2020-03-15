@@ -22,9 +22,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="All Holidays"
-            android:textAlignment="center"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,10 +30,11 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_holidays"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_height="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintBottom_toBottomOf="@+id/create_holiday_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/create_holiday_btn"
             app:menu="@menu/menu_holiday">
 
         </androidx.appcompat.widget.Toolbar>
@@ -44,9 +43,9 @@
             android:id="@+id/create_holiday_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="50dp"
             android:text="@string/create_a_holiday"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +58,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/your_holidays"
-            android:textColor="#AAAAAA"
-            android:textSize="20sp"
+            android:theme="@style/label_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/create_holiday_btn" />
 
@@ -81,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="0dp"
-                android:background="@android:color/darker_gray"
+                android:theme="@style/recycler_view"
                 tools:listitem="@layout/recyclerview_holidayitem" />
         </ScrollView>
 

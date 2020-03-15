@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,6 +74,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     private int i;
 
     private ConstraintLayout constLay_searchDate, constLay_searchTag, constLay_searchHoliday, constLay_searchVPlace, constLay_searchLocation;
+    private ImageView hideBack;
     private Button btn_searchGallery, btn_searchByDate, btn_searchGetDate, btn_searchByTag, btn_searchByHoliday, btn_searchByVPlace, btn_searchByLocation;
     private EditText edit_date, edit_tag, edit_holiday, edit_vPlace, edit_location;
 
@@ -275,6 +277,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
         constLay_searchHoliday = view.findViewById(R.id.constLay_searchHoliday);
         constLay_searchVPlace = view.findViewById(R.id.constLay_searchVPlace);
         constLay_searchLocation = view.findViewById(R.id.constLay_searchLocation);
+        hideBack = view.findViewById(R.id.hide_back);
 
         btn_searchGallery = view.findViewById(R.id.btn_searchGallery);
         btn_searchByDate = view.findViewById(R.id.btn_searchByDate);
@@ -408,7 +411,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     private void createToolbar(View view){
         setHasOptionsMenu(true);
-        gToolbar = view.findViewById(R.id.toolbar_holidays);
+        gToolbar = view.findViewById(R.id.toolbar_gallery);
 
         gToolbar.getMenu().getItem(0).setOnMenuItemClickListener(this);
         gToolbar.getMenu().getItem(1).setOnMenuItemClickListener(this);
@@ -884,6 +887,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -893,6 +897,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -902,6 +907,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.VISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -911,6 +917,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.VISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -920,6 +927,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.VISIBLE);
+                hideBack.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -929,6 +937,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.INVISIBLE);
 
                 setUpRecyclerView(DO_NOT_SORT, mAllImages);
 
@@ -939,6 +948,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchHoliday.setVisibility(View.INVISIBLE);
                 constLay_searchVPlace.setVisibility(View.INVISIBLE);
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
+                hideBack.setVisibility(View.INVISIBLE);
 
                 break;
 
