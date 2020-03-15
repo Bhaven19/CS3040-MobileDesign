@@ -8,9 +8,8 @@
 
     <ImageView
         android:id="@+id/recyclerview_holidayimage"
-        android:layout_width="500px"
-        android:layout_height="500px"
-        android:background="@color/colorAccent"
-        android:gravity="center"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
 
 </LinearLayout>

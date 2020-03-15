@@ -9,15 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DDDDDD">
+        android:background="@color/screen_background">
 
         <TextView
             android:id="@+id/textView_hName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textSize="20dp"
+            android:theme="@style/label_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="placeholder text" />
@@ -28,8 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:theme="@style/view_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView_hName"
+            app:layout_constraintEnd_toStartOf="@+id/textView_ToLbl2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_hName"
             tools:text="placeholder text" />
 
@@ -37,16 +39,19 @@
             android:id="@+id/textView_ToLbl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="To"
-            app:layout_constraintStart_toEndOf="@+id/textView_hStartDate"
-            app:layout_constraintTop_toTopOf="@+id/textView_hStartDate" />
+            android:layout_marginTop="8dp"
+            android:text="to"
+            android:theme="@style/view_text"
+            app:layout_constraintEnd_toEndOf="@+id/textView_hName"
+            app:layout_constraintStart_toStartOf="@+id/textView_hName"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hName" />
 
         <TextView
             android:id="@+id/textView_hEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:theme="@style/view_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView_ToLbl2"
             app:layout_constraintTop_toTopOf="@+id/textView_hStartDate"
             tools:text="placeholder text" />
