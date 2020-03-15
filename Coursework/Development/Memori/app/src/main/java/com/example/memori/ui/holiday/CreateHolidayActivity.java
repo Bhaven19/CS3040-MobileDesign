@@ -158,7 +158,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
                 break;
 
             case R.id.btn_holidaySaveImage:
-                if (pictureSaved == false) {
+                if (!pictureSaved) {
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
                     String[] pictureDialogItems = {
@@ -263,6 +263,7 @@ public class CreateHolidayActivity extends AppCompatActivity implements View.OnC
 
                 mImagePath = "";
                 mImageDate = "";
+                mImageTag = "";
                 bmpHolidayImage = null;
                 pictureSaved = false;
 

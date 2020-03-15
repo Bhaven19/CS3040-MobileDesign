@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".ui.vplace.EditVPlace">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             android:id="@+id/title_createVPlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/create_a_visited_place"
+            android:text="Edit Visited Place"
             android:theme="@style/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,16 +104,6 @@
             app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
             app:layout_constraintTop_toBottomOf="@+id/edit_vPlaceNotes" />
 
-        <TextView
-            android:id="@+id/label_vPlaceNoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/no_image_has_been_saved"
-            android:theme="@style/small_text"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage" />
 
         <EditText
             android:id="@+id/edit_vPlaceName"
@@ -214,52 +205,92 @@
             app:layout_constraintStart_toEndOf="@+id/edit_VPlaceDate"
             app:layout_constraintTop_toTopOf="@+id/edit_VPlaceDate" />
 
-        <Button
-            android:id="@+id/btn_saveVPlaceImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/add_an_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_newVPlaceImage" />
-
-        <Button
-            android:id="@+id/btn_deleteVPlaceImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/remove_image"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_newVPlaceImage" />
 
         <Button
             android:id="@+id/btn_saveVPlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:text="@string/save_visited_place"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_saveVPlaceImage" />
+            app:layout_constraintTop_toBottomOf="@+id/constLay_imageSaved" />
 
-        <ImageView
-            android:id="@+id/imageView_newVPlaceImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLay_imageSaved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage">
+
+            <Button
+                android:id="@+id/btn_holidayDeleteImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Remove  Image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
+
+            <ImageView
+                android:id="@+id/imageView_newHolidayImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@color/colorPrimaryDark" />
+
+            <EditText
+                android:id="@+id/edit_holidayImageTag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Add an Image Tag"
+                android:inputType="textMultiLine"
+                android:theme="@style/edit_text"
+                app:layout_constraintEnd_toStartOf="@+id/btn_holidayDeleteImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_newHolidayImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLay_noImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/edit_vPlaceNotes"
-            app:layout_constraintStart_toStartOf="@+id/label_vPlaceImage"
-            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage"
-            app:srcCompat="@color/colorPrimaryDark" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_vPlaceImage">
+
+            <TextView
+                android:id="@+id/label_holidayNoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:text="No Image Has Been Saved"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_holidaySaveImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add an Image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_holidayNoImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

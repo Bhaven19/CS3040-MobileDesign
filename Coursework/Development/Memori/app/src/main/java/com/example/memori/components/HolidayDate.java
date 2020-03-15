@@ -18,7 +18,7 @@ public class HolidayDate {
 
     }
 
-    public HolidayDate toObject(String stringDate){
+    public static HolidayDate toObject(String stringDate){
         int date;
         int month;
         int year;

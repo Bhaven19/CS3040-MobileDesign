@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
@@ -56,12 +57,13 @@ import java.util.Locale;
 
 public class CreateVPlaceActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceTravellers, textViewVPlaceNotes;
+    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceTravellers, textViewVPlaceNotes, textViewImageTag;
     private TextView textViewVPlaceAddress, textViewNoImage;
     private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
     private Button mAddImage, mSaveVPlace, btnDate, btnRemoveImage;
     private ImageButton mGetCurrentLoc;
+    private ConstraintLayout constLayNoImage, constLayImageSaved;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -90,6 +92,9 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vplace);
 
+        constLayNoImage = findViewById(R.id.constLay_noImage);
+        constLayImageSaved = findViewById(R.id.constLay_imageSaved);
+
         allHolidays = getIntent().getStringArrayListExtra("holidayList");
 
         spinnerChooseHoliday = findViewById(R.id.spinner_vPlaceChooseHoliday);
@@ -103,10 +108,11 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
         textViewVPlaceDate.setEnabled(false);
 
-        imageViewVPlaceImage = findViewById(R.id.imageView_newVPlaceImage);
+        imageViewVPlaceImage = findViewById(R.id.imageView_newHolidayImage);
         textViewNoImage = findViewById(R.id.label_vPlaceNoImage);
+        textViewImageTag = findViewById(R.id.edit_holidayImageTag);
 
-        mAddImage = findViewById(R.id.btn_saveVPlaceImage);
+        mAddImage = findViewById(R.id.btn_holidaySaveImage);
         mAddImage.setOnClickListener(this);
 
         mSaveVPlace = findViewById(R.id.btn_saveVPlace);
@@ -118,7 +124,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
         mGetCurrentLoc = findViewById(R.id.btn_getCurrentLocation);
         mGetCurrentLoc.setOnClickListener(this);
 
-        btnRemoveImage = findViewById(R.id.btn_deleteVPlaceImage);
+        btnRemoveImage = findViewById(R.id.btn_holidayDeleteImage);
         btnRemoveImage.setOnClickListener(this);
 
         setupAutoComplete();
@@ -191,7 +197,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                     saveVPlaceIntent.putExtra("vPlaceCompanions", vPlaceCompanions);
                     saveVPlaceIntent.putExtra("vPlaceNotes", vPlaceNotes);
 
-                    mImageTag = "";
+                    mImageTag = textViewImageTag.getText().toString();
                     Images newImage = new Images(mImagePath, mImageDate, mImageTag, vPlaceLocation);
 
                     saveVPlaceIntent.putExtra("vImage", newImage);
@@ -201,7 +207,7 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
                 finish();
 
                 break;
-            case R.id.btn_saveVPlaceImage:
+            case R.id.btn_holidaySaveImage:
                 if (pictureSaved == false) {
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
@@ -329,11 +335,12 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
                 }
                 break;
-            case R.id.btn_deleteVPlaceImage:
+            case R.id.btn_holidayDeleteImage:
                 printImage(false);
 
                 mImagePath = "";
                 mImageDate = "";
+                textViewImageTag.setText("");
                 bmpHolidayImage = null;
                 pictureSaved = false;
 
@@ -410,8 +417,6 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
             pictureSaved = true;
 
-            printImage(true);
-
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -459,29 +464,23 @@ public class CreateVPlaceActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-
     public void printImage(Boolean choice){
         if (choice) {
             Log.d("ImageFind", "CreateHoliday, printImage(true)");
 
-            textViewNoImage.setVisibility(View.INVISIBLE);
+            constLayImageSaved.setVisibility(View.VISIBLE);
+            constLayNoImage.setVisibility(View.INVISIBLE);
 
-            imageViewVPlaceImage.setVisibility(View.VISIBLE);
             imageViewVPlaceImage.setImageBitmap(bmpHolidayImage);
 
-            mAddImage.setVisibility(View.INVISIBLE);
-            btnRemoveImage.setVisibility(View.VISIBLE);
 
         } else {
             Log.d("ImageFind", "CreateHoliday, printImage(false)");
 
-            textViewNoImage.setVisibility(View.VISIBLE);
+            constLayImageSaved.setVisibility(View.INVISIBLE);
+            constLayNoImage.setVisibility(View.VISIBLE);
 
-            imageViewVPlaceImage.setVisibility(View.INVISIBLE);
             imageViewVPlaceImage.setImageBitmap(null);
-
-            mAddImage.setVisibility(View.VISIBLE);
-            btnRemoveImage.setVisibility(View.INVISIBLE);
 
         }
     }

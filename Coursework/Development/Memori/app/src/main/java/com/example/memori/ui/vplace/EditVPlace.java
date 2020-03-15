@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.memori.R;
 import com.example.memori.components.HolidayDate;
@@ -61,11 +63,12 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
     private HolidayRepository holidayRepository;
 
-    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceLoc, textViewVPlaceTravellers, textViewVPlaceNotes;
-    private TextView textViewVPlaceAddress;
+    private EditText textViewVPlaceName, textViewVPlaceDate, textViewVPlaceLoc, textViewVPlaceTravellers, textViewVPlaceNotes, textViewImageTag;
+    private TextView textViewVPlaceAddress, textViewNoImage;
     private Spinner spinnerChooseHoliday;
     private ImageView imageViewVPlaceImage;
-    private Button mAddImage, mSaveVPlace, btnDate;
+    private Button mAddImage, mSaveVPlace, btnDate, btnRemoveImage;
+    private ConstraintLayout constLayNoImage, constLayImageSaved;
 
     private final Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay;
@@ -75,7 +78,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
     private int GALLERY = 1, CAMERA = 2;
     private static final String IMAGE_DIRECTORY = "/memori/";
     private Boolean pictureSaved = false;
-    private String mImagePath;
+    private String mImagePath, mImagePathOrig;
     private Bitmap bmpHolidayImage;
     private ImageButton mGetCurrentLoc;
 
@@ -100,12 +103,13 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_vplace);
+        setContentView(R.layout.activity_edit_vplace);
 
         mVisitedPlace = (VisitedPlace) getIntent().getSerializableExtra("chosenVisitedPlace");
 
         if (getIntent().getSerializableExtra("vPlaceImage") != null){
             vPlaceImage = (Images) getIntent().getSerializableExtra("vPlaceImage");
+
         } else {
             vPlaceImage = null;
         }
@@ -119,11 +123,22 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
         textViewVPlaceAddress = findViewById(R.id.label_VPlaceAddress);
         textViewVPlaceTravellers = findViewById(R.id.edit_vPlaceCompanions);
         textViewVPlaceNotes = findViewById(R.id.edit_vPlaceNotes);
+        textViewNoImage = findViewById(R.id.label_noImage);
+
+        constLayNoImage = findViewById(R.id.constLay_noImage);
+        constLayImageSaved = findViewById(R.id.constLay_imageSaved);
 
         textViewVPlaceDate.setEnabled(false);
 
-        mAddImage = findViewById(R.id.btn_saveVPlaceImage);
+        imageViewVPlaceImage = findViewById(R.id.imageView_newHolidayImage);
+        textViewNoImage = findViewById(R.id.label_vPlaceNoImage);
+        textViewImageTag = findViewById(R.id.edit_holidayImageTag);
+
+        mAddImage = findViewById(R.id.btn_holidaySaveImage);
         mAddImage.setOnClickListener(this);
+
+        btnRemoveImage = findViewById(R.id.btn_holidayDeleteImage);
+        btnRemoveImage.setOnClickListener(this);
 
         mSaveVPlace = findViewById(R.id.btn_saveVPlace);
         mSaveVPlace.setOnClickListener(this);
@@ -164,20 +179,29 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                         mVisitedPlace.setDate(date.toString());
                     }
 
-                    vPlaceImage.setPath(mImagePath);
-                    vPlaceImage.setDate(mImageDate);
-                    vPlaceImage.setTag(mImageTag);
+                    if(mImagePath.equals(mImagePathOrig)){
+                        vPlaceImage.setTag(textViewImageTag.getText().toString());
+                        saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
+
+                    } else {
+                        String placeID = chosenPlace.getId();
+
+                        vPlaceImage.setPath(mImagePath);
+                        vPlaceImage.setDate(mImageDate);
+                        vPlaceImage.setTag(textViewImageTag.getText().toString());
+                        vPlaceImage.setLocation(placeID);
+                        saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
+                    }
 
                     saveVPlaceIntent.putExtra("editedVPlaceHolidayName", vPlaceHoliday);
                     saveVPlaceIntent.putExtra("editedVPlace", mVisitedPlace);
-                    saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
 
                     setResult(SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE, saveVPlaceIntent);
                 }
                 finish();
 
                 break;
-            case R.id.btn_saveVPlaceImage:
+            case R.id.btn_holidaySaveImage:
                 if (pictureSaved == false) {
                     AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
                     pictureDialog.setTitle("Select Action");
@@ -313,6 +337,16 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
                 }
                 break;
+            case R.id.btn_holidayDeleteImage:
+                printImage(false);
+
+                mImagePath = "";
+                mImageDate = "";
+                textViewImageTag.setText("");
+                bmpHolidayImage = null;
+                pictureSaved = false;
+
+                break;
         }
     }
 
@@ -359,6 +393,20 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
             bmpHolidayImage = thumbnail;
 
             Toast.makeText(EditVPlace.this, "Images Saved!", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        File imageFile = new File(mImagePath);
+        if (imageFile.exists()){
+            bmpHolidayImage = BitmapFactory.decodeFile(mImagePath);
+
+            Log.d("ImageFind", "CreateVplace, IMAGE FOUND");
+
+            printImage(true);
+
+        } else {
+            Log.d("ImageFind", "CreateVplace, IMAGE NOT FOUND");
 
         }
     }
@@ -436,29 +484,7 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    public void setValues(){
-        adapterVisitedPlaces = new HashMap<>();
-        setSpinner = true;
 
-        textViewVPlaceName.setText(isNull(mVisitedPlace.getName()));
-        textViewVPlaceDate.setText(isNull(mVisitedPlace.getDate()));
-        textViewVPlaceTravellers.setText(isNull(mVisitedPlace.getTravellers()));
-        textViewVPlaceNotes.setText(isNull(mVisitedPlace.getNotes()));
-
-        if (vPlaceImage != null){
-            pictureSaved = true;
-            mImagePath = vPlaceImage.getPath();
-            mImageDate = vPlaceImage.getDate();
-            mImageTag = vPlaceImage.getTag();
-        }
-
-        placeID = mVisitedPlace.getLocation();
-        if (placeID != null){
-            setAddress();
-        }
-
-
-    }
 
     public String isNull(String value) {
         if (value == null) {
@@ -527,6 +553,64 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                 Log.d("PlacesAutoComplete", "An error occurred: " + status);
             }
         });
+
+    }
+
+    public void printImage(Boolean choice){
+        if (choice) {
+            Log.d("ImageFind", "CreateHoliday, printImage(true)");
+
+            constLayImageSaved.setVisibility(View.VISIBLE);
+            constLayNoImage.setVisibility(View.INVISIBLE);
+
+            imageViewVPlaceImage.setImageBitmap(bmpHolidayImage);
+
+
+        } else {
+            Log.d("ImageFind", "CreateHoliday, printImage(false)");
+
+            constLayImageSaved.setVisibility(View.INVISIBLE);
+            constLayNoImage.setVisibility(View.VISIBLE);
+
+            imageViewVPlaceImage.setImageBitmap(null);
+
+        }
+    }
+
+    public void setValues(){
+        adapterVisitedPlaces = new HashMap<>();
+        setSpinner = true;
+
+        textViewVPlaceName.setText(isNull(mVisitedPlace.getName()));
+        textViewVPlaceDate.setText(isNull(mVisitedPlace.getDate()));
+        textViewVPlaceTravellers.setText(isNull(mVisitedPlace.getTravellers()));
+        textViewVPlaceNotes.setText(isNull(mVisitedPlace.getNotes()));
+
+        if (vPlaceImage != null){
+            pictureSaved = true;
+            mImagePath = vPlaceImage.getPath();
+            mImagePathOrig = mImagePath;
+            mImageDate = vPlaceImage.getDate();
+            mImageTag = vPlaceImage.getTag();
+
+            textViewImageTag.setText(mImageTag);
+
+            File imageFile = new File(mImagePath);
+            if (imageFile.exists()){
+                bmpHolidayImage = BitmapFactory.decodeFile(mImagePath);
+
+                Log.d("ImageFind", "CreateHoliday, IMAGE FOUND");
+
+                printImage(true);
+
+            }
+        }
+
+        placeID = mVisitedPlace.getLocation();
+        if (placeID != null){
+            setAddress();
+        }
+
 
     }
 

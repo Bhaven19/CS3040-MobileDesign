@@ -50,10 +50,6 @@ public class VPlaceFragment extends Fragment implements MenuItem.OnMenuItemClick
 
     private Boolean editClicked = false, deleteClicked = false;
 
-    public static final int NEW_HOLIDAY_ACTIVITY_REQUEST_CODE = 1;
-    public static final int VIEW_ALL_HOLIDAYS_ACTIVITY_REQUEST_CODE = 2;
-    public static final int SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE = 3;
-
     public static final int NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 4;
     public static final int VIEW_ALL_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 5;
     public static final int SUCCESSFULY_EDITED_VISITED_PLACE_ACTIVITY_REQUEST_CODE = 6;
@@ -116,49 +112,7 @@ public class VPlaceFragment extends Fragment implements MenuItem.OnMenuItemClick
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == NEW_HOLIDAY_ACTIVITY_REQUEST_CODE){
-            Images image =  (Images) data.getSerializableExtra("newImage");
-
-            mHolidayViewModel.insertImage(image);
-
-            HolidayViewModel newHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
-            int imageID = newHolidayViewModel.getLatestImage().get_id() + 1;
-
-            if (image !=null) {
-                Holiday holiday = new Holiday(data.getStringExtra("hName"),
-                        data.getStringExtra("hStartDate"),
-                        data.getStringExtra("hEndDate"),
-                        data.getStringExtra("hCompanions"),
-                        data.getStringExtra("hNotes"),
-                        imageID);
-
-                mHolidayViewModel.insertHoliday(holiday);
-
-            } else {
-                Holiday holiday = new Holiday(data.getStringExtra("hName"),
-                        data.getStringExtra("hStartDate"),
-                        data.getStringExtra("hEndDate"),
-                        data.getStringExtra("hCompanions"),
-                        data.getStringExtra("hNotes"),
-                        0);
-
-                mHolidayViewModel.insertHoliday(holiday);
-
-            }
-
-            Log.d("HolidayList", "Holiday Saved");
-
-
-        } else if (resultCode == SUCCESSFULY_EDITED_HOLIDAY_ACTIVITY_REQUEST_CODE) {
-            Holiday holiday = (Holiday) data.getSerializableExtra("editedHoliday");
-            Images image = (Images) data.getSerializableExtra("editedImage");
-
-            mHolidayViewModel.updateHoliday(holiday);
-            mHolidayViewModel.updateImage(image);
-
-            Log.d("HolidayList", "List of all Holidays: " + mHolidayViewModel.holidayNamesToString());
-
-        } else if (resultCode == NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
+        if (resultCode == NEW_VISITED_PLACE_ACTIVITY_REQUEST_CODE) {
             Images image = (Images) data.getSerializableExtra("vImage");
             mHolidayViewModel.insertImage(image);
 
