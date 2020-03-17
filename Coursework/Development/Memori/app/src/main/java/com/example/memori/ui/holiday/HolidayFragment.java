@@ -3,8 +3,10 @@ package com.example.memori.ui.holiday;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,7 +36,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
+public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClickListener{
 
     private NavController navController;
     private HolidayViewModel mHolidayViewModel;
@@ -61,11 +63,40 @@ public class HolidayFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public ArrayList<Integer> vPlaceIDPerHoliday;
 
+    final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            displayToast("Don't hold me for too long...");
+            Log.d("GestureDetect", "onDown...");
+
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Intent createIntent = new Intent(getActivity(), CreateHolidayActivity.class);
+
+            startActivityForResult(createIntent, NEW_HOLIDAY_ACTIVITY_REQUEST_CODE);
+
+            super.onLongPress(e);
+
+        }
+
+    });
+
     //----------------EVERYTHING BELOW THIS LINE DOES NOT NEED REDEVELOPING FOR HOLIDAY & VISITEDPLACE FUNCTIONALITY
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mHolidayViewModel = ViewModelProviders.of(this).get(HolidayViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_holiday, container, false);
+        root.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
 
         retrieveTables();
 

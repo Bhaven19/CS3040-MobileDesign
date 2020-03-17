@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -102,9 +104,43 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private boolean filtersActive = false;
     private Double[] currentLatLong;
 
+    final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            displayToast("Don't hold me for too long...");
+            Log.d("GestureDetect", "onDown...");
+
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            try {
+                Thread.sleep(1500);
+                displayToast("I told you!");
+
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+
+            }
+
+            super.onLongPress(e);
+
+        }
+
+    });
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+
         view = inflater.inflate(R.layout.fragment_map, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
 
         requestPermissions();
 

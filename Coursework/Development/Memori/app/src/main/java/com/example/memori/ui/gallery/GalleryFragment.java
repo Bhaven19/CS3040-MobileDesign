@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -86,6 +88,33 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
     private ArrayList<Images> filteredImages;
 
     private boolean firstPass = false;
+
+    final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            displayToast("Don't hold me for too long...");
+            Log.d("GestureDetect", "onDown...");
+
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            try {
+                Thread.sleep(1500);
+                displayToast("I told you!");
+
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+
+            }
+
+            super.onLongPress(e);
+
+        }
+
+    });
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -266,7 +295,14 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        root.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
 
         return root;
     }
