@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -145,7 +144,5 @@ public class ViewImageActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
-    public void displayToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
+
 }

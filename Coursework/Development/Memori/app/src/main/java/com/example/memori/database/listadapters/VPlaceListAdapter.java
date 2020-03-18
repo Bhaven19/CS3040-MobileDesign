@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -109,9 +108,5 @@ public class VPlaceListAdapter extends RecyclerView.Adapter<VPlaceListAdapter.VP
         return mVPlaces.get(position);
     }
 
-    public void displayToast(String message){
-        Toast.makeText(mContext.getApplicationContext(), message, Toast.LENGTH_LONG).show();
-
-    }
 
 }

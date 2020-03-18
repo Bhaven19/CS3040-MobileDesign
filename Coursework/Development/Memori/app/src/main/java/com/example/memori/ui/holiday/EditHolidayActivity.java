@@ -74,7 +74,7 @@ public class EditHolidayActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_holiday);
+        setContentView(R.layout.activity_edit_holiday);
 
         constLayNoImage = findViewById(R.id.constLay_noImage);
         constLayImageSaved = findViewById(R.id.constLay_imageSaved);

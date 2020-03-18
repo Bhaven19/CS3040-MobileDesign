@@ -337,9 +337,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void getNearbyPlaces(String placeType){
         RequestQueue queue = Volley.newRequestQueue (getContext());
 
-        displayToast("currentLong " + currentLatLong[0]);
-        displayToast("currentLat " + currentLatLong[1]);
-
         String url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=52.47819,-1.89984&radius=3000&type=" + placeType + "&radius=3000&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + currentLatLong[0] + "," + currentLatLong[1] + "&radius=3000&type=" + placeType + "&radius=3000&key=AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0";
 
@@ -629,7 +626,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         });
     }
 
-    public void setAllVPlaceMarkers(List<VisitedPlace> impAllVPlaces){
+    private void setAllVPlaceMarkers(List<VisitedPlace> impAllVPlaces){
         if (impAllVPlaces != null) {
             int numVPlaces = impAllVPlaces.size();
 
@@ -646,13 +643,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     String placeId = placeID;
 
                     // Specify the fields to return.s
-                    List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+                    List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME,
+                            Place.Field.ADDRESS, Place.Field.LAT_LNG));
 
                     // Construct a request object, passing the place ID and fields array.
                     FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
                     PlacesClient placesClient = Places.createClient(getActivity());
                     placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-                        setMarker("VPlaceFragment", response.getPlace().getLatLng().latitude, response.getPlace().getLatLng().longitude, visitedPlace.getName());
+                        setMarker("VPlaceFragment", response.getPlace().getLatLng().latitude,
+                                response.getPlace().getLatLng().longitude, visitedPlace.getName());
                         i++;
                         setAllVPlaceMarkers(impAllVPlaces);
 
@@ -664,7 +663,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             displayToast("There are no visited places within your desired filters");
 
         }
-
 
     }
 
