@@ -839,6 +839,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
 
 
             if (!firstPass) {
+                filteredImages = new ArrayList<>(mAllImages);
                 setUpRecyclerView(DO_NOT_SORT, mAllImages);
                 firstPass = true;
             }
@@ -903,12 +904,12 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
             FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
             PlacesClient placesClient = Places.createClient(getActivity());
             placesClient.fetchPlace(request).addOnCompleteListener(fetchPlaceResponse -> {
-                    Log.d("OrderGallery", "response.getPlace().getName(): " + fetchPlaceResponse.getResult().getPlace().getName());
-                    hmImageToPlace.put(currentImage, fetchPlaceResponse.getResult().getPlace());
+                Log.d("OrderGallery", "response.getPlace().getName(): " + fetchPlaceResponse.getResult().getPlace().getName());
+                hmImageToPlace.put(currentImage, fetchPlaceResponse.getResult().getPlace());
 
-                    i++;
+                i++;
 
-                    getAllImagePlaces();
+                getAllImagePlaces();
 
             });
         }
@@ -975,6 +976,7 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                 constLay_searchLocation.setVisibility(View.INVISIBLE);
                 hideBack.setVisibility(View.INVISIBLE);
 
+                filteredImages = new ArrayList<>(mAllImages);
                 setUpRecyclerView(DO_NOT_SORT, mAllImages);
 
                 break;

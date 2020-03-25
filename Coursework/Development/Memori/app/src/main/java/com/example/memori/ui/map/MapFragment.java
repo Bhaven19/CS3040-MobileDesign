@@ -142,21 +142,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             }
         });
 
-        requestPermissions();
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        getCurrentLocation();
-
-        retrieveTables();
-        i = 0;
-        j = 0;
-
-        hmTitleToPos = new HashMap<>();
-
-        setFilterViewIDs();
-
-        createMap();
-
         return view;
     }
 
@@ -205,7 +190,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                startDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+                                startDate = new HolidayDate(dayOfMonth, monthOfYear + 1, year);
 
                                 edit_StartDate.setText(startDate.toString());
 
@@ -229,7 +214,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                endDate = new HolidayDate(dayOfMonth, monthOfYear, year);
+                                endDate = new HolidayDate(dayOfMonth, monthOfYear + 1, year);
 
                                 if (endDate.validDate(startDate)){
                                     edit_EndDate.setText(endDate.toString());
@@ -302,8 +287,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         "Find Museum",
                         "Find Shopping Mall",
                         "Find Stadium",
-                        "Find Tourist Attraction",
-                        "Cancel"};
+                        "Find Tourist Attraction"};
                 pictureDialog.setItems(pictureDialogItems,
                         (dialog, which) -> {
                             switch (which) {
@@ -321,9 +305,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                                     break;
                                 case 4:
                                     getNearbyPlaces("tourist_attraction");
-                                    break;
-                                case 5:
-                                    getNearbyPlaces("cancel");
                                     break;
                             }
                         });
@@ -349,7 +330,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 Intent viewPOIIntent = new Intent(getActivity(), ViewPOI.class);
 
                 viewPOIIntent.putExtra("AllPlaces", new ArrayList<>(places));
-                viewPOIIntent.putExtra("POIType", placeType);
+                viewPOIIntent.putExtra("POIType", "Finding " + placeType.substring(0, 1).toUpperCase() + placeType.substring(1).toLowerCase() + "s within a 3000m radius...");
+
 
                 startActivity(viewPOIIntent);
 
@@ -368,14 +350,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        Log.d("MapBug", "onDestroy");
+
+        mMap.clear();
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
+        mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_holder);
+        if (mapFragment != null) {
+            fm.beginTransaction().remove(mapFragment).commit();
+        }
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        Log.d("MapBug", "onResume");
+
+        retrieveTables();
+
         requestPermissions();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         getCurrentLocation();
 
-        retrieveTables();
         i = 0;
         j = 0;
 
@@ -402,15 +402,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        retrieveTables();
-
         if(filtersActive){
             displayToast("All filters have been reset, loading all markers");
             filtersActive = false;
         } else {
             displayToast("Loading all Map Markers");
         }
-
 
         setAllVPlaceMarkers(allVPlaces);
         setAllImageMarkers();
@@ -534,6 +531,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         .title(vPlaceName)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
 
+                Log.d("MapBug", "adding marker: " + vplaceMarker.getTitle() + " to mMap: " + mMap);
                 Marker currentMarker = mMap.addMarker(vplaceMarker);
 
                 Log.d("RemovingMarkers", "Adding VMarker to List: " + currentMarker.getTitle());
@@ -552,6 +550,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         .title(imageName)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
+                Log.d("MapBug", "adding marker: " + imageMarker.getTitle() + " to mMap: " + mMap);
                 mMap.addMarker(imageMarker);
 
                 break;
@@ -576,7 +575,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     }
                 });
     }
-
 
     public void retrieveTables(){
         mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
@@ -614,13 +612,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         mapViewModel.getAllImages().observe(getViewLifecycleOwner(), images -> {
             // Update the cached copy of the words in the adapter.
             allImages = images;
+            Log.d("MapBug", "retrieveTables, images: " + images.size());
+            Log.d("MapBug", "retrieveTables, allImages: " + allImages.size());
 
         });
 
         mapViewModel.getAllVisitedPlaces().observe(getViewLifecycleOwner(), vplaces -> {
             // Update the cached copy of the words in the adapter.
             allVPlaces = vplaces;
-            allVPlacesOriginal = allVPlaces;
+            allVPlacesOriginal = vplaces;
 
 
         });
@@ -667,6 +667,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     public void setAllImageMarkers(){
+        Log.d("MapBug", "setAllImageMarkers, allImages: " + allImages.size());
+
         if(j < allImages.size()){
             Images image = allImages.get(j);
             String placeID = image.getLocation();
