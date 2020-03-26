@@ -57,6 +57,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
         Intent obtainIntent = getIntent();
 
         impVisitedPlace = (VisitedPlace) obtainIntent.getSerializableExtra("chosenVisitedPlace");
+        Log.d("FindImage", "1 obtainIntent.getSerializableExtra(\"chosenImage\"): " + obtainIntent.getSerializableExtra("chosenImage"));
         if (obtainIntent.getSerializableExtra("chosenImage") != null){
             impImage = (Images) obtainIntent.getSerializableExtra("chosenImage");
         } else {
@@ -108,6 +109,7 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
 
         placeID = impVisitedPlace.getLocation();
 
+
         createMap();
 
 
@@ -145,35 +147,41 @@ public class ViewVPlace extends AppCompatActivity implements OnMapReadyCallback{
             Places.initialize(getApplicationContext(), "AIzaSyDMPsU2SV31MnUAONzl0WEI2iEDkU31kZ0", Locale.UK);
         }
 
-        Log.d("VPlaceLocation", "ViewVPlace: placeID: " + placeID);
-        // Define a Place ID.
-        String placeId = placeID;
+        if (!placeID.equals("")) {
+            Log.d("VPlaceLocation", "ViewVPlace: placeID: " + placeID);
 
-        // Specify the fields to return.s
-        List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+            // Define a Place ID.
+            String placeId = placeID;
 
-        // Construct a request object, passing the place ID and fields array.
-        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+            // Specify the fields to return.s
+            List<Place.Field> placeFields = (Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
 
-        PlacesClient placesClient = Places.createClient(getApplicationContext());
-        placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-            vPlaceLoc = response.getPlace();
-            Log.d("VPlaceLocation", "ViewVPlace: Place found: " + vPlaceLoc.getName());
+            // Construct a request object, passing the place ID and fields array.
+            FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
-            double impLat = vPlaceLoc.getLatLng().latitude;
-            double impLon = vPlaceLoc.getLatLng().longitude;
+            PlacesClient placesClient = Places.createClient(getApplicationContext());
+            placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+                vPlaceLoc = response.getPlace();
+                Log.d("VPlaceLocation", "ViewVPlace: Place found: " + vPlaceLoc.getName());
 
-            Log.d("VPlaceLocation", "setMarker- Longitude: " + impLat);
-            Log.d("VPlaceLocation", "setMarker- Latitude: " + impLon);
+                double impLat = vPlaceLoc.getLatLng().latitude;
+                double impLon = vPlaceLoc.getLatLng().longitude;
 
-            LatLng location = new LatLng(impLat, impLon);
-            mMap.addMarker(new MarkerOptions().position(location).title(vPlaceLoc.getName()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                Log.d("VPlaceLocation", "setMarker- Longitude: " + impLat);
+                Log.d("VPlaceLocation", "setMarker- Latitude: " + impLon);
 
-            viewVPlaceAddress.setText("Address: " + vPlaceLoc.getAddress());
+                LatLng location = new LatLng(impLat, impLon);
+                mMap.addMarker(new MarkerOptions().position(location).title(vPlaceLoc.getName()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
-        }).addOnFailureListener(e ->
-                Log.d("VPlaceLocation", "ViewVPlace: Place Not Found: " + vPlaceLoc.getId()));
+                viewVPlaceAddress.setText("Address: " + vPlaceLoc.getAddress());
+
+            }).addOnFailureListener(e ->
+                    Log.d("VPlaceLocation", "ViewVPlace: Place Not Found: " + vPlaceLoc.getId()));
+        } else {
+            viewVPlaceAddress.setText("Address: No Address Has Been Saved");
+        }
+
 
 
     }

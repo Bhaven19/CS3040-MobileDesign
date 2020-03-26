@@ -840,7 +840,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 Log.d("RemovingMarkers", "------------------------");
 
                 for (VisitedPlace visitedPlace : allVPlaces){
+                    Log.d("RemovingMarkers", "------------------------");
+                    Log.d("RemovingMarkers", "currentVPlace: " + visitedPlace.getName());
+
                     String currentVPlaceDate = visitedPlace.getDate();
+                    Log.d("RemovingMarkers", "visitedPlace.getDate(): " + visitedPlace.getDate());
                     Date vPlaceDate = getDate(currentVPlaceDate);
                     Log.d("RemovingMarkers", "vPlaceDate: " + vPlaceDate.toString());
 

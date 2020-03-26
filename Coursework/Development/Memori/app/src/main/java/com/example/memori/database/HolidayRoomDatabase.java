@@ -94,11 +94,11 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                     "14/02/2016"};
 
             String [] endingDates = {
-                    "17/12/2020",
+                    "17/03/2020",
                     "19/11/2019",
                     "22/08/2018",
                     "24/11/2017",
-                    "28/03/2016"};
+                    "28/05/2016"};
 
             String travellerNames = "John, Mark, Sophie";
 
@@ -107,7 +107,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             boolean check = false;
             int holidayID = 0;
 
-            if (populate || mHolidayDao.isHolidayEmpty() == 0) {
+            if (populate) {
 
                 mHolidayDao.deleteAllHolidays();
 
@@ -135,11 +135,11 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                     "Gateway of India"};
 
             String[] date = {
-                    "10/05/2016",
-                    "01/12/2017",
+                    "10/03/2020",
+                    "01/12/2019",
                     "24/07/2018",
-                    "17/04/2019",
-                    "26/02/2020"};
+                    "17/04/2017",
+                    "26/02/2016"};
 
             String[] location = {
                     "ChIJvUdRyzDEyIARhA3R2cXH8oI",
@@ -159,7 +159,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
             int j = 5;
 
-            if (populate || mHolidayDao.isVPlaceEmpty() == 0){
+            if (populate){
 
                 mHolidayDao.deleteAllVisitedPlaces();
 
@@ -194,28 +194,28 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
                     Environment.getExternalStorageDirectory() + "/memori/image10.jpg"};
 
             String[] imageDate = {
-                    "14/06/2019",
-                    "15/07/2019",
-                    "16/08/2019",
-                    "17/09/2019",
-                    "18/10/2019",
-                    "19/11/2019",
-                    "20/12/2019",
-                    "21/01/2020",
-                    "22/02/2020",
-                    "18/03/2020"};
+                    "14/03/2020",
+                    "15/02/2020",
+                    "16/01/2019",
+                    "17/12/2019",
+                    "18/11/2018",
+                    "19/10/2018",
+                    "20/19/2017",
+                    "21/08/2017",
+                    "22/07/2016",
+                    "18/06/2016"};
 
             String[] imageTag = {
                     "winter",
-                    "spring",
+                    "winter",
                     "summer",
-                    "autumn",
+                    "summer",
                     "happy",
-                    "sad",
+                    "happy",
                     "fun",
-                    "colourful",
+                    "fun",
                     "new",
-                    "old"};
+                    "new"};
 
             String[] imageLocation = {
                     //Las Vegas
@@ -252,7 +252,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
             tagList.toArray(imageTag);
 
 
-            if (populate || mHolidayDao.isImagesEmpty() == 0){
+            if (populate){
 
                 mHolidayDao.deleteAllImages();
 

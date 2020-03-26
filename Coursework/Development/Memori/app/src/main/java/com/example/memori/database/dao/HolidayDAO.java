@@ -52,13 +52,6 @@ public interface HolidayDAO {
     @Query("SELECT * from images_table WHERE ID=(Select max(ID) from images_table)")
     Images getLatestImage();
 
-    @Query("SELECT COUNT(*) FROM holiday_table")
-    int isHolidayEmpty();
-    @Query("SELECT COUNT(*) FROM visited_places_table")
-    int isVPlaceEmpty();
-    @Query("SELECT COUNT(*) FROM images_table")
-    int isImagesEmpty();
-
     @Update()
     void updateHoliday(Holiday... holiday);
     @Update()

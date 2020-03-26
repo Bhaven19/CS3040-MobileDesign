@@ -1116,8 +1116,6 @@ public class GalleryFragment extends Fragment implements MenuItem.OnMenuItemClic
                                 setUpRecyclerView(DO_NOT_SORT, filteredImages);
                                 setConstLayView("clear");
 
-                            } else {
-                                displayToast("There were 0 matches for the requested location, please try again");
                             }
 
                         }

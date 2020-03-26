@@ -184,7 +184,11 @@ public class EditVPlace extends AppCompatActivity implements View.OnClickListene
                         saveVPlaceIntent.putExtra("editedVPlaceImage", vPlaceImage);
 
                     } else {
-                        String placeID = chosenPlace.getId();
+                        if (chosenPlace != null){
+                            placeID = chosenPlace.getId();
+                        } else {
+                            placeID = "";
+                        }
 
                         vPlaceImage.setPath(mImagePath);
                         vPlaceImage.setDate(mImageDate);

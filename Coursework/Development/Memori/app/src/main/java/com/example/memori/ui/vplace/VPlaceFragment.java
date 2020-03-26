@@ -301,7 +301,8 @@ public class VPlaceFragment extends Fragment implements MenuItem.OnMenuItemClick
                         Intent viewIntent = new Intent(getActivity(), ViewVPlace.class);
                         viewIntent.putExtra("chosenVisitedPlace", myVisitedPlace);
 
-                        Log.d("FindImage", "myVisitedPlace.getImageID(): "+ myVisitedPlace.getImageID());
+                        Log.d("FindImage", "1 myVisitedPlace.getImageID(): "+ myVisitedPlace.getImageID());
+                        Log.d("FindImage", "1 getImage(myVisitedPlace.getImageID()): " + getImage(myVisitedPlace.getImageID()));
                         viewIntent.putExtra("chosenImage", getImage(myVisitedPlace.getImageID()));
 
                         startActivity(viewIntent);
