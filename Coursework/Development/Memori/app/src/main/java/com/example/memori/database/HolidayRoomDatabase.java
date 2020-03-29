@@ -57,6 +57,7 @@ public abstract class HolidayRoomDatabase extends RoomDatabase {
 
         private final HolidayDAO mHolidayDao;
 
+        //private final boolean populate = true;
         private final boolean populate = false;
 
         private ArrayList<Integer> allImageIDs = new ArrayList<>();
